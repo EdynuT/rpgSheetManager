@@ -1,10 +1,25 @@
 package io.github.edynut.rpgsheetmanager.model;
 
 public class Character {
-
     private String nome;
-
     private StatusBase statusBase = new StatusBase();
+    private StatusSecundario statusSecundarios = new StatusSecundario();
+    private java.util.Map<String, Pericia> pericias = new java.util.LinkedHashMap<>();
+    private Item[] itens = new Item[0];
+    private Armamento[] armamentos = new Armamento[0];
+    private Municao[] municoes = new Municao[0];
+    private java.util.Map<String, DefesaPeca> defesas = new java.util.LinkedHashMap<>();
+    private String[] tiposDanoDefesa = new String[0];
+    private HabilidadePassiva[] habilidadesPassivas = new HabilidadePassiva[0];
+    private HabilidadeAtiva[] habilidadesAtivas = new HabilidadeAtiva[0];
+    private Magia[] magias = new Magia[0];
+    private Magia[] cancoes = new Magia[0];   // mesma estrutura, categoria diferente
+    private Magia[] alquimias = new Magia[0]; // idem
+    private Debuff[] debuffs = new Debuff[0];
+    private Pet[] pets = new Pet[0];
+    private Favorito[] favoritos = new Favorito[0];
+    private Pacto[] pactos = new Pacto[0];
+    private Trauma[] traumas = new Trauma[0];
 
     public Character() {}
 
@@ -12,15 +27,62 @@ public class Character {
         this.nome = nome;
     }
 
-    // ------------------------------------------------------------------
-    // Getters / Setters
-    // ------------------------------------------------------------------
-
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
     public StatusBase getStatusBase() { return statusBase; }
     public void setStatusBase(StatusBase statusBase) { this.statusBase = statusBase; }
+
+    public StatusSecundario getStatusSecundarios() { return statusSecundarios; }
+    public void setStatusSecundarios(StatusSecundario statusSecundarios) { this.statusSecundarios = statusSecundarios; }
+
+    public java.util.Map<String, Pericia> getPericias() { return pericias; }
+    public void setPericias(java.util.Map<String, Pericia> pericias) { this.pericias = pericias; }
+
+    public Item[] getItens() { return itens; }
+    public void setItens(Item[] itens) { this.itens = itens; }
+
+    public Armamento[] getArmamentos() { return armamentos; }
+    public void setArmamentos(Armamento[] armamentos) { this.armamentos = armamentos; }
+
+    public Municao[] getMunicoes() { return municoes; }
+    public void setMunicoes(Municao[] municoes) { this.municoes = municoes; }
+
+    public java.util.Map<String, DefesaPeca> getDefesas() { return defesas; }
+    public void setDefesas(java.util.Map<String, DefesaPeca> defesas) { this.defesas = defesas; }
+
+    public String[] getTiposDanoDefesa() { return tiposDanoDefesa; }
+    public void setTiposDanoDefesa(String[] tiposDanoDefesa) { this.tiposDanoDefesa = tiposDanoDefesa; }
+
+    public HabilidadePassiva[] getHabilidadesPassivas() { return habilidadesPassivas; }
+    public void setHabilidadesPassivas(HabilidadePassiva[] habilidadesPassivas) { this.habilidadesPassivas = habilidadesPassivas; }
+
+    public HabilidadeAtiva[] getHabilidadesAtivas() { return habilidadesAtivas; }
+    public void setHabilidadesAtivas(HabilidadeAtiva[] habilidadesAtivas) { this.habilidadesAtivas = habilidadesAtivas; }
+
+    public Magia[] getMagias() { return magias; }
+    public void setMagias(Magia[] magias) { this.magias = magias; }
+
+    public Magia[] getCancoes() { return cancoes; }
+    public void setCancoes(Magia[] cancoes) { this.cancoes = cancoes; }
+
+    public Magia[] getAlquimias() { return alquimias; }
+    public void setAlquimias(Magia[] alquimias) { this.alquimias = alquimias; }
+
+    public Debuff[] getDebuffs() { return debuffs; }
+    public void setDebuffs(Debuff[] debuffs) { this.debuffs = debuffs; }
+
+    public Pet[] getPets() { return pets; }
+    public void setPets(Pet[] pets) { this.pets = pets; }
+
+    public Favorito[] getFavoritos() { return favoritos; }
+    public void setFavoritos(Favorito[] favoritos) { this.favoritos = favoritos; }
+
+    public Pacto[] getPactos() { return pactos; }
+    public void setPactos(Pacto[] pactos) { this.pactos = pactos; }
+
+    public Trauma[] getTraumas() { return traumas; }
+    public void setTraumas(Trauma[] traumas) { this.traumas = traumas; }
 
     // ------------------------------------------------------------------
     // StatusBase
@@ -138,12 +200,7 @@ public class Character {
     private String nome = "";
     private String descricao = "";
     private String categoria = "Geral";
-    private String dano_normal = "";
-    private String dano_critico = "";
-    private String alcance = "";
-    private String gasto = "";
     private String efeito = "";
-    private String cd_cast = "";
     private boolean equipado = false;
     private double peso = 0.0;
     private int quantidade = 1;
@@ -162,23 +219,8 @@ public class Character {
     public String getCategoria() { return categoria; }
     public void setCategoria(String categoria) { this.categoria = categoria; }
 
-    public String getDanoNormal() { return dano_normal; }
-    public void setDanoNormal(String dano_normal) { this.dano_normal = dano_normal; }
-
-    public String getDanoCritico() { return dano_critico; }
-    public void setDanoCritico(String dano_critico) { this.dano_critico = dano_critico; }
-
-    public String getAlcance() { return alcance; }
-    public void setAlcance(String alcance) { this.alcance = alcance; }
-
-    public String getGasto() { return gasto; }
-    public void setGasto(String gasto) { this.gasto = gasto; }
-
     public String getEfeito() { return efeito; }
     public void setEfeito(String efeito) { this.efeito = efeito; }
-
-    public String getCdCast() { return cd_cast; }
-    public void setCdCast(String cd_cast) { this.cd_cast = cd_cast; }
 
     public boolean isEquipado() { return equipado; }
     public void setEquipado(boolean equipado) { this.equipado = equipado; }
@@ -188,6 +230,51 @@ public class Character {
 
     public int getQuantidade() { return quantidade; }
     public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+    }
+
+    // ------------------------------------------------------------------
+    // Armamentos
+    // ------------------------------------------------------------------
+
+    public static class Armamento {
+        private String id = java.util.UUID.randomUUID().toString();
+        private String nome = "";
+        private String descricao = "";
+        private String danoNormal = "";
+        private String danoCritico = "";
+        private boolean equipado = false;
+        private double peso = 0.0;
+        private HabilidadePassiva[] habilidadesPassivas = new HabilidadePassiva[0];
+        private HabilidadeAtiva[] habilidadesAtivas = new HabilidadeAtiva[0];
+
+        public Armamento() {}
+
+        public String getId() { return id; }
+        public void setId(String id) { this.id = id; }
+
+        public String getNome() { return nome; }
+        public void setNome(String nomeArmamento) { this.nome = nomeArmamento; }
+
+        public String getDescricao() { return descricao; }
+        public void setDescricao(String descricao) { this.descricao = descricao; }
+
+        public String getDanoNormal() { return danoNormal; }
+        public void setDanoNormal(String danoNormal) { this.danoNormal = danoNormal; }
+
+        public String getDanoCritico() { return danoCritico; }
+        public void setDanoCritico(String danoCritico) { this.danoCritico = danoCritico; }
+
+        public boolean isEquipado() { return equipado; }
+        public void setEquipado(boolean equipado) { this.equipado = equipado; }
+
+        public double getPeso() { return peso; }
+        public void setPeso(double peso) { this.peso = peso; }
+
+        public HabilidadePassiva[] getHabilidadesPassivas() { return habilidadesPassivas; }
+        public void setHabilidadesPassivas(HabilidadePassiva[] habilidadesPassivas) { this.habilidadesPassivas = habilidadesPassivas; }
+
+        public HabilidadeAtiva[] getHabilidadesAtivas() { return habilidadesAtivas; }
+        public void setHabilidadesAtivas(HabilidadeAtiva[] habilidadesAtivas) { this.habilidadesAtivas = habilidadesAtivas; }
     }
 
     // ------------------------------------------------------------------
@@ -307,11 +394,12 @@ public class Character {
     }
 
     // ------------------------------------------------------------------
-    // Magias, Canções e Alquimias
+    // Magias
     // ------------------------------------------------------------------
 
     public static class Magia {
         private String id = java.util.UUID.randomUUID().toString();
+        private String categoria = "Magia";
         private String nome = "";
         private String descricao = "";
         private String danoNormal = "";
@@ -325,6 +413,9 @@ public class Character {
 
         public String getId() { return id; }
         public void setId(String id) { this.id = id; }
+
+        public String getCategoria() { return categoria; }
+        public void setCategoria(String categoria) { this.categoria = categoria; }
 
         public String getNome() { return nome; }
         public void setNome(String nomeMagia) { this.nome = nomeMagia; }
@@ -351,7 +442,150 @@ public class Character {
         public void setCustoValor(int custoValor) { this.custoValor = custoValor; }
     }
 
-    public static class Cancao {
-        
+    // Sistematicamente isso n tem diferença alguma de magia senão pela nomeação, então nem sei se compensa criar uma classe separada para isso, o mesmo acontece com alquimias
+    //public static class Cancao {
+    //    
+    //}
+
+    // ------------------------------------------------------------------
+    //  Buffs, Debuffs, Pets, Favoritos, Pactos, Traumas
+    // ------------------------------------------------------------------
+
+    public static class Buff {
+        private String id = java.util.UUID.randomUUID().toString();
+        private String nome = "";
+        private String descricao = "";
+        private int duracao = 0;
+        private String efeito = "";
+
+        public Buff() {}
+
+        public String getId() { return id; }
+        public void setId(String id) { this.id = id; }
+
+        public String getNome() { return nome; }
+        public void setNome(String nomeBuff) { this.nome = nomeBuff; }
+
+        public String getDescricao() { return descricao; }
+        public void setDescricao(String descricao) { this.descricao = descricao; }
+
+        public int getDuracao() { return duracao; }
+        public void setDuracao(int duracao) { this.duracao = duracao; }
+
+        public String getEfeito() { return efeito; }
+        public void setEfeito(String efeito) { this.efeito = efeito; }
+    }
+
+    public static class Debuff {
+        private String id = java.util.UUID.randomUUID().toString();
+        private String nome = "";
+        private String descricao = "";
+        private int duracao = 0;
+        private String efeito = "";
+
+        public Debuff() {}
+
+        public String getId() { return id; }
+        public void setId(String id) { this.id = id; }
+
+        public String getNome() { return nome; }
+        public void setNome(String nomeDebuff) { this.nome = nomeDebuff; }
+
+        public String getDescricao() { return descricao; }
+        public void setDescricao(String descricao) { this.descricao = descricao; }
+
+        public int getDuracao() { return duracao; }
+        public void setDuracao(int duracao) { this.duracao = duracao; }
+
+        public String getEfeito() { return efeito; }
+        public void setEfeito(String efeito) { this.efeito = efeito; }
+    }
+
+    public static class Pet {
+        private String id = java.util.UUID.randomUUID().toString();
+        private String nome = "";
+        private String descricao = "";
+
+        public Pet() {}
+
+        public String getId() { return id; }
+        public void setId(String id) { this.id = id; }
+
+        public String getNome() { return nome; }
+        public void setNome(String nomePet) { this.nome = nomePet; }
+
+        public String getDescricao() { return descricao; }
+        public void setDescricao(String descricao) { this.descricao = descricao; }
+    }
+
+    public static class Favorito {
+        private String id = java.util.UUID.randomUUID().toString();
+        private String nome = "";
+        private String descricao = "";
+
+        public Favorito() {}
+
+        public String getId() { return id; }
+        public void setId(String id) { this.id = id; }
+
+        public String getNome() { return nome; }
+        public void setNome(String nomeFavorito) { this.nome = nomeFavorito; }
+
+        public String getDescricao() { return descricao; }
+        public void setDescricao(String descricao) { this.descricao = descricao; }
+    }
+
+    public static class Pacto {
+        private String id = java.util.UUID.randomUUID().toString();
+        private String nome = "";
+        private String descricao = "";
+        private Buff[] buffs = new Buff[0];
+        private Debuff[] debuffs = new Debuff[0];
+
+        public Pacto() {}
+
+        public String getId() { return id; }
+        public void setId(String id) { this.id = id; }
+
+        public String getNome() { return nome; }
+        public void setNome(String nomePacto) { this.nome = nomePacto; }
+
+        public String getDescricao() { return descricao; }
+        public void setDescricao(String descricao) { this.descricao = descricao; }
+
+        public Buff[] getBuffs() { return buffs; }
+        public void setBuffs(Buff[] buffs) { this.buffs = buffs; }
+
+        public Debuff[] getDebuffs() { return debuffs; }
+        public void setDebuffs(Debuff[] debuffs) { this.debuffs = debuffs; }
+    }
+
+    public static class Trauma {
+        private String id = java.util.UUID.randomUUID().toString();
+        private String nome = "";
+        private String descricao = "";
+        private Debuff[] debuffs = new Debuff[0];
+        private Buff[] buffs = new Buff[0];
+        private boolean ativo = false;
+
+        public Trauma() {}
+
+        public String getId() { return id; }
+        public void setId(String id) { this.id = id; }
+
+        public String getNome() { return nome; }
+        public void setNome(String nomeTrauma) { this.nome = nomeTrauma; }
+
+        public String getDescricao() { return descricao; }
+        public void setDescricao(String descricao) { this.descricao = descricao; }
+
+        public Debuff[] getDebuffs() { return debuffs; }
+        public void setDebuffs(Debuff[] debuffs) { this.debuffs = debuffs; }
+
+        public Buff[] getBuffs() { return buffs; }
+        public void setBuffs(Buff[] buffs) { this.buffs = buffs; }
+
+        public boolean isAtivo() { return ativo; }
+        public void setAtivo(boolean ativo) { this.ativo = ativo; }
     }
 }

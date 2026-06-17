@@ -45,7 +45,6 @@ public class Constants {
         "Peitoral",
         "Manoplas",
         "Grevas",
-        "Botas",
     };
 
     public static final String[] DEFAULT_DAMAGE_TYPES = {
@@ -57,9 +56,11 @@ public class Constants {
         "Sombrio",
     };
 
-    public static final String[] ITEM_CATEGORIES = {"Arma", "Mágico", "Efeito", "Geral"};
+    public static final String[] ITEM_CATEGORIES = {"Mágico", "Efeito", "Geral"};
+    
+    public static final String[] MAGIA_CATEGORIES = {"Magia", "Canção", "Alquimia"};
 
-    public static final String[] CUSTO_TIPOS = {"Mana", "Esforço", "Sanidade", "Vida", "Outro"};
+    public static final String[] CUSTO_TIPOS = {"Mana", "Esforço", "Sanidade", "Vida"};
 
-    public static final String[] ACAO_TIPOS = {"Normal", "Movimento", "Reação", "Livre", "Completa"};
+    public static final String[] ACAO_TIPOS = {"Normal", "Movimento", "Reação", "Bônus", "Livre", "Completa"};
 }
