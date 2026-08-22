@@ -1,9 +1,7 @@
-import java.sql.SQLException;
-
-import src.utils.DataBase;
+import src.gui.ConsoleGUI;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
-        DataBase.conectar();       
+    public static void main(String[] args) {
+        ConsoleGUI.exibirMenu();
     }
 }
