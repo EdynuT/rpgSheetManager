@@ -1,7 +1,7 @@
 package src.model;
 
 public class Armor extends Item {
-    private Integer id;
+    private Integer armorID;
     private Integer physicalAC;
     private Integer elementalAC;
 
@@ -9,19 +9,19 @@ public class Armor extends Item {
         super();
     }
 
-    public Armor(Integer id, Integer itemID, String name, String description, Integer physicalAC, Integer elementalAC) {
-        super(itemID, name, description, null, null);
-        this.id = id;
+    public Armor(Integer armorID, Integer itemID, String name, String description, Double weight, Integer physicalAC, Integer elementalAC) {
+        super(itemID, name, description, weight, ItemCategory.ARMOR);
+        this.armorID = armorID;
         this.physicalAC = physicalAC;
         this.elementalAC = elementalAC;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getArmotId() {
+        return armorID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setArmorId(Integer armorID) {
+        this.armorID = armorID;
     }
 
     public Integer getPhysicalAC() {

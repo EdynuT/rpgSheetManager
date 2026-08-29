@@ -13,7 +13,11 @@ public class Item {
 
     public Item(Integer id, String name, String description, double weight, ItemCategory category) {
         this.id = id;
-        this.name = name;
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name;
+        } else {
+            throw new IllegalArgumentException("Item name must not be null");
+        }
         this.description = description;
         this.weight = weight;
         this.category = category;

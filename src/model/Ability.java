@@ -1,7 +1,7 @@
 package src.model;
 
 public class Ability {
-    private Integer id;
+    private Integer abilityID;
     private String name;
     private AbilityCategory category;
     private ActionType actionType;
@@ -13,9 +13,13 @@ public class Ability {
         
     }
 
-    public Ability(Integer id, String name, AbilityCategory category, ActionType actionType, CostType costType, Integer costValue, String description) {
-        this.id = id;
-        this.name = name;
+    public Ability(Integer abilityId, String name, AbilityCategory category, ActionType actionType, CostType costType, Integer costValue, String description) {
+        this.abilityID = abilityId;
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name;
+        } else {
+            throw new IllegalArgumentException("Ability name must not be null");
+        }
         this.category = category;
         this.actionType = actionType;
         this.costType = costType;
@@ -23,12 +27,12 @@ public class Ability {
         this.description = description;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getAbilityID() {
+        return abilityID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setAbilityID(Integer id) {
+        this.abilityID = id;
     }
 
     public String getName() {

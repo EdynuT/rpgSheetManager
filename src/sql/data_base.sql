@@ -23,7 +23,7 @@ CREATE TABLE player_character (
 
 CREATE TABLE ability (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name UNIQUE VARCHAR(100) NOT NULL,
     category VARCHAR(50) NOT NULL,
     action_type VARCHAR(20) NOT NULL,
     cost_type VARCHAR(20) NOT NULL,
@@ -33,24 +33,24 @@ CREATE TABLE ability (
 
 CREATE TABLE item (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name UNIQUE VARCHAR(100) NOT NULL,
     description TEXT,
     weight DECIMAL(5,2) NOT NULL DEFAULT 0.00,
     category item_category NOT NULL
 );
 
-CREATE TABLE ability (
+CREATE TABLE skill (
     id SERIAL PRIMARY KEY,
     character_id INT NOT NULL REFERENCES player_character(id) ON DELETE CASCADE,
-    ability_name VARCHAR(50) NOT NULL,
-    score INT NOT NULL DEFAULT 0,
-    UNIQUE (character_id, ability_name)
+    skill_name UNIQUE VARCHAR(50) NOT NULL,
+    value INT NOT NULL DEFAULT 0,
+    UNIQUE (character_id, skill_name)
 );
 
 CREATE TABLE secondary_bond (
     id SERIAL PRIMARY KEY,
     character_id INT NOT NULL REFERENCES player_character(id) ON DELETE CASCADE,
-    name VARCHAR(100) NOT NULL,
+    name UNIQUE VARCHAR(100) NOT NULL,
     type VARCHAR(20) NOT NULL,
     description TEXT,
     is_active BOOL DEFAULT true
@@ -80,9 +80,7 @@ CREATE TABLE armor (
 
 CREATE TABLE ammunition (
     item_id INT PRIMARY KEY REFERENCES item(id) ON DELETE CASCADE,
-    modification_target VARCHAR(50) NOT NULL,
-    modifier_value INT NOT NULL,
-    condition TEXT
+    damage TEXT NOT NULL
 );
 
 CREATE TABLE inventory (

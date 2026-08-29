@@ -30,7 +30,11 @@ public class PlayerCharacter {
             int currentHealth, int currentMana, int currentStamina, int currentSanity) {
         this.id = id;
         this.level = level;
-        this.name = name;
+        if (name != null && !name.trim().isEmpty()) {
+                this.name = name;
+        } else {
+            throw new IllegalArgumentException("Character name must not be null!");
+        }
         this.age = age;
         this.race = race;
         this.characterClass = characterClass;
