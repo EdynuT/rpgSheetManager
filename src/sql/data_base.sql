@@ -1,5 +1,5 @@
 CREATE TYPE item_category AS ENUM ('WEAPON', 'ARMOR', 'AMMUNITION', 'GENERAL');
-CREATE TYPE ability_category AS ENUM ('ACTIVE', 'PASSIVE', 'MAGIC')
+CREATE TYPE ability_category AS ENUM ('ACTIVE', 'PASSIVE', 'MAGIC');
 
 CREATE TABLE player_character (
     id SERIAL PRIMARY KEY,
@@ -12,19 +12,19 @@ CREATE TABLE player_character (
     origin VARCHAR(50) NOT NULL,
     languages TEXT,
     base_health INT NOT NULL,
-    base_mana INT NOT NULL,
-    base_stamina INT NOT NULL,
-    base_sanity INT NOT NULL,
     current_health INT NOT NULL,
+    base_mana INT NOT NULL,
     current_mana INT NOT NULL,
+    base_stamina INT NOT NULL,
     current_stamina INT NOT NULL,
+    base_sanity INT NOT NULL,
     current_sanity INT NOT NULL
 );
 
 CREATE TABLE ability (
     id SERIAL PRIMARY KEY,
-    name UNIQUE VARCHAR(100) NOT NULL,
-    category VARCHAR(50) NOT NULL,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    category ability_category NOT NULL,
     action_type VARCHAR(20) NOT NULL,
     cost_type VARCHAR(20) NOT NULL,
     cost_value INT NOT NULL DEFAULT 0,
@@ -33,7 +33,7 @@ CREATE TABLE ability (
 
 CREATE TABLE item (
     id SERIAL PRIMARY KEY,
-    name UNIQUE VARCHAR(100) NOT NULL,
+    name VARCHAR(100) UNIQUE NOT NULL,
     description TEXT,
     weight DECIMAL(5,2) NOT NULL DEFAULT 0.00,
     category item_category NOT NULL
@@ -42,7 +42,7 @@ CREATE TABLE item (
 CREATE TABLE skill (
     id SERIAL PRIMARY KEY,
     character_id INT NOT NULL REFERENCES player_character(id) ON DELETE CASCADE,
-    skill_name UNIQUE VARCHAR(50) NOT NULL,
+    skill_name VARCHAR(50) NOT NULL,
     value INT NOT NULL DEFAULT 0,
     UNIQUE (character_id, skill_name)
 );
@@ -50,10 +50,9 @@ CREATE TABLE skill (
 CREATE TABLE secondary_bond (
     id SERIAL PRIMARY KEY,
     character_id INT NOT NULL REFERENCES player_character(id) ON DELETE CASCADE,
-    name UNIQUE VARCHAR(100) NOT NULL,
-    type VARCHAR(20) NOT NULL,
-    description TEXT,
-    is_active BOOL DEFAULT true
+    name VARCHAR(100) NOT NULL,
+    value INT NOT NULL DEFAULT 0,
+    UNIQUE (character_id, name)
 );
 
 CREATE TABLE character_ability (

@@ -1,4 +1,4 @@
-package src.model;
+package model;
 
 public class Item {
     private Integer id;

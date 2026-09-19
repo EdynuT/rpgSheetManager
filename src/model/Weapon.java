@@ -1,10 +1,8 @@
-package src.model;
+package model;
 
 public class Weapon extends Item {
-    private Integer id;
     private String scalingAttribute;
     private String damageDice;
-    private int flatDamage;
     private int criticalRange;
     private int criticalMultiplier;
 
@@ -12,23 +10,13 @@ public class Weapon extends Item {
         super();
     }
 
-    public Weapon(Integer id, Integer itemID, String name, String description, double weight, ItemCategory category,
-                  String scalingAttribute, String damageDice, int flatDamage, int criticalRange, int criticalMultiplier) {
-        super(itemID, name, description, weight, category);
-        this.id = id;
+    public Weapon(Integer id, String name, String description, double weight, ItemCategory category,
+                  String scalingAttribute, String damageDice, int criticalRange, int criticalMultiplier) {
+        super(id, name, description, weight, category);
         this.scalingAttribute = scalingAttribute;
         this.damageDice = damageDice;
-        this.flatDamage = flatDamage;
         this.criticalRange = criticalRange;
         this.criticalMultiplier = criticalMultiplier;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getScalingAttribute() {
@@ -45,14 +33,6 @@ public class Weapon extends Item {
 
     public void setDamageDice(String damageDice) {
         this.damageDice = damageDice;
-    }
-
-    public int getFlatDamage() {
-        return flatDamage;
-    }
-
-    public void setFlatDamage(int flatDamage) {
-        this.flatDamage = flatDamage;
     }
 
     public int getCriticalRange() {
@@ -76,7 +56,6 @@ public class Weapon extends Item {
         return "Weapon{" +
                 "scalingAttribute='" + scalingAttribute + '\'' +
                 ", damageDice='" + damageDice + '\'' +
-                ", flatDamage=" + flatDamage +
                 ", criticalRange=" + criticalRange +
                 ", criticalMultiplier=" + criticalMultiplier +
                 '}';

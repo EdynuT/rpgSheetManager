@@ -1,9 +1,9 @@
-package src.model;
+package model;
 
-public class Inventory extends PlayerCharacter {
+public class Inventory {
     private Integer id;
-    private Integer characterID;
-    private Integer itemID;
+    private Integer characterId;
+    private Integer itemId;
     private Integer quantity;
     private boolean isEquipped;
 
@@ -11,10 +11,10 @@ public class Inventory extends PlayerCharacter {
         super();
     }
 
-    public Inventory(Integer id, Integer characterID, Integer itemID, Integer quantity, boolean isEquipped) {
+    public Inventory(Integer id, Integer characterId, Integer itemId, Integer quantity, boolean isEquipped) {
         this.id = id;
-        this.characterID = characterID;
-        this.itemID = itemID;
+        this.characterId = characterId;
+        this.itemId = itemId;
         this.quantity = quantity;
         this.isEquipped = isEquipped;
     }
@@ -27,20 +27,20 @@ public class Inventory extends PlayerCharacter {
         this.id = id;
     }
 
-    public Integer getCharacterID() {
-        return characterID;
+    public Integer getCharacterId() {
+        return characterId;
     }
 
-    public void setCharacterID(Integer characterID) {
-        this.characterID = characterID;
+    public void setCharacterId(Integer characterId) {
+        this.characterId = characterId;
     }
 
-    public Integer getItemID() {
-        return itemID;
+    public Integer getItemId() {
+        return itemId;
     }
 
-    public void setItemID(Integer itemID) {
-        this.itemID = itemID;
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
     }
 
     public Integer getQuantity() {

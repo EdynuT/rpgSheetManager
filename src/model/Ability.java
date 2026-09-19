@@ -1,7 +1,7 @@
-package src.model;
+package model;
 
 public class Ability {
-    private Integer abilityID;
+    private Integer abilityId;
     private String name;
     private AbilityCategory category;
     private ActionType actionType;
@@ -14,7 +14,7 @@ public class Ability {
     }
 
     public Ability(Integer abilityId, String name, AbilityCategory category, ActionType actionType, CostType costType, Integer costValue, String description) {
-        this.abilityID = abilityId;
+        this.abilityId = abilityId;
         if (name != null && !name.trim().isEmpty()) {
             this.name = name;
         } else {
@@ -27,12 +27,12 @@ public class Ability {
         this.description = description;
     }
 
-    public Integer getAbilityID() {
-        return abilityID;
+    public Integer getAbilityId() {
+        return abilityId;
     }
 
-    public void setAbilityID(Integer id) {
-        this.abilityID = id;
+    public void setAbilityId(Integer id) {
+        this.abilityId = id;
     }
 
     public String getName() {

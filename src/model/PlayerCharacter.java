@@ -1,24 +1,24 @@
-package src.model;
+package model;
 
 public class PlayerCharacter {
-    private Integer id;
-    private Integer level;
-    private String name;
-    private Integer age;
-    private String race;
-    private String characterClass;
-    private String subclass;
-    private String origin;
-    private String language;
+    protected Integer id;
+    protected Integer level;
+    protected String name;
+    protected Integer age;
+    protected String race;
+    protected String characterClass;
+    protected String subclass;
+    protected String origin;
+    protected String language;
     // Stats
-    private int baseHealth;
-    private int baseMana;
-    private int baseStamina;
-    private int baseSanity;
-    private int currentHealth;
-    private int currentMana;
-    private int currentStamina;
-    private int currentSanity;
+    protected int baseHealth;
+    protected int currentHealth;
+    protected int baseMana;
+    protected int currentMana;
+    protected int baseStamina;
+    protected int currentStamina;
+    protected int baseSanity;
+    protected int currentSanity;
     
     // Empty constructor required for instantiation via DAO
     public PlayerCharacter() {
@@ -26,8 +26,8 @@ public class PlayerCharacter {
     }
     
     public PlayerCharacter(Integer id, Integer level, String name, Integer age, String race, String characterClass, String subclass,
-            String origin, String language, int baseHealth, int baseMana, int baseStamina, int baseSanity,
-            int currentHealth, int currentMana, int currentStamina, int currentSanity) {
+            String origin, String language, int baseHealth, int currentHealth, int baseMana, int currentMana,
+            int baseStamina, int currentStamina, int baseSanity, int currentSanity) {
         this.id = id;
         this.level = level;
         if (name != null && !name.trim().isEmpty()) {
@@ -42,12 +42,12 @@ public class PlayerCharacter {
         this.origin = origin;
         this.language = language;
         this.baseHealth = baseHealth;
-        this.baseMana = baseMana;
-        this.baseStamina = baseStamina;
-        this.baseSanity = baseSanity;
         this.currentHealth = currentHealth;
+        this.baseMana = baseMana;
         this.currentMana = currentMana;
+        this.baseStamina = baseStamina;
         this.currentStamina = currentStamina;
+        this.baseSanity = baseSanity;
         this.currentSanity = currentSanity;
     }
 
@@ -84,68 +84,68 @@ public class PlayerCharacter {
         this.age = age; 
     }
    
+    public int getBaseHealth() {
+        return baseHealth;
+    }
+
+    public void setBaseHealth(int baseHealth) {
+        this.baseHealth = baseHealth;
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+
     public void setCurrentHealth(int currentHealth) {
         this.currentHealth = currentHealth;
     }
 
-    public int getCurrentHealth() {
-        return currentHealth; 
-    }
-    
-    public int getBaseHealth() {
-        return baseHealth; 
-    }
-
-    public void setBaseHealth(int baseHealth) {
-        this.baseHealth = baseHealth; 
-    }
-
     public int getBaseMana() {
-        return baseMana; 
+        return baseMana;
     }
 
     public void setBaseMana(int baseMana) {
-        this.baseMana = baseMana; 
-    }
-
-    public int getBaseStamina() {
-        return baseStamina; 
-    }
-
-    public void setBaseStamina(int baseStamina) {
-        this.baseStamina = baseStamina; 
-    }
-
-    public int getBaseSanity() {
-        return baseSanity; 
-    }
-
-    public void setBaseSanity(int baseSanity) {
-        this.baseSanity = baseSanity; 
+        this.baseMana = baseMana;
     }
 
     public int getCurrentMana() {
-        return currentMana; 
+        return currentMana;
     }
 
     public void setCurrentMana(int currentMana) {
-        this.currentMana = currentMana; 
+        this.currentMana = currentMana;
+    }
+
+    public int getBaseStamina() {
+        return baseStamina;
+    }
+
+    public void setBaseStamina(int baseStamina) {
+        this.baseStamina = baseStamina;
     }
 
     public int getCurrentStamina() {
-        return currentStamina; 
+        return currentStamina;
     }
 
     public void setCurrentStamina(int currentStamina) {
-        this.currentStamina = currentStamina; 
+        this.currentStamina = currentStamina;
+    }
+
+    public int getBaseSanity() {
+        return baseSanity;
+    }
+
+    public void setBaseSanity(int baseSanity) {
+        this.baseSanity = baseSanity;
     }
 
     public int getCurrentSanity() {
-        return currentSanity; 
+        return currentSanity;
     }
 
     public void setCurrentSanity(int currentSanity) {
-        this.currentSanity = currentSanity; 
+        this.currentSanity = currentSanity;
     }
 
 

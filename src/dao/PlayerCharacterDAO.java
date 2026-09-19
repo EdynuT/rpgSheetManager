@@ -1,7 +1,7 @@
-package src.dao;
+package dao;
 
-import src.config.Database;
-import src.model.PlayerCharacter;
+import config.Database;
+import model.PlayerCharacter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
     @Override
     public PlayerCharacter insert(PlayerCharacter p) throws SQLException {
         String sql = "INSERT INTO character (level, name, age, race, character_class, subclass, origin, language, " +
-                     "base_health, base_mana, base_stamina, base_sanity, " +
-                     "current_health, current_mana, current_stamina, current_sanity) " +
+                     "base_health, current_health, base_mana, current_mana, " +
+                     "base_stamina, current_stamina, base_sanity, current_sanity) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
                      
         try (Connection con = Database.connect();
@@ -33,12 +33,12 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
             stmt.setString(7, p.getOrigin());
             stmt.setString(8, p.getLanguage());
             stmt.setInt(9, p.getBaseHealth());
-            stmt.setInt(10, p.getBaseMana());
-            stmt.setInt(11, p.getBaseStamina());
-            stmt.setInt(12, p.getBaseSanity());
-            stmt.setInt(13, p.getCurrentHealth());
-            stmt.setInt(14, p.getCurrentMana());
-            stmt.setInt(15, p.getCurrentStamina());
+            stmt.setInt(10, p.getCurrentHealth());
+            stmt.setInt(11, p.getBaseMana());
+            stmt.setInt(12, p.getCurrentMana());
+            stmt.setInt(13, p.getBaseStamina());
+            stmt.setInt(14, p.getCurrentStamina());
+            stmt.setInt(15, p.getBaseSanity());
             stmt.setInt(16, p.getCurrentSanity());
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -53,8 +53,8 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
     @Override
     public void update(PlayerCharacter p) throws SQLException {
         String sql = "UPDATE character SET level = ?, name = ?, age = ?, race = ?, character_class = ?, subclass = ?, " +
-                     "origin = ?, language = ?, base_health = ?, base_mana = ?, base_stamina = ?, base_sanity = ?, " +
-                     "current_health = ?, current_mana = ?, current_stamina = ?, current_sanity = ? WHERE id = ?";
+                     "origin = ?, language = ?, base_health = ?, current_health = ?, base_mana = ?, current_mana = ?, " +
+                     "base_stamina = ?, current_stamina = ?, base_sanity = ?, current_sanity = ? WHERE id = ?";
 
         try (Connection con = Database.connect();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -73,12 +73,12 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
             stmt.setString(7, p.getOrigin());
             stmt.setString(8, p.getLanguage());
             stmt.setInt(9, p.getBaseHealth());
-            stmt.setInt(10, p.getBaseMana());
-            stmt.setInt(11, p.getBaseStamina());
-            stmt.setInt(12, p.getBaseSanity());
-            stmt.setInt(13, p.getCurrentHealth());
-            stmt.setInt(14, p.getCurrentMana());
-            stmt.setInt(15, p.getCurrentStamina());
+            stmt.setInt(10, p.getCurrentHealth());
+            stmt.setInt(11, p.getBaseMana());
+            stmt.setInt(12, p.getCurrentMana());
+            stmt.setInt(13, p.getBaseStamina());
+            stmt.setInt(14, p.getCurrentStamina());
+            stmt.setInt(15, p.getBaseSanity());
             stmt.setInt(16, p.getCurrentSanity());
             stmt.setInt(17, p.getId());
 
@@ -142,12 +142,12 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
                 rs.getString("origin"),
                 rs.getString("language"),
                 rs.getInt("base_health"),
-                rs.getInt("base_mana"),
-                rs.getInt("base_stamina"),
-                rs.getInt("base_sanity"),
                 rs.getInt("current_health"),
+                rs.getInt("base_mana"),
                 rs.getInt("current_mana"),
+                rs.getInt("base_stamina"),
                 rs.getInt("current_stamina"),
+                rs.getInt("base_sanity"),
                 rs.getInt("current_sanity"));
     }
 }
