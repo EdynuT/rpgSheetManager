@@ -448,13 +448,14 @@ public class MainWindow extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         titleLabel = new javax.swing.JLabel();
         leftPanel = new javax.swing.JPanel();
         searchPanel = new javax.swing.JPanel();
         searchLabel = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
         characterScroll = new javax.swing.JScrollPane();
-        characterList = new javax.swing.JList<>();
+        characterList = new javax.swing.JList<model.PlayerCharacter>();
         tabs = new javax.swing.JTabbedPane();
         characterTab = new javax.swing.JPanel();
         characterFields = new javax.swing.JPanel();
@@ -529,11 +530,11 @@ public class MainWindow extends javax.swing.JFrame {
         abilityNameLabel = new javax.swing.JLabel();
         abilityNameField = new javax.swing.JTextField();
         categoryLabel = new javax.swing.JLabel();
-        categoryCombo = new javax.swing.JComboBox<>();
+        categoryCombo = new javax.swing.JComboBox<model.AbilityCategory>();
         actionTypeLabel = new javax.swing.JLabel();
-        actionTypeCombo = new javax.swing.JComboBox<>();
+        actionTypeCombo = new javax.swing.JComboBox<model.ActionType>();
         costTypeLabel = new javax.swing.JLabel();
-        costTypeCombo = new javax.swing.JComboBox<>();
+        costTypeCombo = new javax.swing.JComboBox<model.CostType>();
         costLabel = new javax.swing.JLabel();
         costField = new javax.swing.JTextField();
         abilityDescriptionLabel = new javax.swing.JLabel();
@@ -552,7 +553,7 @@ public class MainWindow extends javax.swing.JFrame {
         inventoryForm = new javax.swing.JPanel();
         inventoryFields = new javax.swing.JPanel();
         itemLabel = new javax.swing.JLabel();
-        itemCombo = new javax.swing.JComboBox<>();
+        itemCombo = new javax.swing.JComboBox<String>();
         quantityLabel = new javax.swing.JLabel();
         quantityField = new javax.swing.JTextField();
         equippedLabel = new javax.swing.JLabel();
@@ -637,8 +638,8 @@ public class MainWindow extends javax.swing.JFrame {
         deleteAmmoButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1100, 650));
         setTitle("RPG Sheet Manager");
+        setPreferredSize(new java.awt.Dimension(1100, 650));
 
         titleLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
         titleLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -1484,6 +1485,7 @@ public class MainWindow extends javax.swing.JFrame {
         tabs.addTab("Ammunition", ammunitionTab);
 
         getContentPane().add(tabs, java.awt.BorderLayout.CENTER);
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
