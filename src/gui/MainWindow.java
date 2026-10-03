@@ -641,10 +641,10 @@ public class MainWindow extends javax.swing.JFrame {
         setTitle("RPG Sheet Manager");
         setPreferredSize(new java.awt.Dimension(1100, 650));
 
-        titleLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
         titleLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLabel.setText("RPG SHEET MANAGER");
+        titleLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
         getContentPane().add(titleLabel, java.awt.BorderLayout.PAGE_START);
 
         leftPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 10, 0));
@@ -665,10 +665,10 @@ public class MainWindow extends javax.swing.JFrame {
 
         leftPanel.add(searchPanel, java.awt.BorderLayout.PAGE_START);
 
+        characterList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         characterList.setFixedCellHeight(110);
         characterList.setFixedCellWidth(110);
         characterList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
-        characterList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         characterList.setVisibleRowCount(-1);
         characterList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
