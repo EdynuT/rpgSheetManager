@@ -76,7 +76,7 @@ public class AmunitionDAO implements DAO<Amunition> {
     @Override
     public List<Amunition> list() throws SQLException {
         String sql = "SELECT i.*, a.damage " +
-                     "FROM item i JOIN ammunition a ON i.id = a.item_id";
+                     "FROM item i JOIN ammunition a ON i.id = a.item_id ORDER BY i.name";
         List<Amunition> ammunitions = new ArrayList<>();
 
         try (Connection con = Database.connect();

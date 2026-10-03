@@ -39,7 +39,7 @@ public class ItemDAO implements DAO<Item> {
 
     @Override
     public List<Item> list() throws SQLException {
-        String sql = "SELECT * FROM item";
+        String sql = "SELECT * FROM item ORDER BY name";
         List<Item> items = new ArrayList<>();
 
         try (Connection con = Database.connect();
@@ -48,6 +48,23 @@ public class ItemDAO implements DAO<Item> {
 
             while (rs.next()) {
                 items.add(mapRow(rs));
+            }
+        }
+        return items;
+    }
+
+    public List<Item> listByCategory(ItemCategory category) throws SQLException {
+        String sql = "SELECT * FROM item WHERE category = ?::item_category ORDER BY name";
+        List<Item> items = new ArrayList<>();
+
+        try (Connection con = Database.connect();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setString(1, category.name());
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    items.add(mapRow(rs));
+                }
             }
         }
         return items;

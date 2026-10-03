@@ -1,9 +1,7 @@
-import config.Database;
-import java.sql.SQLException;
+import gui.MainWindow;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
-        // SheetGUI.showMenu();
-        Database.connect();
+    public static void main(String[] args) {
+        MainWindow.main(args);
     }
 }

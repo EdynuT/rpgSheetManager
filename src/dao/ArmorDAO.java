@@ -79,7 +79,7 @@ public class ArmorDAO implements DAO<Armor> {
     @Override
     public List<Armor> list() throws SQLException {
         String sql = "SELECT i.*, a.physical_ac, a.elemental_ac " +
-                     "FROM item i JOIN armor a ON i.id = a.item_id";
+                     "FROM item i JOIN armor a ON i.id = a.item_id ORDER BY i.name";
         List<Armor> armors = new ArrayList<>();
 
         try (Connection con = Database.connect();

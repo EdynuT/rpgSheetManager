@@ -66,7 +66,7 @@ public class AbilityDAO implements DAO<Ability> {
 
     @Override
     public List<Ability> list() throws SQLException {
-        String sql = "SELECT * FROM ability";
+        String sql = "SELECT * FROM ability ORDER BY name";
         List<Ability> abilities = new ArrayList<>();
 
         try (Connection con = Database.connect();

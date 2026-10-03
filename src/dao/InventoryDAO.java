@@ -32,7 +32,7 @@ public class InventoryDAO implements DAO<Inventory> {
 
     @Override
     public void update(Inventory obj) throws SQLException {
-        String sql = "UPDATE inventory SET character_id, item_id = ?, quantity = ?, is_equipped = ? WHERE id = ?";
+        String sql = "UPDATE inventory SET character_id = ?, item_id = ?, quantity = ?, is_equipped = ? WHERE id = ?";
 
         try (Connection con = Database.connect();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -67,6 +67,23 @@ public class InventoryDAO implements DAO<Inventory> {
 
             while (rs.next()) {
                 inventories.add(mapRow(rs));
+            }
+        }
+        return inventories;
+    }
+
+    public List<Inventory> listByCharacter(int characterId) throws SQLException {
+        String sql = "SELECT * FROM inventory WHERE character_id = ? ORDER BY id";
+        List<Inventory> inventories = new ArrayList<>();
+
+        try (Connection con = Database.connect();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, characterId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    inventories.add(mapRow(rs));
+                }
             }
         }
         return inventories;

@@ -18,7 +18,8 @@ CREATE TABLE player_character (
     base_stamina INT NOT NULL,
     current_stamina INT NOT NULL,
     base_sanity INT NOT NULL,
-    current_sanity INT NOT NULL
+    current_sanity INT NOT NULL,
+    photo BYTEA
 );
 
 CREATE TABLE ability (
@@ -51,11 +52,8 @@ CREATE TABLE secondary_bond (
     id SERIAL PRIMARY KEY,
     character_id INT NOT NULL REFERENCES player_character(id) ON DELETE CASCADE,
     name VARCHAR(100) NOT NULL,
-    type VARCHAR(20) NOT NULL,
     value INT NOT NULL DEFAULT 0,
-    description TEXT,
-    is_active BOOL DEFAULT true,
-    UNIQUE (character_id, name, type)
+    UNIQUE (character_id, name)
 );
 
 CREATE TABLE character_ability (

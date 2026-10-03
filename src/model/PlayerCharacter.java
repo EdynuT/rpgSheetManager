@@ -19,7 +19,9 @@ public class PlayerCharacter {
     protected int currentStamina;
     protected int baseSanity;
     protected int currentSanity;
-    
+
+    protected byte[] photo;
+
     // Empty constructor required for instantiation via DAO
     public PlayerCharacter() {
         
@@ -148,7 +150,6 @@ public class PlayerCharacter {
         this.currentSanity = currentSanity;
     }
 
-
     public String getRace() {
         return race; 
     }
@@ -186,7 +187,15 @@ public class PlayerCharacter {
     }
 
     public void setLanguage(String language) {
-        this.language = language; 
+        this.language = language;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 
     @Override

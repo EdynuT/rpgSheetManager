@@ -83,7 +83,7 @@ public class WeaponDAO implements DAO<Weapon> {
     @Override
     public List<Weapon> list() throws SQLException {
         String sql = "SELECT i.*, w.scaling_attribute, w.damage_dice, w.critical_range, w.critical_multiplier " +
-                     "FROM item i JOIN weapon w ON i.id = w.item_id";
+                     "FROM item i JOIN weapon w ON i.id = w.item_id ORDER BY i.name";
         List<Weapon> weapons = new ArrayList<>();
 
         try (Connection con = Database.connect();

@@ -70,6 +70,23 @@ public class SecondBoundDAO implements DAO<SecondBound> {
         return bonds;
     }
 
+    public List<SecondBound> listByCharacter(int characterId) throws SQLException {
+        String sql = "SELECT * FROM secondary_bond WHERE character_id = ? ORDER BY name";
+        List<SecondBound> bonds = new ArrayList<>();
+
+        try (Connection con = Database.connect();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, characterId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    bonds.add(mapRow(rs));
+                }
+            }
+        }
+        return bonds;
+    }
+
     @Override
     public SecondBound findById(int id) throws SQLException {
         String sql = "SELECT * FROM secondary_bond WHERE id = ?";
