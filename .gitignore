@@ -11,6 +11,7 @@ nbproject/private/
 target/
 
 # IDE / OS
+.vscode/
 *.class
 .idea/
 *.iml

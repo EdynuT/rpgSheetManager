@@ -1,0 +1,157 @@
+package com.edynu.rpgSheetManager.dao;
+
+import com.edynu.rpgSheetManager.config.Database;
+import com.edynu.rpgSheetManager.model.PlayerCharacter;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
+
+    @Override
+    public PlayerCharacter insert(PlayerCharacter p) throws SQLException {
+        String sql = "INSERT INTO player_character (level, name, age, race, character_class, subclass, origin, languages, " +
+                     "base_health, current_health, base_mana, current_mana, " +
+                     "base_stamina, current_stamina, base_sanity, current_sanity, photo) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
+                     
+        try (Connection con = Database.connect();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            
+            stmt.setInt(1, p.getLevel());
+            stmt.setString(2, p.getName());
+            // setNull is required if age is null in the database
+            if (p.getAge() != null) {
+                stmt.setInt(3, p.getAge());
+            } else {
+                stmt.setNull(3, Types.INTEGER);
+            }
+            
+            stmt.setString(4, p.getRace());
+            stmt.setString(5, p.getCharacterClass());
+            stmt.setString(6, p.getSubclass());
+            stmt.setString(7, p.getOrigin());
+            stmt.setString(8, p.getLanguage());
+            stmt.setInt(9, p.getBaseHealth());
+            stmt.setInt(10, p.getCurrentHealth());
+            stmt.setInt(11, p.getBaseMana());
+            stmt.setInt(12, p.getCurrentMana());
+            stmt.setInt(13, p.getBaseStamina());
+            stmt.setInt(14, p.getCurrentStamina());
+            stmt.setInt(15, p.getBaseSanity());
+            stmt.setInt(16, p.getCurrentSanity());
+            stmt.setBytes(17, p.getPhoto()); // a null photo is stored as SQL NULL
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    p.setId(rs.getInt("id"));
+                }
+            }
+            return p;
+        }
+    }
+
+    @Override
+    public void update(PlayerCharacter p) throws SQLException {
+        String sql = "UPDATE player_character SET level = ?, name = ?, age = ?, race = ?, character_class = ?, subclass = ?, " +
+                     "origin = ?, languages = ?, base_health = ?, current_health = ?, base_mana = ?, current_mana = ?, " +
+                     "base_stamina = ?, current_stamina = ?, base_sanity = ?, current_sanity = ?, photo = ? WHERE id = ?";
+
+        try (Connection con = Database.connect();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, p.getLevel());
+            stmt.setString(2, p.getName());
+            if (p.getAge() != null) {
+                stmt.setInt(3, p.getAge());
+            } else {
+                stmt.setNull(3, Types.INTEGER);
+            }
+
+            stmt.setString(4, p.getRace());
+            stmt.setString(5, p.getCharacterClass());
+            stmt.setString(6, p.getSubclass());
+            stmt.setString(7, p.getOrigin());
+            stmt.setString(8, p.getLanguage());
+            stmt.setInt(9, p.getBaseHealth());
+            stmt.setInt(10, p.getCurrentHealth());
+            stmt.setInt(11, p.getBaseMana());
+            stmt.setInt(12, p.getCurrentMana());
+            stmt.setInt(13, p.getBaseStamina());
+            stmt.setInt(14, p.getCurrentStamina());
+            stmt.setInt(15, p.getBaseSanity());
+            stmt.setInt(16, p.getCurrentSanity());
+            stmt.setBytes(17, p.getPhoto());
+            stmt.setInt(18, p.getId());
+
+            stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public void delete(int id) throws SQLException {
+        String sql = "DELETE FROM player_character WHERE id = ?";
+
+        try (Connection con = Database.connect();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public List<PlayerCharacter> list() throws SQLException {
+        String sql = "SELECT * FROM player_character ORDER BY name";
+        List<PlayerCharacter> characters = new ArrayList<>();
+
+        try (Connection con = Database.connect();
+             PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                characters.add(mapRow(rs));
+            }
+        }
+        return characters;
+    }
+
+    @Override
+    public PlayerCharacter findById(int id) throws SQLException {
+        String sql = "SELECT * FROM player_character WHERE id = ?";
+
+        try (Connection con = Database.connect();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() ? mapRow(rs) : null;
+            }
+        }
+    }
+
+    private PlayerCharacter mapRow(ResultSet rs) throws SQLException {
+        int age = rs.getInt("age");
+        Integer ageOrNull = rs.wasNull() ? null : age;
+        PlayerCharacter p = new PlayerCharacter(
+                rs.getInt("id"),
+                rs.getInt("level"),
+                rs.getString("name"),
+                ageOrNull,
+                rs.getString("race"),
+                rs.getString("character_class"),
+                rs.getString("subclass"),
+                rs.getString("origin"),
+                rs.getString("languages"),
+                rs.getInt("base_health"),
+                rs.getInt("current_health"),
+                rs.getInt("base_mana"),
+                rs.getInt("current_mana"),
+                rs.getInt("base_stamina"),
+                rs.getInt("current_stamina"),
+                rs.getInt("base_sanity"),
+                rs.getInt("current_sanity"));
+        p.setPhoto(rs.getBytes("photo"));
+        return p;
+    }
+}
