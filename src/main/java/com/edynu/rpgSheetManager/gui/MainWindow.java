@@ -76,11 +76,11 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
-        categoryCombo.setModel(new DefaultComboBoxModel<>(AbilityCategory.values()));
-        actionTypeCombo.setModel(new DefaultComboBoxModel<>(ActionType.values()));
-        costTypeCombo.setModel(new DefaultComboBoxModel<>(CostType.values()));
+        cmbCategory.setModel(new DefaultComboBoxModel<>(AbilityCategory.values()));
+        cmbActionType.setModel(new DefaultComboBoxModel<>(ActionType.values()));
+        cmbCostType.setModel(new DefaultComboBoxModel<>(CostType.values()));
         // Each character of the gallery is shown as its photo with the name below it.
-        characterList.setCellRenderer(new DefaultListCellRenderer() {
+        lstCharacter.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 PlayerCharacter character = (PlayerCharacter) value;
@@ -96,7 +96,7 @@ public class MainWindow extends javax.swing.JFrame {
         loadItems();
         loadAbilities();
         if (!characters.isEmpty()) {
-            characterList.setSelectedIndex(0);
+            lstCharacter.setSelectedIndex(0);
         }
     }
 
@@ -117,45 +117,45 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Shows the characters whose name contains the text of the search field.
     private void fillGallery() {
-        String search = searchField.getText().trim().toLowerCase();
+        String search = txtSearch.getText().trim().toLowerCase();
         DefaultListModel<PlayerCharacter> model = new DefaultListModel<>();
         for (PlayerCharacter character : characters) {
             if (character.getName().toLowerCase().contains(search)) {
                 model.addElement(character);
             }
         }
-        characterList.setModel(model);
+        lstCharacter.setModel(model);
         if (selected != null) {
             selectInGallery(selected.getId());
         }
     }
 
     private void selectInGallery(int characterId) {
-        for (int i = 0; i < characterList.getModel().getSize(); i++) {
-            if (((PlayerCharacter) characterList.getModel().getElementAt(i)).getId() == characterId) {
-                characterList.setSelectedIndex(i);
+        for (int i = 0; i < lstCharacter.getModel().getSize(); i++) {
+            if (((PlayerCharacter) lstCharacter.getModel().getElementAt(i)).getId() == characterId) {
+                lstCharacter.setSelectedIndex(i);
             }
         }
     }
 
     // Fills the Character tab and the tables of the selected character.
     private void showCharacter() {
-        nameField.setText(selected.getName());
-        levelField.setText(String.valueOf(selected.getLevel()));
-        ageField.setText(String.valueOf(selected.getAge()));
-        raceField.setText(selected.getRace());
-        classField.setText(selected.getCharacterClass());
-        subclassField.setText(selected.getSubclass());
-        originField.setText(selected.getOrigin());
-        languagesField.setText(selected.getLanguage());
-        healthField.setText(String.valueOf(selected.getCurrentHealth()));
-        baseHealthField.setText(String.valueOf(selected.getBaseHealth()));
-        manaField.setText(String.valueOf(selected.getCurrentMana()));
-        baseManaField.setText(String.valueOf(selected.getBaseMana()));
-        staminaField.setText(String.valueOf(selected.getCurrentStamina()));
-        baseStaminaField.setText(String.valueOf(selected.getBaseStamina()));
-        sanityField.setText(String.valueOf(selected.getCurrentSanity()));
-        baseSanityField.setText(String.valueOf(selected.getBaseSanity()));
+        txtName.setText(selected.getName());
+        txtLevel.setText(String.valueOf(selected.getLevel()));
+        txtAge.setText(String.valueOf(selected.getAge()));
+        txtRace.setText(selected.getRace());
+        txtClass.setText(selected.getCharacterClass());
+        txtSubclass.setText(selected.getSubclass());
+        txtOrigin.setText(selected.getOrigin());
+        txtLanguages.setText(selected.getLanguage());
+        txtHealth.setText(String.valueOf(selected.getCurrentHealth()));
+        txtBaseHealth.setText(String.valueOf(selected.getBaseHealth()));
+        txtMana.setText(String.valueOf(selected.getCurrentMana()));
+        txtBaseMana.setText(String.valueOf(selected.getBaseMana()));
+        txtStamina.setText(String.valueOf(selected.getCurrentStamina()));
+        txtBaseStamina.setText(String.valueOf(selected.getBaseStamina()));
+        txtSanity.setText(String.valueOf(selected.getCurrentSanity()));
+        txtBaseSanity.setText(String.valueOf(selected.getBaseSanity()));
         loadSkills();
         loadBonds();
         loadAbilities();
@@ -164,9 +164,9 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void clearCharacter() {
         selected = null;
-        characterList.clearSelection();
-        clear(nameField, levelField, ageField, raceField, classField, subclassField, originField, languagesField,
-                healthField, baseHealthField, manaField, baseManaField, staminaField, baseStaminaField, sanityField, baseSanityField);
+        lstCharacter.clearSelection();
+        clear(txtName, txtLevel, txtAge, txtRace, txtClass, txtSubclass, txtOrigin, txtLanguages,
+                txtHealth, txtBaseHealth, txtMana, txtBaseMana, txtStamina, txtBaseStamina, txtSanity, txtBaseSanity);
         loadSkills();
         loadBonds();
         loadAbilities();
@@ -184,7 +184,7 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (SQLException e) {
             showError(e);
         }
-        DefaultTableModel model = (DefaultTableModel) skillsTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblSkills.getModel();
         model.setRowCount(0);
         for (Skill skill : skills) {
             model.addRow(new Object[] {skill.getSkillName(), skill.getValue()});
@@ -193,8 +193,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void clearSkillForm() {
-        skillsTable.clearSelection();
-        clear(skillNameField, skillValueField);
+        tblSkills.clearSelection();
+        clear(txtSkillName, txtSkillValue);
     }
 
     // ---------------------------------------------------------------- Bonds
@@ -208,7 +208,7 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (SQLException e) {
             showError(e);
         }
-        DefaultTableModel model = (DefaultTableModel) bondsTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblBonds.getModel();
         model.setRowCount(0);
         for (SecondBound bond : bonds) {
             model.addRow(new Object[] {bond.getBoundName(), bond.getValue()});
@@ -217,8 +217,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void clearBondForm() {
-        bondsTable.clearSelection();
-        clear(bondNameField, bondValueField);
+        tblBonds.clearSelection();
+        clear(txtBondName, txtBondValue);
     }
 
     // ---------------------------------------------------------------- Abilities
@@ -234,7 +234,7 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (SQLException e) {
             showError(e);
         }
-        DefaultTableModel model = (DefaultTableModel) abilitiesTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblAbilities.getModel();
         model.setRowCount(0);
         for (Ability ability : abilities) {
             CharacterAbility link = findLearned(ability.getAbilityId());
@@ -255,9 +255,9 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void clearAbilityForm() {
-        abilitiesTable.clearSelection();
-        clear(abilityNameField, costField, abilityDescriptionField);
-        activeCheck.setSelected(false);
+        tblAbilities.clearSelection();
+        clear(txtAbilityName, txtCost, txtAbilityDescription);
+        chkActive.setSelected(false);
     }
 
     // ---------------------------------------------------------------- Inventory
@@ -271,7 +271,7 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (SQLException e) {
             showError(e);
         }
-        DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblInventory.getModel();
         model.setRowCount(0);
         for (Inventory entry : inventory) {
             Item item = findItem(entry.getItemId());
@@ -291,10 +291,10 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void clearInventoryForm() {
-        inventoryTable.clearSelection();
-        itemCombo.setSelectedIndex(-1);
-        clear(quantityField);
-        equippedCheck.setSelected(false);
+        tblInventory.clearSelection();
+        cmbItem.setSelectedIndex(-1);
+        clear(txtQuantity);
+        chkEquipped.setSelected(false);
     }
 
     // ---------------------------------------------------------------- Items, weapons, armor and ammunition
@@ -311,31 +311,31 @@ public class MainWindow extends javax.swing.JFrame {
             showError(e);
         }
 
-        DefaultTableModel model = (DefaultTableModel) itemsTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblItems.getModel();
         model.setRowCount(0);
         for (Item item : generalItems) {
             model.addRow(new Object[] {item.getName(), item.getWeight(), item.getDescription()});
         }
-        model = (DefaultTableModel) weaponsTable.getModel();
+        model = (DefaultTableModel) tblWeapons.getModel();
         model.setRowCount(0);
         for (Weapon weapon : weapons) {
             model.addRow(new Object[] {weapon.getName(), weapon.getDamageDice(), weapon.getScalingAttribute(),
                 weapon.getCriticalRange(), weapon.getCriticalMultiplier(), weapon.getWeight()});
         }
-        model = (DefaultTableModel) armorTable.getModel();
+        model = (DefaultTableModel) tblArmor.getModel();
         model.setRowCount(0);
         for (Armor armor : armors) {
             model.addRow(new Object[] {armor.getName(), armor.getPhysicalAC(), armor.getElementalAC(), armor.getWeight()});
         }
-        model = (DefaultTableModel) ammunitionTable.getModel();
+        model = (DefaultTableModel) tblAmmunition.getModel();
         model.setRowCount(0);
         for (Amunition ammo : ammunition) {
             model.addRow(new Object[] {ammo.getName(), ammo.getDamageDice(), ammo.getWeight()});
         }
 
-        itemCombo.removeAllItems();
+        cmbItem.removeAllItems();
         for (Item item : allItems) {
-            itemCombo.addItem(item.getName());
+            cmbItem.addItem(item.getName());
         }
         clearItemForm();
         clearWeaponForm();
@@ -345,24 +345,24 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void clearItemForm() {
-        itemsTable.clearSelection();
-        clear(itemNameField, itemWeightField, itemDescriptionField);
+        tblItems.clearSelection();
+        clear(txtItemName, txtItemWeight, txtItemDescription);
     }
 
     private void clearWeaponForm() {
-        weaponsTable.clearSelection();
-        clear(weaponNameField, weaponWeightField, weaponAttributeField, weaponDamageField, weaponRangeField,
-                weaponMultiplierField, weaponDescriptionField);
+        tblWeapons.clearSelection();
+        clear(txtWeaponName, txtWeaponWeight, txtWeaponAttribute, txtWeaponDamage, txtWeaponRange,
+                txtWeaponMultiplier, txtWeaponDescription);
     }
 
     private void clearArmorForm() {
-        armorTable.clearSelection();
-        clear(armorNameField, armorWeightField, physicalAcField, elementalAcField, armorDescriptionField);
+        tblArmor.clearSelection();
+        clear(txtArmorName, txtArmorWeight, txtPhysicalAc, txtElementalAc, txtArmorDescription);
     }
 
     private void clearAmmoForm() {
-        ammunitionTable.clearSelection();
-        clear(ammoNameField, ammoWeightField, ammoDamageField, ammoDescriptionField);
+        tblAmmunition.clearSelection();
+        clear(txtAmmoName, txtAmmoWeight, txtAmmoDamage, txtAmmoDescription);
     }
 
     // ---------------------------------------------------------------- Photos
@@ -449,355 +449,355 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        titleLabel = new javax.swing.JLabel();
-        leftPanel = new javax.swing.JPanel();
-        searchPanel = new javax.swing.JPanel();
-        searchLabel = new javax.swing.JLabel();
-        searchField = new javax.swing.JTextField();
-        characterScroll = new javax.swing.JScrollPane();
-        characterList = new javax.swing.JList<com.edynu.rpgSheetManager.model.PlayerCharacter>();
-        tabs = new javax.swing.JTabbedPane();
-        characterTab = new javax.swing.JPanel();
-        characterFields = new javax.swing.JPanel();
-        nameLabel = new javax.swing.JLabel();
-        nameField = new javax.swing.JTextField();
-        levelLabel = new javax.swing.JLabel();
-        levelField = new javax.swing.JTextField();
-        ageLabel = new javax.swing.JLabel();
-        ageField = new javax.swing.JTextField();
-        raceLabel = new javax.swing.JLabel();
-        raceField = new javax.swing.JTextField();
-        classLabel = new javax.swing.JLabel();
-        classField = new javax.swing.JTextField();
-        subclassLabel = new javax.swing.JLabel();
-        subclassField = new javax.swing.JTextField();
-        originLabel = new javax.swing.JLabel();
-        originField = new javax.swing.JTextField();
-        languagesLabel = new javax.swing.JLabel();
-        languagesField = new javax.swing.JTextField();
-        healthLabel = new javax.swing.JLabel();
-        healthField = new javax.swing.JTextField();
-        baseHealthLabel = new javax.swing.JLabel();
-        baseHealthField = new javax.swing.JTextField();
-        manaLabel = new javax.swing.JLabel();
-        manaField = new javax.swing.JTextField();
-        baseManaLabel = new javax.swing.JLabel();
-        baseManaField = new javax.swing.JTextField();
-        staminaLabel = new javax.swing.JLabel();
-        staminaField = new javax.swing.JTextField();
-        baseStaminaLabel = new javax.swing.JLabel();
-        baseStaminaField = new javax.swing.JTextField();
-        sanityLabel = new javax.swing.JLabel();
-        sanityField = new javax.swing.JTextField();
-        baseSanityLabel = new javax.swing.JLabel();
-        baseSanityField = new javax.swing.JTextField();
-        characterButtons = new javax.swing.JPanel();
-        newCharacterButton = new javax.swing.JButton();
-        saveCharacterButton = new javax.swing.JButton();
-        deleteCharacterButton = new javax.swing.JButton();
-        changePhotoButton = new javax.swing.JButton();
-        skillsTab = new javax.swing.JPanel();
-        skillsScroll = new javax.swing.JScrollPane();
-        skillsTable = new javax.swing.JTable();
-        skillsForm = new javax.swing.JPanel();
-        skillsFields = new javax.swing.JPanel();
-        skillNameLabel = new javax.swing.JLabel();
-        skillNameField = new javax.swing.JTextField();
-        skillValueLabel = new javax.swing.JLabel();
-        skillValueField = new javax.swing.JTextField();
-        skillsButtons = new javax.swing.JPanel();
-        newSkillButton = new javax.swing.JButton();
-        saveSkillButton = new javax.swing.JButton();
-        deleteSkillButton = new javax.swing.JButton();
-        bondsTab = new javax.swing.JPanel();
-        bondsScroll = new javax.swing.JScrollPane();
-        bondsTable = new javax.swing.JTable();
-        bondsForm = new javax.swing.JPanel();
-        bondsFields = new javax.swing.JPanel();
-        bondNameLabel = new javax.swing.JLabel();
-        bondNameField = new javax.swing.JTextField();
-        bondValueLabel = new javax.swing.JLabel();
-        bondValueField = new javax.swing.JTextField();
-        bondsButtons = new javax.swing.JPanel();
-        newBondButton = new javax.swing.JButton();
-        saveBondButton = new javax.swing.JButton();
-        deleteBondButton = new javax.swing.JButton();
-        abilitiesTab = new javax.swing.JPanel();
-        abilitiesScroll = new javax.swing.JScrollPane();
-        abilitiesTable = new javax.swing.JTable();
-        abilitiesForm = new javax.swing.JPanel();
-        abilitiesFields = new javax.swing.JPanel();
-        abilityNameLabel = new javax.swing.JLabel();
-        abilityNameField = new javax.swing.JTextField();
-        categoryLabel = new javax.swing.JLabel();
-        categoryCombo = new javax.swing.JComboBox<com.edynu.rpgSheetManager.model.AbilityCategory>();
-        actionTypeLabel = new javax.swing.JLabel();
-        actionTypeCombo = new javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ActionType>();
-        costTypeLabel = new javax.swing.JLabel();
-        costTypeCombo = new javax.swing.JComboBox<com.edynu.rpgSheetManager.model.CostType>();
-        costLabel = new javax.swing.JLabel();
-        costField = new javax.swing.JTextField();
-        abilityDescriptionLabel = new javax.swing.JLabel();
-        abilityDescriptionField = new javax.swing.JTextField();
-        activeLabel = new javax.swing.JLabel();
-        activeCheck = new javax.swing.JCheckBox();
-        abilitiesButtons = new javax.swing.JPanel();
-        newAbilityButton = new javax.swing.JButton();
-        saveAbilityButton = new javax.swing.JButton();
-        deleteAbilityButton = new javax.swing.JButton();
-        learnButton = new javax.swing.JButton();
-        forgetButton = new javax.swing.JButton();
-        inventoryTab = new javax.swing.JPanel();
-        inventoryScroll = new javax.swing.JScrollPane();
-        inventoryTable = new javax.swing.JTable();
-        inventoryForm = new javax.swing.JPanel();
-        inventoryFields = new javax.swing.JPanel();
-        itemLabel = new javax.swing.JLabel();
-        itemCombo = new javax.swing.JComboBox<String>();
-        quantityLabel = new javax.swing.JLabel();
-        quantityField = new javax.swing.JTextField();
-        equippedLabel = new javax.swing.JLabel();
-        equippedCheck = new javax.swing.JCheckBox();
-        inventoryButtons = new javax.swing.JPanel();
-        newEntryButton = new javax.swing.JButton();
-        saveEntryButton = new javax.swing.JButton();
-        deleteEntryButton = new javax.swing.JButton();
-        itemsTab = new javax.swing.JPanel();
-        itemsScroll = new javax.swing.JScrollPane();
-        itemsTable = new javax.swing.JTable();
-        itemsForm = new javax.swing.JPanel();
-        itemsFields = new javax.swing.JPanel();
-        itemNameLabel = new javax.swing.JLabel();
-        itemNameField = new javax.swing.JTextField();
-        itemWeightLabel = new javax.swing.JLabel();
-        itemWeightField = new javax.swing.JTextField();
-        itemDescriptionLabel = new javax.swing.JLabel();
-        itemDescriptionField = new javax.swing.JTextField();
-        itemsButtons = new javax.swing.JPanel();
-        newItemButton = new javax.swing.JButton();
-        saveItemButton = new javax.swing.JButton();
-        deleteItemButton = new javax.swing.JButton();
-        weaponsTab = new javax.swing.JPanel();
-        weaponsScroll = new javax.swing.JScrollPane();
-        weaponsTable = new javax.swing.JTable();
-        weaponsForm = new javax.swing.JPanel();
-        weaponsFields = new javax.swing.JPanel();
-        weaponNameLabel = new javax.swing.JLabel();
-        weaponNameField = new javax.swing.JTextField();
-        weaponWeightLabel = new javax.swing.JLabel();
-        weaponWeightField = new javax.swing.JTextField();
-        weaponAttributeLabel = new javax.swing.JLabel();
-        weaponAttributeField = new javax.swing.JTextField();
-        weaponDamageLabel = new javax.swing.JLabel();
-        weaponDamageField = new javax.swing.JTextField();
-        weaponRangeLabel = new javax.swing.JLabel();
-        weaponRangeField = new javax.swing.JTextField();
-        weaponMultiplierLabel = new javax.swing.JLabel();
-        weaponMultiplierField = new javax.swing.JTextField();
-        weaponDescriptionLabel = new javax.swing.JLabel();
-        weaponDescriptionField = new javax.swing.JTextField();
-        weaponsButtons = new javax.swing.JPanel();
-        newWeaponButton = new javax.swing.JButton();
-        saveWeaponButton = new javax.swing.JButton();
-        deleteWeaponButton = new javax.swing.JButton();
-        armorTab = new javax.swing.JPanel();
-        armorScroll = new javax.swing.JScrollPane();
-        armorTable = new javax.swing.JTable();
-        armorForm = new javax.swing.JPanel();
-        armorFields = new javax.swing.JPanel();
-        armorNameLabel = new javax.swing.JLabel();
-        armorNameField = new javax.swing.JTextField();
-        armorWeightLabel = new javax.swing.JLabel();
-        armorWeightField = new javax.swing.JTextField();
-        physicalAcLabel = new javax.swing.JLabel();
-        physicalAcField = new javax.swing.JTextField();
-        elementalAcLabel = new javax.swing.JLabel();
-        elementalAcField = new javax.swing.JTextField();
-        armorDescriptionLabel = new javax.swing.JLabel();
-        armorDescriptionField = new javax.swing.JTextField();
-        armorButtons = new javax.swing.JPanel();
-        newArmorButton = new javax.swing.JButton();
-        saveArmorButton = new javax.swing.JButton();
-        deleteArmorButton = new javax.swing.JButton();
-        ammunitionTab = new javax.swing.JPanel();
-        ammunitionScroll = new javax.swing.JScrollPane();
-        ammunitionTable = new javax.swing.JTable();
-        ammunitionForm = new javax.swing.JPanel();
-        ammunitionFields = new javax.swing.JPanel();
-        ammoNameLabel = new javax.swing.JLabel();
-        ammoNameField = new javax.swing.JTextField();
-        ammoWeightLabel = new javax.swing.JLabel();
-        ammoWeightField = new javax.swing.JTextField();
-        ammoDamageLabel = new javax.swing.JLabel();
-        ammoDamageField = new javax.swing.JTextField();
-        ammoDescriptionLabel = new javax.swing.JLabel();
-        ammoDescriptionField = new javax.swing.JTextField();
-        ammunitionButtons = new javax.swing.JPanel();
-        newAmmoButton = new javax.swing.JButton();
-        saveAmmoButton = new javax.swing.JButton();
-        deleteAmmoButton = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
+        pnlLeft = new javax.swing.JPanel();
+        pnlSearch = new javax.swing.JPanel();
+        lblSearch = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
+        scrCharacter = new javax.swing.JScrollPane();
+        lstCharacter = new javax.swing.JList<com.edynu.rpgSheetManager.model.PlayerCharacter>();
+        tabMain = new javax.swing.JTabbedPane();
+        pnlCharacterTab = new javax.swing.JPanel();
+        pnlCharacterFields = new javax.swing.JPanel();
+        lblName = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        lblLevel = new javax.swing.JLabel();
+        txtLevel = new javax.swing.JTextField();
+        lblAge = new javax.swing.JLabel();
+        txtAge = new javax.swing.JTextField();
+        lblRace = new javax.swing.JLabel();
+        txtRace = new javax.swing.JTextField();
+        lblClass = new javax.swing.JLabel();
+        txtClass = new javax.swing.JTextField();
+        lblSubclass = new javax.swing.JLabel();
+        txtSubclass = new javax.swing.JTextField();
+        lblOrigin = new javax.swing.JLabel();
+        txtOrigin = new javax.swing.JTextField();
+        lblLanguages = new javax.swing.JLabel();
+        txtLanguages = new javax.swing.JTextField();
+        lblHealth = new javax.swing.JLabel();
+        txtHealth = new javax.swing.JTextField();
+        lblBaseHealth = new javax.swing.JLabel();
+        txtBaseHealth = new javax.swing.JTextField();
+        lblMana = new javax.swing.JLabel();
+        txtMana = new javax.swing.JTextField();
+        lblBaseMana = new javax.swing.JLabel();
+        txtBaseMana = new javax.swing.JTextField();
+        lblStamina = new javax.swing.JLabel();
+        txtStamina = new javax.swing.JTextField();
+        lblBaseStamina = new javax.swing.JLabel();
+        txtBaseStamina = new javax.swing.JTextField();
+        lblSanity = new javax.swing.JLabel();
+        txtSanity = new javax.swing.JTextField();
+        lblBaseSanity = new javax.swing.JLabel();
+        txtBaseSanity = new javax.swing.JTextField();
+        pnlCharacterButtons = new javax.swing.JPanel();
+        btnNewCharacter = new javax.swing.JButton();
+        btnSaveCharacter = new javax.swing.JButton();
+        btnDeleteCharacter = new javax.swing.JButton();
+        btnChangePhoto = new javax.swing.JButton();
+        pnlSkillsTab = new javax.swing.JPanel();
+        scrSkills = new javax.swing.JScrollPane();
+        tblSkills = new javax.swing.JTable();
+        pnlSkillsForm = new javax.swing.JPanel();
+        pnlSkillsFields = new javax.swing.JPanel();
+        lblSkillName = new javax.swing.JLabel();
+        txtSkillName = new javax.swing.JTextField();
+        lblSkillValue = new javax.swing.JLabel();
+        txtSkillValue = new javax.swing.JTextField();
+        pnlSkillsButtons = new javax.swing.JPanel();
+        btnNewSkill = new javax.swing.JButton();
+        btnSaveSkill = new javax.swing.JButton();
+        btnDeleteSkill = new javax.swing.JButton();
+        pnlBondsTab = new javax.swing.JPanel();
+        scrBonds = new javax.swing.JScrollPane();
+        tblBonds = new javax.swing.JTable();
+        pnlBondsForm = new javax.swing.JPanel();
+        pnlBondsFields = new javax.swing.JPanel();
+        lblBondName = new javax.swing.JLabel();
+        txtBondName = new javax.swing.JTextField();
+        lblBondValue = new javax.swing.JLabel();
+        txtBondValue = new javax.swing.JTextField();
+        pnlBondsButtons = new javax.swing.JPanel();
+        btnNewBond = new javax.swing.JButton();
+        btnSaveBond = new javax.swing.JButton();
+        btnDeleteBond = new javax.swing.JButton();
+        pnlAbilitiesTab = new javax.swing.JPanel();
+        scrAbilities = new javax.swing.JScrollPane();
+        tblAbilities = new javax.swing.JTable();
+        pnlAbilitiesForm = new javax.swing.JPanel();
+        pnlAbilitiesFields = new javax.swing.JPanel();
+        lblAbilityName = new javax.swing.JLabel();
+        txtAbilityName = new javax.swing.JTextField();
+        lblCategory = new javax.swing.JLabel();
+        cmbCategory = new javax.swing.JComboBox<com.edynu.rpgSheetManager.model.AbilityCategory>();
+        lblActionType = new javax.swing.JLabel();
+        cmbActionType = new javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ActionType>();
+        lblCostType = new javax.swing.JLabel();
+        cmbCostType = new javax.swing.JComboBox<com.edynu.rpgSheetManager.model.CostType>();
+        lblCost = new javax.swing.JLabel();
+        txtCost = new javax.swing.JTextField();
+        lblAbilityDescription = new javax.swing.JLabel();
+        txtAbilityDescription = new javax.swing.JTextField();
+        lblActive = new javax.swing.JLabel();
+        chkActive = new javax.swing.JCheckBox();
+        pnlAbilitiesButtons = new javax.swing.JPanel();
+        btnNewAbility = new javax.swing.JButton();
+        btnSaveAbility = new javax.swing.JButton();
+        btnDeleteAbility = new javax.swing.JButton();
+        btnLearn = new javax.swing.JButton();
+        btnForget = new javax.swing.JButton();
+        pnlInventoryTab = new javax.swing.JPanel();
+        scrInventory = new javax.swing.JScrollPane();
+        tblInventory = new javax.swing.JTable();
+        pnlInventoryForm = new javax.swing.JPanel();
+        pnlInventoryFields = new javax.swing.JPanel();
+        lblItem = new javax.swing.JLabel();
+        cmbItem = new javax.swing.JComboBox<String>();
+        lblQuantity = new javax.swing.JLabel();
+        txtQuantity = new javax.swing.JTextField();
+        lblEquipped = new javax.swing.JLabel();
+        chkEquipped = new javax.swing.JCheckBox();
+        pnlInventoryButtons = new javax.swing.JPanel();
+        btnNewEntry = new javax.swing.JButton();
+        btnSaveEntry = new javax.swing.JButton();
+        btnDeleteEntry = new javax.swing.JButton();
+        pnlItemsTab = new javax.swing.JPanel();
+        scrItems = new javax.swing.JScrollPane();
+        tblItems = new javax.swing.JTable();
+        pnlItemsForm = new javax.swing.JPanel();
+        pnlItemsFields = new javax.swing.JPanel();
+        lblItemName = new javax.swing.JLabel();
+        txtItemName = new javax.swing.JTextField();
+        lblItemWeight = new javax.swing.JLabel();
+        txtItemWeight = new javax.swing.JTextField();
+        lblItemDescription = new javax.swing.JLabel();
+        txtItemDescription = new javax.swing.JTextField();
+        pnlItemsButtons = new javax.swing.JPanel();
+        btnNewItem = new javax.swing.JButton();
+        btnSaveItem = new javax.swing.JButton();
+        btnDeleteItem = new javax.swing.JButton();
+        pnlWeaponsTab = new javax.swing.JPanel();
+        scrWeapons = new javax.swing.JScrollPane();
+        tblWeapons = new javax.swing.JTable();
+        pnlWeaponsForm = new javax.swing.JPanel();
+        pnlWeaponsFields = new javax.swing.JPanel();
+        lblWeaponName = new javax.swing.JLabel();
+        txtWeaponName = new javax.swing.JTextField();
+        lblWeaponWeight = new javax.swing.JLabel();
+        txtWeaponWeight = new javax.swing.JTextField();
+        lblWeaponAttribute = new javax.swing.JLabel();
+        txtWeaponAttribute = new javax.swing.JTextField();
+        lblWeaponDamage = new javax.swing.JLabel();
+        txtWeaponDamage = new javax.swing.JTextField();
+        lblWeaponRange = new javax.swing.JLabel();
+        txtWeaponRange = new javax.swing.JTextField();
+        lblWeaponMultiplier = new javax.swing.JLabel();
+        txtWeaponMultiplier = new javax.swing.JTextField();
+        lblWeaponDescription = new javax.swing.JLabel();
+        txtWeaponDescription = new javax.swing.JTextField();
+        pnlWeaponsButtons = new javax.swing.JPanel();
+        btnNewWeapon = new javax.swing.JButton();
+        btnSaveWeapon = new javax.swing.JButton();
+        btnDeleteWeapon = new javax.swing.JButton();
+        pnlArmorTab = new javax.swing.JPanel();
+        scrArmor = new javax.swing.JScrollPane();
+        tblArmor = new javax.swing.JTable();
+        pnlArmorForm = new javax.swing.JPanel();
+        pnlArmorFields = new javax.swing.JPanel();
+        lblArmorName = new javax.swing.JLabel();
+        txtArmorName = new javax.swing.JTextField();
+        lblArmorWeight = new javax.swing.JLabel();
+        txtArmorWeight = new javax.swing.JTextField();
+        lblPhysicalAc = new javax.swing.JLabel();
+        txtPhysicalAc = new javax.swing.JTextField();
+        lblElementalAc = new javax.swing.JLabel();
+        txtElementalAc = new javax.swing.JTextField();
+        lblArmorDescription = new javax.swing.JLabel();
+        txtArmorDescription = new javax.swing.JTextField();
+        pnlArmorButtons = new javax.swing.JPanel();
+        btnNewArmor = new javax.swing.JButton();
+        btnSaveArmor = new javax.swing.JButton();
+        btnDeleteArmor = new javax.swing.JButton();
+        pnlAmmunitionTab = new javax.swing.JPanel();
+        scrAmmunition = new javax.swing.JScrollPane();
+        tblAmmunition = new javax.swing.JTable();
+        pnlAmmunitionForm = new javax.swing.JPanel();
+        pnlAmmunitionFields = new javax.swing.JPanel();
+        lblAmmoName = new javax.swing.JLabel();
+        txtAmmoName = new javax.swing.JTextField();
+        lblAmmoWeight = new javax.swing.JLabel();
+        txtAmmoWeight = new javax.swing.JTextField();
+        lblAmmoDamage = new javax.swing.JLabel();
+        txtAmmoDamage = new javax.swing.JTextField();
+        lblAmmoDescription = new javax.swing.JLabel();
+        txtAmmoDescription = new javax.swing.JTextField();
+        pnlAmmunitionButtons = new javax.swing.JPanel();
+        btnNewAmmo = new javax.swing.JButton();
+        btnSaveAmmo = new javax.swing.JButton();
+        btnDeleteAmmo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("RPG Sheet Manager");
         setPreferredSize(new java.awt.Dimension(1100, 650));
 
-        titleLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("RPG SHEET MANAGER");
-        titleLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        getContentPane().add(titleLabel, java.awt.BorderLayout.PAGE_START);
+        lblTitle.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("RPG SHEET MANAGER");
+        lblTitle.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        getContentPane().add(lblTitle, java.awt.BorderLayout.PAGE_START);
 
-        leftPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 10, 0));
-        leftPanel.setPreferredSize(new java.awt.Dimension(250, 400));
-        leftPanel.setLayout(new java.awt.BorderLayout(0, 5));
+        pnlLeft.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 10, 0));
+        pnlLeft.setPreferredSize(new java.awt.Dimension(250, 400));
+        pnlLeft.setLayout(new java.awt.BorderLayout(0, 5));
 
-        searchPanel.setLayout(new java.awt.BorderLayout(0, 3));
+        pnlSearch.setLayout(new java.awt.BorderLayout(0, 3));
 
-        searchLabel.setText("Character name");
-        searchPanel.add(searchLabel, java.awt.BorderLayout.PAGE_START);
+        lblSearch.setText("Character name");
+        pnlSearch.add(lblSearch, java.awt.BorderLayout.PAGE_START);
 
-        searchField.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 searchFieldKeyReleased(evt);
             }
         });
-        searchPanel.add(searchField, java.awt.BorderLayout.CENTER);
+        pnlSearch.add(txtSearch, java.awt.BorderLayout.CENTER);
 
-        leftPanel.add(searchPanel, java.awt.BorderLayout.PAGE_START);
+        pnlLeft.add(pnlSearch, java.awt.BorderLayout.PAGE_START);
 
-        characterList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        characterList.setFixedCellHeight(110);
-        characterList.setFixedCellWidth(110);
-        characterList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
-        characterList.setVisibleRowCount(-1);
-        characterList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        lstCharacter.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstCharacter.setFixedCellHeight(110);
+        lstCharacter.setFixedCellWidth(110);
+        lstCharacter.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        lstCharacter.setVisibleRowCount(-1);
+        lstCharacter.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 characterListValueChanged(evt);
             }
         });
-        characterScroll.setViewportView(characterList);
+        scrCharacter.setViewportView(lstCharacter);
 
-        leftPanel.add(characterScroll, java.awt.BorderLayout.CENTER);
+        pnlLeft.add(scrCharacter, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(leftPanel, java.awt.BorderLayout.LINE_START);
+        getContentPane().add(pnlLeft, java.awt.BorderLayout.LINE_START);
 
-        tabs.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 10, 10));
+        tabMain.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 10, 10));
 
-        characterTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        characterTab.setLayout(new java.awt.BorderLayout(10, 10));
+        pnlCharacterTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlCharacterTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        characterFields.setLayout(new java.awt.GridLayout(0, 4, 8, 8));
+        pnlCharacterFields.setLayout(new java.awt.GridLayout(0, 4, 8, 8));
 
-        nameLabel.setText("Name");
-        characterFields.add(nameLabel);
+        lblName.setText("Name");
+        pnlCharacterFields.add(lblName);
 
-        nameField.setColumns(12);
-        characterFields.add(nameField);
+        txtName.setColumns(12);
+        pnlCharacterFields.add(txtName);
 
-        levelLabel.setText("Level");
-        characterFields.add(levelLabel);
-        characterFields.add(levelField);
+        lblLevel.setText("Level");
+        pnlCharacterFields.add(lblLevel);
+        pnlCharacterFields.add(txtLevel);
 
-        ageLabel.setText("Age");
-        characterFields.add(ageLabel);
-        characterFields.add(ageField);
+        lblAge.setText("Age");
+        pnlCharacterFields.add(lblAge);
+        pnlCharacterFields.add(txtAge);
 
-        raceLabel.setText("Race");
-        characterFields.add(raceLabel);
-        characterFields.add(raceField);
+        lblRace.setText("Race");
+        pnlCharacterFields.add(lblRace);
+        pnlCharacterFields.add(txtRace);
 
-        classLabel.setText("Class");
-        characterFields.add(classLabel);
-        characterFields.add(classField);
+        lblClass.setText("Class");
+        pnlCharacterFields.add(lblClass);
+        pnlCharacterFields.add(txtClass);
 
-        subclassLabel.setText("Subclass");
-        characterFields.add(subclassLabel);
-        characterFields.add(subclassField);
+        lblSubclass.setText("Subclass");
+        pnlCharacterFields.add(lblSubclass);
+        pnlCharacterFields.add(txtSubclass);
 
-        originLabel.setText("Origin");
-        characterFields.add(originLabel);
-        characterFields.add(originField);
+        lblOrigin.setText("Origin");
+        pnlCharacterFields.add(lblOrigin);
+        pnlCharacterFields.add(txtOrigin);
 
-        languagesLabel.setText("Languages");
-        characterFields.add(languagesLabel);
-        characterFields.add(languagesField);
+        lblLanguages.setText("Languages");
+        pnlCharacterFields.add(lblLanguages);
+        pnlCharacterFields.add(txtLanguages);
 
-        healthLabel.setText("Health");
-        characterFields.add(healthLabel);
-        characterFields.add(healthField);
+        lblHealth.setText("Health");
+        pnlCharacterFields.add(lblHealth);
+        pnlCharacterFields.add(txtHealth);
 
-        baseHealthLabel.setText("Base health");
-        characterFields.add(baseHealthLabel);
-        characterFields.add(baseHealthField);
+        lblBaseHealth.setText("Base health");
+        pnlCharacterFields.add(lblBaseHealth);
+        pnlCharacterFields.add(txtBaseHealth);
 
-        manaLabel.setText("Mana");
-        characterFields.add(manaLabel);
-        characterFields.add(manaField);
+        lblMana.setText("Mana");
+        pnlCharacterFields.add(lblMana);
+        pnlCharacterFields.add(txtMana);
 
-        baseManaLabel.setText("Base mana");
-        characterFields.add(baseManaLabel);
-        characterFields.add(baseManaField);
+        lblBaseMana.setText("Base mana");
+        pnlCharacterFields.add(lblBaseMana);
+        pnlCharacterFields.add(txtBaseMana);
 
-        staminaLabel.setText("Stamina");
-        characterFields.add(staminaLabel);
-        characterFields.add(staminaField);
+        lblStamina.setText("Stamina");
+        pnlCharacterFields.add(lblStamina);
+        pnlCharacterFields.add(txtStamina);
 
-        baseStaminaLabel.setText("Base stamina");
-        characterFields.add(baseStaminaLabel);
-        characterFields.add(baseStaminaField);
+        lblBaseStamina.setText("Base stamina");
+        pnlCharacterFields.add(lblBaseStamina);
+        pnlCharacterFields.add(txtBaseStamina);
 
-        sanityLabel.setText("Sanity");
-        characterFields.add(sanityLabel);
-        characterFields.add(sanityField);
+        lblSanity.setText("Sanity");
+        pnlCharacterFields.add(lblSanity);
+        pnlCharacterFields.add(txtSanity);
 
-        baseSanityLabel.setText("Base sanity");
-        characterFields.add(baseSanityLabel);
-        characterFields.add(baseSanityField);
+        lblBaseSanity.setText("Base sanity");
+        pnlCharacterFields.add(lblBaseSanity);
+        pnlCharacterFields.add(txtBaseSanity);
 
-        characterTab.add(characterFields, java.awt.BorderLayout.PAGE_START);
+        pnlCharacterTab.add(pnlCharacterFields, java.awt.BorderLayout.PAGE_START);
 
-        characterButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        pnlCharacterButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        newCharacterButton.setText("New");
-        newCharacterButton.addActionListener(new java.awt.event.ActionListener() {
+        btnNewCharacter.setText("New");
+        btnNewCharacter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newCharacterButtonActionPerformed(evt);
             }
         });
-        characterButtons.add(newCharacterButton);
+        pnlCharacterButtons.add(btnNewCharacter);
 
-        saveCharacterButton.setText("Save");
-        saveCharacterButton.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveCharacter.setText("Save");
+        btnSaveCharacter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveCharacterButtonActionPerformed(evt);
             }
         });
-        characterButtons.add(saveCharacterButton);
+        pnlCharacterButtons.add(btnSaveCharacter);
 
-        deleteCharacterButton.setText("Delete");
-        deleteCharacterButton.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteCharacter.setText("Delete");
+        btnDeleteCharacter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteCharacterButtonActionPerformed(evt);
             }
         });
-        characterButtons.add(deleteCharacterButton);
+        pnlCharacterButtons.add(btnDeleteCharacter);
 
-        changePhotoButton.setText("Change photo");
-        changePhotoButton.addActionListener(new java.awt.event.ActionListener() {
+        btnChangePhoto.setText("Change photo");
+        btnChangePhoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changePhotoButtonActionPerformed(evt);
             }
         });
-        characterButtons.add(changePhotoButton);
+        pnlCharacterButtons.add(btnChangePhoto);
 
-        characterTab.add(characterButtons, java.awt.BorderLayout.CENTER);
+        pnlCharacterTab.add(pnlCharacterButtons, java.awt.BorderLayout.CENTER);
 
-        tabs.addTab("Character", characterTab);
+        tabMain.addTab("Character", pnlCharacterTab);
 
-        skillsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        skillsTab.setLayout(new java.awt.BorderLayout(10, 10));
+        pnlSkillsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlSkillsTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        skillsTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblSkills.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -813,67 +813,67 @@ public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        skillsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblSkills.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 skillsTableMouseClicked(evt);
             }
         });
-        skillsScroll.setViewportView(skillsTable);
+        scrSkills.setViewportView(tblSkills);
 
-        skillsTab.add(skillsScroll, java.awt.BorderLayout.CENTER);
+        pnlSkillsTab.add(scrSkills, java.awt.BorderLayout.CENTER);
 
-        skillsForm.setLayout(new java.awt.BorderLayout(0, 10));
+        pnlSkillsForm.setLayout(new java.awt.BorderLayout(0, 10));
 
-        skillsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
+        pnlSkillsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        skillNameLabel.setText("Skill");
-        skillsFields.add(skillNameLabel);
+        lblSkillName.setText("Skill");
+        pnlSkillsFields.add(lblSkillName);
 
-        skillNameField.setColumns(12);
-        skillsFields.add(skillNameField);
+        txtSkillName.setColumns(12);
+        pnlSkillsFields.add(txtSkillName);
 
-        skillValueLabel.setText("Value");
-        skillsFields.add(skillValueLabel);
-        skillsFields.add(skillValueField);
+        lblSkillValue.setText("Value");
+        pnlSkillsFields.add(lblSkillValue);
+        pnlSkillsFields.add(txtSkillValue);
 
-        skillsForm.add(skillsFields, java.awt.BorderLayout.PAGE_START);
+        pnlSkillsForm.add(pnlSkillsFields, java.awt.BorderLayout.PAGE_START);
 
-        skillsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        pnlSkillsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        newSkillButton.setText("New");
-        newSkillButton.addActionListener(new java.awt.event.ActionListener() {
+        btnNewSkill.setText("New");
+        btnNewSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newSkillButtonActionPerformed(evt);
             }
         });
-        skillsButtons.add(newSkillButton);
+        pnlSkillsButtons.add(btnNewSkill);
 
-        saveSkillButton.setText("Save");
-        saveSkillButton.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveSkill.setText("Save");
+        btnSaveSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveSkillButtonActionPerformed(evt);
             }
         });
-        skillsButtons.add(saveSkillButton);
+        pnlSkillsButtons.add(btnSaveSkill);
 
-        deleteSkillButton.setText("Delete");
-        deleteSkillButton.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteSkill.setText("Delete");
+        btnDeleteSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteSkillButtonActionPerformed(evt);
             }
         });
-        skillsButtons.add(deleteSkillButton);
+        pnlSkillsButtons.add(btnDeleteSkill);
 
-        skillsForm.add(skillsButtons, java.awt.BorderLayout.CENTER);
+        pnlSkillsForm.add(pnlSkillsButtons, java.awt.BorderLayout.CENTER);
 
-        skillsTab.add(skillsForm, java.awt.BorderLayout.LINE_END);
+        pnlSkillsTab.add(pnlSkillsForm, java.awt.BorderLayout.LINE_END);
 
-        tabs.addTab("Skills", skillsTab);
+        tabMain.addTab("Skills", pnlSkillsTab);
 
-        bondsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        bondsTab.setLayout(new java.awt.BorderLayout(10, 10));
+        pnlBondsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlBondsTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        bondsTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblBonds.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -889,67 +889,67 @@ public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        bondsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblBonds.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bondsTableMouseClicked(evt);
             }
         });
-        bondsScroll.setViewportView(bondsTable);
+        scrBonds.setViewportView(tblBonds);
 
-        bondsTab.add(bondsScroll, java.awt.BorderLayout.CENTER);
+        pnlBondsTab.add(scrBonds, java.awt.BorderLayout.CENTER);
 
-        bondsForm.setLayout(new java.awt.BorderLayout(0, 10));
+        pnlBondsForm.setLayout(new java.awt.BorderLayout(0, 10));
 
-        bondsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
+        pnlBondsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        bondNameLabel.setText("Bond");
-        bondsFields.add(bondNameLabel);
+        lblBondName.setText("Bond");
+        pnlBondsFields.add(lblBondName);
 
-        bondNameField.setColumns(12);
-        bondsFields.add(bondNameField);
+        txtBondName.setColumns(12);
+        pnlBondsFields.add(txtBondName);
 
-        bondValueLabel.setText("Value");
-        bondsFields.add(bondValueLabel);
-        bondsFields.add(bondValueField);
+        lblBondValue.setText("Value");
+        pnlBondsFields.add(lblBondValue);
+        pnlBondsFields.add(txtBondValue);
 
-        bondsForm.add(bondsFields, java.awt.BorderLayout.PAGE_START);
+        pnlBondsForm.add(pnlBondsFields, java.awt.BorderLayout.PAGE_START);
 
-        bondsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        pnlBondsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        newBondButton.setText("New");
-        newBondButton.addActionListener(new java.awt.event.ActionListener() {
+        btnNewBond.setText("New");
+        btnNewBond.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newBondButtonActionPerformed(evt);
             }
         });
-        bondsButtons.add(newBondButton);
+        pnlBondsButtons.add(btnNewBond);
 
-        saveBondButton.setText("Save");
-        saveBondButton.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveBond.setText("Save");
+        btnSaveBond.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveBondButtonActionPerformed(evt);
             }
         });
-        bondsButtons.add(saveBondButton);
+        pnlBondsButtons.add(btnSaveBond);
 
-        deleteBondButton.setText("Delete");
-        deleteBondButton.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteBond.setText("Delete");
+        btnDeleteBond.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteBondButtonActionPerformed(evt);
             }
         });
-        bondsButtons.add(deleteBondButton);
+        pnlBondsButtons.add(btnDeleteBond);
 
-        bondsForm.add(bondsButtons, java.awt.BorderLayout.CENTER);
+        pnlBondsForm.add(pnlBondsButtons, java.awt.BorderLayout.CENTER);
 
-        bondsTab.add(bondsForm, java.awt.BorderLayout.LINE_END);
+        pnlBondsTab.add(pnlBondsForm, java.awt.BorderLayout.LINE_END);
 
-        tabs.addTab("Bonds", bondsTab);
+        tabMain.addTab("Bonds", pnlBondsTab);
 
-        abilitiesTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        abilitiesTab.setLayout(new java.awt.BorderLayout(10, 10));
+        pnlAbilitiesTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlAbilitiesTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        abilitiesTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblAbilities.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -965,103 +965,103 @@ public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        abilitiesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblAbilities.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 abilitiesTableMouseClicked(evt);
             }
         });
-        abilitiesScroll.setViewportView(abilitiesTable);
+        scrAbilities.setViewportView(tblAbilities);
 
-        abilitiesTab.add(abilitiesScroll, java.awt.BorderLayout.CENTER);
+        pnlAbilitiesTab.add(scrAbilities, java.awt.BorderLayout.CENTER);
 
-        abilitiesForm.setLayout(new java.awt.BorderLayout(0, 10));
+        pnlAbilitiesForm.setLayout(new java.awt.BorderLayout(0, 10));
 
-        abilitiesFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
+        pnlAbilitiesFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        abilityNameLabel.setText("Name");
-        abilitiesFields.add(abilityNameLabel);
+        lblAbilityName.setText("Name");
+        pnlAbilitiesFields.add(lblAbilityName);
 
-        abilityNameField.setColumns(12);
-        abilitiesFields.add(abilityNameField);
+        txtAbilityName.setColumns(12);
+        pnlAbilitiesFields.add(txtAbilityName);
 
-        categoryLabel.setText("Category");
-        abilitiesFields.add(categoryLabel);
-        abilitiesFields.add(categoryCombo);
+        lblCategory.setText("Category");
+        pnlAbilitiesFields.add(lblCategory);
+        pnlAbilitiesFields.add(cmbCategory);
 
-        actionTypeLabel.setText("Action");
-        abilitiesFields.add(actionTypeLabel);
-        abilitiesFields.add(actionTypeCombo);
+        lblActionType.setText("Action");
+        pnlAbilitiesFields.add(lblActionType);
+        pnlAbilitiesFields.add(cmbActionType);
 
-        costTypeLabel.setText("Cost type");
-        abilitiesFields.add(costTypeLabel);
-        abilitiesFields.add(costTypeCombo);
+        lblCostType.setText("Cost type");
+        pnlAbilitiesFields.add(lblCostType);
+        pnlAbilitiesFields.add(cmbCostType);
 
-        costLabel.setText("Cost");
-        abilitiesFields.add(costLabel);
-        abilitiesFields.add(costField);
+        lblCost.setText("Cost");
+        pnlAbilitiesFields.add(lblCost);
+        pnlAbilitiesFields.add(txtCost);
 
-        abilityDescriptionLabel.setText("Description");
-        abilitiesFields.add(abilityDescriptionLabel);
-        abilitiesFields.add(abilityDescriptionField);
+        lblAbilityDescription.setText("Description");
+        pnlAbilitiesFields.add(lblAbilityDescription);
+        pnlAbilitiesFields.add(txtAbilityDescription);
 
-        activeLabel.setText("Active");
-        abilitiesFields.add(activeLabel);
-        abilitiesFields.add(activeCheck);
+        lblActive.setText("Active");
+        pnlAbilitiesFields.add(lblActive);
+        pnlAbilitiesFields.add(chkActive);
 
-        abilitiesForm.add(abilitiesFields, java.awt.BorderLayout.PAGE_START);
+        pnlAbilitiesForm.add(pnlAbilitiesFields, java.awt.BorderLayout.PAGE_START);
 
-        abilitiesButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        pnlAbilitiesButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        newAbilityButton.setText("New");
-        newAbilityButton.addActionListener(new java.awt.event.ActionListener() {
+        btnNewAbility.setText("New");
+        btnNewAbility.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newAbilityButtonActionPerformed(evt);
             }
         });
-        abilitiesButtons.add(newAbilityButton);
+        pnlAbilitiesButtons.add(btnNewAbility);
 
-        saveAbilityButton.setText("Save");
-        saveAbilityButton.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveAbility.setText("Save");
+        btnSaveAbility.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveAbilityButtonActionPerformed(evt);
             }
         });
-        abilitiesButtons.add(saveAbilityButton);
+        pnlAbilitiesButtons.add(btnSaveAbility);
 
-        deleteAbilityButton.setText("Delete");
-        deleteAbilityButton.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteAbility.setText("Delete");
+        btnDeleteAbility.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteAbilityButtonActionPerformed(evt);
             }
         });
-        abilitiesButtons.add(deleteAbilityButton);
+        pnlAbilitiesButtons.add(btnDeleteAbility);
 
-        learnButton.setText("Learn");
-        learnButton.addActionListener(new java.awt.event.ActionListener() {
+        btnLearn.setText("Learn");
+        btnLearn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 learnButtonActionPerformed(evt);
             }
         });
-        abilitiesButtons.add(learnButton);
+        pnlAbilitiesButtons.add(btnLearn);
 
-        forgetButton.setText("Forget");
-        forgetButton.addActionListener(new java.awt.event.ActionListener() {
+        btnForget.setText("Forget");
+        btnForget.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 forgetButtonActionPerformed(evt);
             }
         });
-        abilitiesButtons.add(forgetButton);
+        pnlAbilitiesButtons.add(btnForget);
 
-        abilitiesForm.add(abilitiesButtons, java.awt.BorderLayout.CENTER);
+        pnlAbilitiesForm.add(pnlAbilitiesButtons, java.awt.BorderLayout.CENTER);
 
-        abilitiesTab.add(abilitiesForm, java.awt.BorderLayout.LINE_END);
+        pnlAbilitiesTab.add(pnlAbilitiesForm, java.awt.BorderLayout.LINE_END);
 
-        tabs.addTab("Abilities", abilitiesTab);
+        tabMain.addTab("Abilities", pnlAbilitiesTab);
 
-        inventoryTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        inventoryTab.setLayout(new java.awt.BorderLayout(10, 10));
+        pnlInventoryTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlInventoryTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        inventoryTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblInventory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1077,69 +1077,69 @@ public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        inventoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblInventory.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 inventoryTableMouseClicked(evt);
             }
         });
-        inventoryScroll.setViewportView(inventoryTable);
+        scrInventory.setViewportView(tblInventory);
 
-        inventoryTab.add(inventoryScroll, java.awt.BorderLayout.CENTER);
+        pnlInventoryTab.add(scrInventory, java.awt.BorderLayout.CENTER);
 
-        inventoryForm.setLayout(new java.awt.BorderLayout(0, 10));
+        pnlInventoryForm.setLayout(new java.awt.BorderLayout(0, 10));
 
-        inventoryFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
+        pnlInventoryFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        itemLabel.setText("Item");
-        inventoryFields.add(itemLabel);
-        inventoryFields.add(itemCombo);
+        lblItem.setText("Item");
+        pnlInventoryFields.add(lblItem);
+        pnlInventoryFields.add(cmbItem);
 
-        quantityLabel.setText("Quantity");
-        inventoryFields.add(quantityLabel);
-        inventoryFields.add(quantityField);
+        lblQuantity.setText("Quantity");
+        pnlInventoryFields.add(lblQuantity);
+        pnlInventoryFields.add(txtQuantity);
 
-        equippedLabel.setText("Equipped");
-        inventoryFields.add(equippedLabel);
-        inventoryFields.add(equippedCheck);
+        lblEquipped.setText("Equipped");
+        pnlInventoryFields.add(lblEquipped);
+        pnlInventoryFields.add(chkEquipped);
 
-        inventoryForm.add(inventoryFields, java.awt.BorderLayout.PAGE_START);
+        pnlInventoryForm.add(pnlInventoryFields, java.awt.BorderLayout.PAGE_START);
 
-        inventoryButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        pnlInventoryButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        newEntryButton.setText("New");
-        newEntryButton.addActionListener(new java.awt.event.ActionListener() {
+        btnNewEntry.setText("New");
+        btnNewEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newEntryButtonActionPerformed(evt);
             }
         });
-        inventoryButtons.add(newEntryButton);
+        pnlInventoryButtons.add(btnNewEntry);
 
-        saveEntryButton.setText("Save");
-        saveEntryButton.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveEntry.setText("Save");
+        btnSaveEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveEntryButtonActionPerformed(evt);
             }
         });
-        inventoryButtons.add(saveEntryButton);
+        pnlInventoryButtons.add(btnSaveEntry);
 
-        deleteEntryButton.setText("Delete");
-        deleteEntryButton.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteEntry.setText("Delete");
+        btnDeleteEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteEntryButtonActionPerformed(evt);
             }
         });
-        inventoryButtons.add(deleteEntryButton);
+        pnlInventoryButtons.add(btnDeleteEntry);
 
-        inventoryForm.add(inventoryButtons, java.awt.BorderLayout.CENTER);
+        pnlInventoryForm.add(pnlInventoryButtons, java.awt.BorderLayout.CENTER);
 
-        inventoryTab.add(inventoryForm, java.awt.BorderLayout.LINE_END);
+        pnlInventoryTab.add(pnlInventoryForm, java.awt.BorderLayout.LINE_END);
 
-        tabs.addTab("Inventory", inventoryTab);
+        tabMain.addTab("Inventory", pnlInventoryTab);
 
-        itemsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        itemsTab.setLayout(new java.awt.BorderLayout(10, 10));
+        pnlItemsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlItemsTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        itemsTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1155,71 +1155,71 @@ public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        itemsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblItems.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 itemsTableMouseClicked(evt);
             }
         });
-        itemsScroll.setViewportView(itemsTable);
+        scrItems.setViewportView(tblItems);
 
-        itemsTab.add(itemsScroll, java.awt.BorderLayout.CENTER);
+        pnlItemsTab.add(scrItems, java.awt.BorderLayout.CENTER);
 
-        itemsForm.setLayout(new java.awt.BorderLayout(0, 10));
+        pnlItemsForm.setLayout(new java.awt.BorderLayout(0, 10));
 
-        itemsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
+        pnlItemsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        itemNameLabel.setText("Name");
-        itemsFields.add(itemNameLabel);
+        lblItemName.setText("Name");
+        pnlItemsFields.add(lblItemName);
 
-        itemNameField.setColumns(12);
-        itemsFields.add(itemNameField);
+        txtItemName.setColumns(12);
+        pnlItemsFields.add(txtItemName);
 
-        itemWeightLabel.setText("Weight");
-        itemsFields.add(itemWeightLabel);
-        itemsFields.add(itemWeightField);
+        lblItemWeight.setText("Weight");
+        pnlItemsFields.add(lblItemWeight);
+        pnlItemsFields.add(txtItemWeight);
 
-        itemDescriptionLabel.setText("Description");
-        itemsFields.add(itemDescriptionLabel);
-        itemsFields.add(itemDescriptionField);
+        lblItemDescription.setText("Description");
+        pnlItemsFields.add(lblItemDescription);
+        pnlItemsFields.add(txtItemDescription);
 
-        itemsForm.add(itemsFields, java.awt.BorderLayout.PAGE_START);
+        pnlItemsForm.add(pnlItemsFields, java.awt.BorderLayout.PAGE_START);
 
-        itemsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        pnlItemsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        newItemButton.setText("New");
-        newItemButton.addActionListener(new java.awt.event.ActionListener() {
+        btnNewItem.setText("New");
+        btnNewItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newItemButtonActionPerformed(evt);
             }
         });
-        itemsButtons.add(newItemButton);
+        pnlItemsButtons.add(btnNewItem);
 
-        saveItemButton.setText("Save");
-        saveItemButton.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveItem.setText("Save");
+        btnSaveItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveItemButtonActionPerformed(evt);
             }
         });
-        itemsButtons.add(saveItemButton);
+        pnlItemsButtons.add(btnSaveItem);
 
-        deleteItemButton.setText("Delete");
-        deleteItemButton.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteItem.setText("Delete");
+        btnDeleteItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteItemButtonActionPerformed(evt);
             }
         });
-        itemsButtons.add(deleteItemButton);
+        pnlItemsButtons.add(btnDeleteItem);
 
-        itemsForm.add(itemsButtons, java.awt.BorderLayout.CENTER);
+        pnlItemsForm.add(pnlItemsButtons, java.awt.BorderLayout.CENTER);
 
-        itemsTab.add(itemsForm, java.awt.BorderLayout.LINE_END);
+        pnlItemsTab.add(pnlItemsForm, java.awt.BorderLayout.LINE_END);
 
-        tabs.addTab("Items", itemsTab);
+        tabMain.addTab("Items", pnlItemsTab);
 
-        weaponsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        weaponsTab.setLayout(new java.awt.BorderLayout(10, 10));
+        pnlWeaponsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlWeaponsTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        weaponsTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblWeapons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1235,87 +1235,87 @@ public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        weaponsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblWeapons.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 weaponsTableMouseClicked(evt);
             }
         });
-        weaponsScroll.setViewportView(weaponsTable);
+        scrWeapons.setViewportView(tblWeapons);
 
-        weaponsTab.add(weaponsScroll, java.awt.BorderLayout.CENTER);
+        pnlWeaponsTab.add(scrWeapons, java.awt.BorderLayout.CENTER);
 
-        weaponsForm.setLayout(new java.awt.BorderLayout(0, 10));
+        pnlWeaponsForm.setLayout(new java.awt.BorderLayout(0, 10));
 
-        weaponsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
+        pnlWeaponsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        weaponNameLabel.setText("Name");
-        weaponsFields.add(weaponNameLabel);
+        lblWeaponName.setText("Name");
+        pnlWeaponsFields.add(lblWeaponName);
 
-        weaponNameField.setColumns(12);
-        weaponsFields.add(weaponNameField);
+        txtWeaponName.setColumns(12);
+        pnlWeaponsFields.add(txtWeaponName);
 
-        weaponWeightLabel.setText("Weight");
-        weaponsFields.add(weaponWeightLabel);
-        weaponsFields.add(weaponWeightField);
+        lblWeaponWeight.setText("Weight");
+        pnlWeaponsFields.add(lblWeaponWeight);
+        pnlWeaponsFields.add(txtWeaponWeight);
 
-        weaponAttributeLabel.setText("Attribute");
-        weaponsFields.add(weaponAttributeLabel);
-        weaponsFields.add(weaponAttributeField);
+        lblWeaponAttribute.setText("Attribute");
+        pnlWeaponsFields.add(lblWeaponAttribute);
+        pnlWeaponsFields.add(txtWeaponAttribute);
 
-        weaponDamageLabel.setText("Damage");
-        weaponsFields.add(weaponDamageLabel);
-        weaponsFields.add(weaponDamageField);
+        lblWeaponDamage.setText("Damage");
+        pnlWeaponsFields.add(lblWeaponDamage);
+        pnlWeaponsFields.add(txtWeaponDamage);
 
-        weaponRangeLabel.setText("Critical range");
-        weaponsFields.add(weaponRangeLabel);
-        weaponsFields.add(weaponRangeField);
+        lblWeaponRange.setText("Critical range");
+        pnlWeaponsFields.add(lblWeaponRange);
+        pnlWeaponsFields.add(txtWeaponRange);
 
-        weaponMultiplierLabel.setText("Critical multiplier");
-        weaponsFields.add(weaponMultiplierLabel);
-        weaponsFields.add(weaponMultiplierField);
+        lblWeaponMultiplier.setText("Critical multiplier");
+        pnlWeaponsFields.add(lblWeaponMultiplier);
+        pnlWeaponsFields.add(txtWeaponMultiplier);
 
-        weaponDescriptionLabel.setText("Description");
-        weaponsFields.add(weaponDescriptionLabel);
-        weaponsFields.add(weaponDescriptionField);
+        lblWeaponDescription.setText("Description");
+        pnlWeaponsFields.add(lblWeaponDescription);
+        pnlWeaponsFields.add(txtWeaponDescription);
 
-        weaponsForm.add(weaponsFields, java.awt.BorderLayout.PAGE_START);
+        pnlWeaponsForm.add(pnlWeaponsFields, java.awt.BorderLayout.PAGE_START);
 
-        weaponsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        pnlWeaponsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        newWeaponButton.setText("New");
-        newWeaponButton.addActionListener(new java.awt.event.ActionListener() {
+        btnNewWeapon.setText("New");
+        btnNewWeapon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newWeaponButtonActionPerformed(evt);
             }
         });
-        weaponsButtons.add(newWeaponButton);
+        pnlWeaponsButtons.add(btnNewWeapon);
 
-        saveWeaponButton.setText("Save");
-        saveWeaponButton.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveWeapon.setText("Save");
+        btnSaveWeapon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveWeaponButtonActionPerformed(evt);
             }
         });
-        weaponsButtons.add(saveWeaponButton);
+        pnlWeaponsButtons.add(btnSaveWeapon);
 
-        deleteWeaponButton.setText("Delete");
-        deleteWeaponButton.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteWeapon.setText("Delete");
+        btnDeleteWeapon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteWeaponButtonActionPerformed(evt);
             }
         });
-        weaponsButtons.add(deleteWeaponButton);
+        pnlWeaponsButtons.add(btnDeleteWeapon);
 
-        weaponsForm.add(weaponsButtons, java.awt.BorderLayout.CENTER);
+        pnlWeaponsForm.add(pnlWeaponsButtons, java.awt.BorderLayout.CENTER);
 
-        weaponsTab.add(weaponsForm, java.awt.BorderLayout.LINE_END);
+        pnlWeaponsTab.add(pnlWeaponsForm, java.awt.BorderLayout.LINE_END);
 
-        tabs.addTab("Weapons", weaponsTab);
+        tabMain.addTab("Weapons", pnlWeaponsTab);
 
-        armorTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        armorTab.setLayout(new java.awt.BorderLayout(10, 10));
+        pnlArmorTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlArmorTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        armorTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblArmor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1331,79 +1331,79 @@ public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        armorTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblArmor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 armorTableMouseClicked(evt);
             }
         });
-        armorScroll.setViewportView(armorTable);
+        scrArmor.setViewportView(tblArmor);
 
-        armorTab.add(armorScroll, java.awt.BorderLayout.CENTER);
+        pnlArmorTab.add(scrArmor, java.awt.BorderLayout.CENTER);
 
-        armorForm.setLayout(new java.awt.BorderLayout(0, 10));
+        pnlArmorForm.setLayout(new java.awt.BorderLayout(0, 10));
 
-        armorFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
+        pnlArmorFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        armorNameLabel.setText("Name");
-        armorFields.add(armorNameLabel);
+        lblArmorName.setText("Name");
+        pnlArmorFields.add(lblArmorName);
 
-        armorNameField.setColumns(12);
-        armorFields.add(armorNameField);
+        txtArmorName.setColumns(12);
+        pnlArmorFields.add(txtArmorName);
 
-        armorWeightLabel.setText("Weight");
-        armorFields.add(armorWeightLabel);
-        armorFields.add(armorWeightField);
+        lblArmorWeight.setText("Weight");
+        pnlArmorFields.add(lblArmorWeight);
+        pnlArmorFields.add(txtArmorWeight);
 
-        physicalAcLabel.setText("Physical AC");
-        armorFields.add(physicalAcLabel);
-        armorFields.add(physicalAcField);
+        lblPhysicalAc.setText("Physical AC");
+        pnlArmorFields.add(lblPhysicalAc);
+        pnlArmorFields.add(txtPhysicalAc);
 
-        elementalAcLabel.setText("Elemental AC");
-        armorFields.add(elementalAcLabel);
-        armorFields.add(elementalAcField);
+        lblElementalAc.setText("Elemental AC");
+        pnlArmorFields.add(lblElementalAc);
+        pnlArmorFields.add(txtElementalAc);
 
-        armorDescriptionLabel.setText("Description");
-        armorFields.add(armorDescriptionLabel);
-        armorFields.add(armorDescriptionField);
+        lblArmorDescription.setText("Description");
+        pnlArmorFields.add(lblArmorDescription);
+        pnlArmorFields.add(txtArmorDescription);
 
-        armorForm.add(armorFields, java.awt.BorderLayout.PAGE_START);
+        pnlArmorForm.add(pnlArmorFields, java.awt.BorderLayout.PAGE_START);
 
-        armorButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        pnlArmorButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        newArmorButton.setText("New");
-        newArmorButton.addActionListener(new java.awt.event.ActionListener() {
+        btnNewArmor.setText("New");
+        btnNewArmor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newArmorButtonActionPerformed(evt);
             }
         });
-        armorButtons.add(newArmorButton);
+        pnlArmorButtons.add(btnNewArmor);
 
-        saveArmorButton.setText("Save");
-        saveArmorButton.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveArmor.setText("Save");
+        btnSaveArmor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveArmorButtonActionPerformed(evt);
             }
         });
-        armorButtons.add(saveArmorButton);
+        pnlArmorButtons.add(btnSaveArmor);
 
-        deleteArmorButton.setText("Delete");
-        deleteArmorButton.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteArmor.setText("Delete");
+        btnDeleteArmor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteArmorButtonActionPerformed(evt);
             }
         });
-        armorButtons.add(deleteArmorButton);
+        pnlArmorButtons.add(btnDeleteArmor);
 
-        armorForm.add(armorButtons, java.awt.BorderLayout.CENTER);
+        pnlArmorForm.add(pnlArmorButtons, java.awt.BorderLayout.CENTER);
 
-        armorTab.add(armorForm, java.awt.BorderLayout.LINE_END);
+        pnlArmorTab.add(pnlArmorForm, java.awt.BorderLayout.LINE_END);
 
-        tabs.addTab("Armor", armorTab);
+        tabMain.addTab("Armor", pnlArmorTab);
 
-        ammunitionTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        ammunitionTab.setLayout(new java.awt.BorderLayout(10, 10));
+        pnlAmmunitionTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlAmmunitionTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        ammunitionTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblAmmunition.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1419,72 +1419,72 @@ public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        ammunitionTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblAmmunition.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ammunitionTableMouseClicked(evt);
             }
         });
-        ammunitionScroll.setViewportView(ammunitionTable);
+        scrAmmunition.setViewportView(tblAmmunition);
 
-        ammunitionTab.add(ammunitionScroll, java.awt.BorderLayout.CENTER);
+        pnlAmmunitionTab.add(scrAmmunition, java.awt.BorderLayout.CENTER);
 
-        ammunitionForm.setLayout(new java.awt.BorderLayout(0, 10));
+        pnlAmmunitionForm.setLayout(new java.awt.BorderLayout(0, 10));
 
-        ammunitionFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
+        pnlAmmunitionFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        ammoNameLabel.setText("Name");
-        ammunitionFields.add(ammoNameLabel);
+        lblAmmoName.setText("Name");
+        pnlAmmunitionFields.add(lblAmmoName);
 
-        ammoNameField.setColumns(12);
-        ammunitionFields.add(ammoNameField);
+        txtAmmoName.setColumns(12);
+        pnlAmmunitionFields.add(txtAmmoName);
 
-        ammoWeightLabel.setText("Weight");
-        ammunitionFields.add(ammoWeightLabel);
-        ammunitionFields.add(ammoWeightField);
+        lblAmmoWeight.setText("Weight");
+        pnlAmmunitionFields.add(lblAmmoWeight);
+        pnlAmmunitionFields.add(txtAmmoWeight);
 
-        ammoDamageLabel.setText("Damage");
-        ammunitionFields.add(ammoDamageLabel);
-        ammunitionFields.add(ammoDamageField);
+        lblAmmoDamage.setText("Damage");
+        pnlAmmunitionFields.add(lblAmmoDamage);
+        pnlAmmunitionFields.add(txtAmmoDamage);
 
-        ammoDescriptionLabel.setText("Description");
-        ammunitionFields.add(ammoDescriptionLabel);
-        ammunitionFields.add(ammoDescriptionField);
+        lblAmmoDescription.setText("Description");
+        pnlAmmunitionFields.add(lblAmmoDescription);
+        pnlAmmunitionFields.add(txtAmmoDescription);
 
-        ammunitionForm.add(ammunitionFields, java.awt.BorderLayout.PAGE_START);
+        pnlAmmunitionForm.add(pnlAmmunitionFields, java.awt.BorderLayout.PAGE_START);
 
-        ammunitionButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        pnlAmmunitionButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        newAmmoButton.setText("New");
-        newAmmoButton.addActionListener(new java.awt.event.ActionListener() {
+        btnNewAmmo.setText("New");
+        btnNewAmmo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newAmmoButtonActionPerformed(evt);
             }
         });
-        ammunitionButtons.add(newAmmoButton);
+        pnlAmmunitionButtons.add(btnNewAmmo);
 
-        saveAmmoButton.setText("Save");
-        saveAmmoButton.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveAmmo.setText("Save");
+        btnSaveAmmo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveAmmoButtonActionPerformed(evt);
             }
         });
-        ammunitionButtons.add(saveAmmoButton);
+        pnlAmmunitionButtons.add(btnSaveAmmo);
 
-        deleteAmmoButton.setText("Delete");
-        deleteAmmoButton.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteAmmo.setText("Delete");
+        btnDeleteAmmo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteAmmoButtonActionPerformed(evt);
             }
         });
-        ammunitionButtons.add(deleteAmmoButton);
+        pnlAmmunitionButtons.add(btnDeleteAmmo);
 
-        ammunitionForm.add(ammunitionButtons, java.awt.BorderLayout.CENTER);
+        pnlAmmunitionForm.add(pnlAmmunitionButtons, java.awt.BorderLayout.CENTER);
 
-        ammunitionTab.add(ammunitionForm, java.awt.BorderLayout.LINE_END);
+        pnlAmmunitionTab.add(pnlAmmunitionForm, java.awt.BorderLayout.LINE_END);
 
-        tabs.addTab("Ammunition", ammunitionTab);
+        tabMain.addTab("Ammunition", pnlAmmunitionTab);
 
-        getContentPane().add(tabs, java.awt.BorderLayout.CENTER);
+        getContentPane().add(tabMain, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
@@ -1495,7 +1495,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_searchFieldKeyReleased
 
     private void characterListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_characterListValueChanged
-        PlayerCharacter chosen = (PlayerCharacter) characterList.getSelectedValue();
+        PlayerCharacter chosen = (PlayerCharacter) lstCharacter.getSelectedValue();
         if (evt.getValueIsAdjusting() || chosen == null || chosen == selected) {
             return;
         }
@@ -1505,18 +1505,18 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void newCharacterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCharacterButtonActionPerformed
         clearCharacter();
-        nameField.requestFocus();
+        txtName.requestFocus();
     }//GEN-LAST:event_newCharacterButtonActionPerformed
 
     private void saveCharacterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCharacterButtonActionPerformed
         try {
             PlayerCharacter character = new PlayerCharacter(selected == null ? null : selected.getId(),
-                    number(levelField, "Level"), nameField.getText(), number(ageField, "Age"), raceField.getText(),
-                    classField.getText(), subclassField.getText(), originField.getText(), languagesField.getText(),
-                    number(baseHealthField, "Base health"), number(healthField, "Health"),
-                    number(baseManaField, "Base mana"), number(manaField, "Mana"),
-                    number(baseStaminaField, "Base stamina"), number(staminaField, "Stamina"),
-                    number(baseSanityField, "Base sanity"), number(sanityField, "Sanity"));
+                    number(txtLevel, "Level"), txtName.getText(), number(txtAge, "Age"), txtRace.getText(),
+                    txtClass.getText(), txtSubclass.getText(), txtOrigin.getText(), txtLanguages.getText(),
+                    number(txtBaseHealth, "Base health"), number(txtHealth, "Health"),
+                    number(txtBaseMana, "Base mana"), number(txtMana, "Mana"),
+                    number(txtBaseStamina, "Base stamina"), number(txtStamina, "Stamina"),
+                    number(txtBaseSanity, "Base sanity"), number(txtSanity, "Sanity"));
             character.setPhoto(selected == null ? null : selected.getPhoto());
             service.saveCharacter(character);
             loadCharacters();
@@ -1568,13 +1568,13 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_changePhotoButtonActionPerformed
 
     private void skillsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_skillsTableMouseClicked
-        int row = skillsTable.getSelectedRow();
+        int row = tblSkills.getSelectedRow();
         if (row < 0) {
             return;
         }
         Skill skill = skills.get(row);
-        skillNameField.setText(skill.getSkillName());
-        skillValueField.setText(String.valueOf(skill.getValue()));
+        txtSkillName.setText(skill.getSkillName());
+        txtSkillValue.setText(String.valueOf(skill.getValue()));
     }//GEN-LAST:event_skillsTableMouseClicked
 
     private void newSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSkillButtonActionPerformed
@@ -1587,9 +1587,9 @@ public class MainWindow extends javax.swing.JFrame {
             return;
         }
         try {
-            int row = skillsTable.getSelectedRow();
+            int row = tblSkills.getSelectedRow();
             Integer id = row >= 0 ? skills.get(row).getId() : null;
-            service.saveSkill(new Skill(id, selected.getId(), skillNameField.getText(), number(skillValueField, "Value")));
+            service.saveSkill(new Skill(id, selected.getId(), txtSkillName.getText(), number(txtSkillValue, "Value")));
             loadSkills();
         } catch (Exception e) {
             showError(e);
@@ -1597,7 +1597,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_saveSkillButtonActionPerformed
 
     private void deleteSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSkillButtonActionPerformed
-        int row = skillsTable.getSelectedRow();
+        int row = tblSkills.getSelectedRow();
         if (row < 0) {
             showMessage("Click a skill in the table first.");
             return;
@@ -1614,13 +1614,13 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteSkillButtonActionPerformed
 
     private void bondsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bondsTableMouseClicked
-        int row = bondsTable.getSelectedRow();
+        int row = tblBonds.getSelectedRow();
         if (row < 0) {
             return;
         }
         SecondBound bond = bonds.get(row);
-        bondNameField.setText(bond.getBoundName());
-        bondValueField.setText(String.valueOf(bond.getValue()));
+        txtBondName.setText(bond.getBoundName());
+        txtBondValue.setText(String.valueOf(bond.getValue()));
     }//GEN-LAST:event_bondsTableMouseClicked
 
     private void newBondButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBondButtonActionPerformed
@@ -1633,9 +1633,9 @@ public class MainWindow extends javax.swing.JFrame {
             return;
         }
         try {
-            int row = bondsTable.getSelectedRow();
+            int row = tblBonds.getSelectedRow();
             Integer id = row >= 0 ? bonds.get(row).getId() : null;
-            service.saveBond(new SecondBound(id, selected.getId(), bondNameField.getText(), number(bondValueField, "Value")));
+            service.saveBond(new SecondBound(id, selected.getId(), txtBondName.getText(), number(txtBondValue, "Value")));
             loadBonds();
         } catch (Exception e) {
             showError(e);
@@ -1643,7 +1643,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_saveBondButtonActionPerformed
 
     private void deleteBondButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBondButtonActionPerformed
-        int row = bondsTable.getSelectedRow();
+        int row = tblBonds.getSelectedRow();
         if (row < 0) {
             showMessage("Click a bond in the table first.");
             return;
@@ -1660,19 +1660,19 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteBondButtonActionPerformed
 
     private void abilitiesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abilitiesTableMouseClicked
-        int row = abilitiesTable.getSelectedRow();
+        int row = tblAbilities.getSelectedRow();
         if (row < 0) {
             return;
         }
         Ability ability = abilities.get(row);
-        abilityNameField.setText(ability.getName());
-        categoryCombo.setSelectedItem(ability.getCategory());
-        actionTypeCombo.setSelectedItem(ability.getActionType());
-        costTypeCombo.setSelectedItem(ability.getCostType());
-        costField.setText(String.valueOf(ability.getCostValue()));
-        abilityDescriptionField.setText(ability.getDescription());
+        txtAbilityName.setText(ability.getName());
+        cmbCategory.setSelectedItem(ability.getCategory());
+        cmbActionType.setSelectedItem(ability.getActionType());
+        cmbCostType.setSelectedItem(ability.getCostType());
+        txtCost.setText(String.valueOf(ability.getCostValue()));
+        txtAbilityDescription.setText(ability.getDescription());
         CharacterAbility link = findLearned(ability.getAbilityId());
-        activeCheck.setSelected(link != null && link.isToggled());
+        chkActive.setSelected(link != null && link.isToggled());
     }//GEN-LAST:event_abilitiesTableMouseClicked
 
     private void newAbilityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAbilityButtonActionPerformed
@@ -1681,11 +1681,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void saveAbilityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAbilityButtonActionPerformed
         try {
-            int row = abilitiesTable.getSelectedRow();
+            int row = tblAbilities.getSelectedRow();
             Integer id = row >= 0 ? abilities.get(row).getAbilityId() : null;
-            service.saveAbility(new Ability(id, abilityNameField.getText(), (AbilityCategory) categoryCombo.getSelectedItem(),
-                    (ActionType) actionTypeCombo.getSelectedItem(), (CostType) costTypeCombo.getSelectedItem(),
-                    number(costField, "Cost"), abilityDescriptionField.getText()));
+            service.saveAbility(new Ability(id, txtAbilityName.getText(), (AbilityCategory) cmbCategory.getSelectedItem(),
+                    (ActionType) cmbActionType.getSelectedItem(), (CostType) cmbCostType.getSelectedItem(),
+                    number(txtCost, "Cost"), txtAbilityDescription.getText()));
             loadAbilities();
         } catch (Exception e) {
             showError(e);
@@ -1693,7 +1693,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_saveAbilityButtonActionPerformed
 
     private void deleteAbilityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAbilityButtonActionPerformed
-        int row = abilitiesTable.getSelectedRow();
+        int row = tblAbilities.getSelectedRow();
         if (row < 0) {
             showMessage("Click an ability in the table first.");
             return;
@@ -1710,13 +1710,13 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteAbilityButtonActionPerformed
 
     private void learnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnButtonActionPerformed
-        int row = abilitiesTable.getSelectedRow();
+        int row = tblAbilities.getSelectedRow();
         if (selected == null || row < 0) {
             showMessage("Select a character and click an ability in the table first.");
             return;
         }
         try {
-            service.learnAbility(selected.getId(), abilities.get(row).getAbilityId(), activeCheck.isSelected());
+            service.learnAbility(selected.getId(), abilities.get(row).getAbilityId(), chkActive.isSelected());
             loadAbilities();
         } catch (SQLException e) {
             showError(e);
@@ -1724,7 +1724,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_learnButtonActionPerformed
 
     private void forgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forgetButtonActionPerformed
-        int row = abilitiesTable.getSelectedRow();
+        int row = tblAbilities.getSelectedRow();
         if (selected == null || row < 0) {
             showMessage("Select a character and click an ability in the table first.");
             return;
@@ -1738,14 +1738,14 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_forgetButtonActionPerformed
 
     private void inventoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryTableMouseClicked
-        int row = inventoryTable.getSelectedRow();
+        int row = tblInventory.getSelectedRow();
         if (row < 0) {
             return;
         }
         Inventory entry = inventory.get(row);
-        itemCombo.setSelectedIndex(allItems.indexOf(findItem(entry.getItemId())));
-        quantityField.setText(String.valueOf(entry.getQuantity()));
-        equippedCheck.setSelected(entry.isEquipped());
+        cmbItem.setSelectedIndex(allItems.indexOf(findItem(entry.getItemId())));
+        txtQuantity.setText(String.valueOf(entry.getQuantity()));
+        chkEquipped.setSelected(entry.isEquipped());
     }//GEN-LAST:event_inventoryTableMouseClicked
 
     private void newEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEntryButtonActionPerformed
@@ -1753,15 +1753,15 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_newEntryButtonActionPerformed
 
     private void saveEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveEntryButtonActionPerformed
-        if (selected == null || itemCombo.getSelectedIndex() < 0) {
+        if (selected == null || cmbItem.getSelectedIndex() < 0) {
             showMessage("Select a character and choose an item first.");
             return;
         }
         try {
-            int row = inventoryTable.getSelectedRow();
+            int row = tblInventory.getSelectedRow();
             Integer id = row >= 0 ? inventory.get(row).getId() : null;
-            int itemId = allItems.get(itemCombo.getSelectedIndex()).getId();
-            service.saveInventory(new Inventory(id, selected.getId(), itemId, number(quantityField, "Quantity"), equippedCheck.isSelected()));
+            int itemId = allItems.get(cmbItem.getSelectedIndex()).getId();
+            service.saveInventory(new Inventory(id, selected.getId(), itemId, number(txtQuantity, "Quantity"), chkEquipped.isSelected()));
             loadInventory();
         } catch (Exception e) {
             showError(e);
@@ -1769,7 +1769,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_saveEntryButtonActionPerformed
 
     private void deleteEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEntryButtonActionPerformed
-        int row = inventoryTable.getSelectedRow();
+        int row = tblInventory.getSelectedRow();
         if (row < 0) {
             showMessage("Click an item in the table first.");
             return;
@@ -1786,14 +1786,14 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteEntryButtonActionPerformed
 
     private void itemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemsTableMouseClicked
-        int row = itemsTable.getSelectedRow();
+        int row = tblItems.getSelectedRow();
         if (row < 0) {
             return;
         }
         Item item = generalItems.get(row);
-        itemNameField.setText(item.getName());
-        itemWeightField.setText(String.valueOf(item.getWeight()));
-        itemDescriptionField.setText(item.getDescription());
+        txtItemName.setText(item.getName());
+        txtItemWeight.setText(String.valueOf(item.getWeight()));
+        txtItemDescription.setText(item.getDescription());
     }//GEN-LAST:event_itemsTableMouseClicked
 
     private void newItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemButtonActionPerformed
@@ -1802,10 +1802,10 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void saveItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveItemButtonActionPerformed
         try {
-            int row = itemsTable.getSelectedRow();
+            int row = tblItems.getSelectedRow();
             Integer id = row >= 0 ? generalItems.get(row).getId() : null;
-            service.saveGeneralItem(new Item(id, itemNameField.getText(), itemDescriptionField.getText(),
-                    decimal(itemWeightField, "Weight"), ItemCategory.GENERAL));
+            service.saveGeneralItem(new Item(id, txtItemName.getText(), txtItemDescription.getText(),
+                    decimal(txtItemWeight, "Weight"), ItemCategory.GENERAL));
             loadItems();
         } catch (Exception e) {
             showError(e);
@@ -1813,7 +1813,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_saveItemButtonActionPerformed
 
     private void deleteItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemButtonActionPerformed
-        int row = itemsTable.getSelectedRow();
+        int row = tblItems.getSelectedRow();
         if (row < 0) {
             showMessage("Click an item in the table first.");
             return;
@@ -1830,18 +1830,18 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteItemButtonActionPerformed
 
     private void weaponsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_weaponsTableMouseClicked
-        int row = weaponsTable.getSelectedRow();
+        int row = tblWeapons.getSelectedRow();
         if (row < 0) {
             return;
         }
         Weapon weapon = weapons.get(row);
-        weaponNameField.setText(weapon.getName());
-        weaponWeightField.setText(String.valueOf(weapon.getWeight()));
-        weaponAttributeField.setText(weapon.getScalingAttribute());
-        weaponDamageField.setText(weapon.getDamageDice());
-        weaponRangeField.setText(String.valueOf(weapon.getCriticalRange()));
-        weaponMultiplierField.setText(String.valueOf(weapon.getCriticalMultiplier()));
-        weaponDescriptionField.setText(weapon.getDescription());
+        txtWeaponName.setText(weapon.getName());
+        txtWeaponWeight.setText(String.valueOf(weapon.getWeight()));
+        txtWeaponAttribute.setText(weapon.getScalingAttribute());
+        txtWeaponDamage.setText(weapon.getDamageDice());
+        txtWeaponRange.setText(String.valueOf(weapon.getCriticalRange()));
+        txtWeaponMultiplier.setText(String.valueOf(weapon.getCriticalMultiplier()));
+        txtWeaponDescription.setText(weapon.getDescription());
     }//GEN-LAST:event_weaponsTableMouseClicked
 
     private void newWeaponButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newWeaponButtonActionPerformed
@@ -1850,12 +1850,12 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void saveWeaponButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveWeaponButtonActionPerformed
         try {
-            int row = weaponsTable.getSelectedRow();
+            int row = tblWeapons.getSelectedRow();
             Integer id = row >= 0 ? weapons.get(row).getId() : null;
-            service.saveWeapon(new Weapon(id, weaponNameField.getText(), weaponDescriptionField.getText(),
-                    decimal(weaponWeightField, "Weight"), ItemCategory.WEAPON, weaponAttributeField.getText(),
-                    weaponDamageField.getText(), number(weaponRangeField, "Critical range"),
-                    number(weaponMultiplierField, "Critical multiplier")));
+            service.saveWeapon(new Weapon(id, txtWeaponName.getText(), txtWeaponDescription.getText(),
+                    decimal(txtWeaponWeight, "Weight"), ItemCategory.WEAPON, txtWeaponAttribute.getText(),
+                    txtWeaponDamage.getText(), number(txtWeaponRange, "Critical range"),
+                    number(txtWeaponMultiplier, "Critical multiplier")));
             loadItems();
         } catch (Exception e) {
             showError(e);
@@ -1863,7 +1863,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_saveWeaponButtonActionPerformed
 
     private void deleteWeaponButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteWeaponButtonActionPerformed
-        int row = weaponsTable.getSelectedRow();
+        int row = tblWeapons.getSelectedRow();
         if (row < 0) {
             showMessage("Click a weapon in the table first.");
             return;
@@ -1880,16 +1880,16 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteWeaponButtonActionPerformed
 
     private void armorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_armorTableMouseClicked
-        int row = armorTable.getSelectedRow();
+        int row = tblArmor.getSelectedRow();
         if (row < 0) {
             return;
         }
         Armor armor = armors.get(row);
-        armorNameField.setText(armor.getName());
-        armorWeightField.setText(String.valueOf(armor.getWeight()));
-        physicalAcField.setText(String.valueOf(armor.getPhysicalAC()));
-        elementalAcField.setText(String.valueOf(armor.getElementalAC()));
-        armorDescriptionField.setText(armor.getDescription());
+        txtArmorName.setText(armor.getName());
+        txtArmorWeight.setText(String.valueOf(armor.getWeight()));
+        txtPhysicalAc.setText(String.valueOf(armor.getPhysicalAC()));
+        txtElementalAc.setText(String.valueOf(armor.getElementalAC()));
+        txtArmorDescription.setText(armor.getDescription());
     }//GEN-LAST:event_armorTableMouseClicked
 
     private void newArmorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newArmorButtonActionPerformed
@@ -1898,11 +1898,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void saveArmorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveArmorButtonActionPerformed
         try {
-            int row = armorTable.getSelectedRow();
+            int row = tblArmor.getSelectedRow();
             Integer id = row >= 0 ? armors.get(row).getId() : null;
-            service.saveArmor(new Armor(id, armorNameField.getText(), armorDescriptionField.getText(),
-                    decimal(armorWeightField, "Weight"), number(physicalAcField, "Physical AC"),
-                    number(elementalAcField, "Elemental AC")));
+            service.saveArmor(new Armor(id, txtArmorName.getText(), txtArmorDescription.getText(),
+                    decimal(txtArmorWeight, "Weight"), number(txtPhysicalAc, "Physical AC"),
+                    number(txtElementalAc, "Elemental AC")));
             loadItems();
         } catch (Exception e) {
             showError(e);
@@ -1910,7 +1910,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_saveArmorButtonActionPerformed
 
     private void deleteArmorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteArmorButtonActionPerformed
-        int row = armorTable.getSelectedRow();
+        int row = tblArmor.getSelectedRow();
         if (row < 0) {
             showMessage("Click an armor in the table first.");
             return;
@@ -1927,15 +1927,15 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteArmorButtonActionPerformed
 
     private void ammunitionTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ammunitionTableMouseClicked
-        int row = ammunitionTable.getSelectedRow();
+        int row = tblAmmunition.getSelectedRow();
         if (row < 0) {
             return;
         }
         Amunition ammo = ammunition.get(row);
-        ammoNameField.setText(ammo.getName());
-        ammoWeightField.setText(String.valueOf(ammo.getWeight()));
-        ammoDamageField.setText(ammo.getDamageDice());
-        ammoDescriptionField.setText(ammo.getDescription());
+        txtAmmoName.setText(ammo.getName());
+        txtAmmoWeight.setText(String.valueOf(ammo.getWeight()));
+        txtAmmoDamage.setText(ammo.getDamageDice());
+        txtAmmoDescription.setText(ammo.getDescription());
     }//GEN-LAST:event_ammunitionTableMouseClicked
 
     private void newAmmoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAmmoButtonActionPerformed
@@ -1944,16 +1944,16 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void saveAmmoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAmmoButtonActionPerformed
         try {
-            if (ammoNameField.getText().trim().isEmpty()) {
+            if (txtAmmoName.getText().trim().isEmpty()) {
                 throw new IllegalArgumentException("Ammunition name must not be null");
             }
-            int row = ammunitionTable.getSelectedRow();
+            int row = tblAmmunition.getSelectedRow();
             Amunition ammo = new Amunition();
             ammo.setId(row >= 0 ? ammunition.get(row).getId() : null);
-            ammo.setName(ammoNameField.getText());
-            ammo.setWeight(decimal(ammoWeightField, "Weight"));
-            ammo.setDamageDice(ammoDamageField.getText());
-            ammo.setDescription(ammoDescriptionField.getText());
+            ammo.setName(txtAmmoName.getText());
+            ammo.setWeight(decimal(txtAmmoWeight, "Weight"));
+            ammo.setDamageDice(txtAmmoDamage.getText());
+            ammo.setDescription(txtAmmoDescription.getText());
             ammo.setCategory(ItemCategory.AMMUNITION);
             service.saveAmmunition(ammo);
             loadItems();
@@ -1963,7 +1963,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_saveAmmoButtonActionPerformed
 
     private void deleteAmmoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAmmoButtonActionPerformed
-        int row = ammunitionTable.getSelectedRow();
+        int row = tblAmmunition.getSelectedRow();
         if (row < 0) {
             showMessage("Click an ammunition in the table first.");
             return;
@@ -2015,192 +2015,192 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel abilitiesButtons;
-    private javax.swing.JPanel abilitiesFields;
-    private javax.swing.JPanel abilitiesForm;
-    private javax.swing.JScrollPane abilitiesScroll;
-    private javax.swing.JPanel abilitiesTab;
-    private javax.swing.JTable abilitiesTable;
-    private javax.swing.JTextField abilityDescriptionField;
-    private javax.swing.JLabel abilityDescriptionLabel;
-    private javax.swing.JTextField abilityNameField;
-    private javax.swing.JLabel abilityNameLabel;
-    private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ActionType> actionTypeCombo;
-    private javax.swing.JLabel actionTypeLabel;
-    private javax.swing.JCheckBox activeCheck;
-    private javax.swing.JLabel activeLabel;
-    private javax.swing.JTextField ageField;
-    private javax.swing.JLabel ageLabel;
-    private javax.swing.JTextField ammoDamageField;
-    private javax.swing.JLabel ammoDamageLabel;
-    private javax.swing.JTextField ammoDescriptionField;
-    private javax.swing.JLabel ammoDescriptionLabel;
-    private javax.swing.JTextField ammoNameField;
-    private javax.swing.JLabel ammoNameLabel;
-    private javax.swing.JTextField ammoWeightField;
-    private javax.swing.JLabel ammoWeightLabel;
-    private javax.swing.JPanel ammunitionButtons;
-    private javax.swing.JPanel ammunitionFields;
-    private javax.swing.JPanel ammunitionForm;
-    private javax.swing.JScrollPane ammunitionScroll;
-    private javax.swing.JPanel ammunitionTab;
-    private javax.swing.JTable ammunitionTable;
-    private javax.swing.JPanel armorButtons;
-    private javax.swing.JTextField armorDescriptionField;
-    private javax.swing.JLabel armorDescriptionLabel;
-    private javax.swing.JPanel armorFields;
-    private javax.swing.JPanel armorForm;
-    private javax.swing.JTextField armorNameField;
-    private javax.swing.JLabel armorNameLabel;
-    private javax.swing.JScrollPane armorScroll;
-    private javax.swing.JPanel armorTab;
-    private javax.swing.JTable armorTable;
-    private javax.swing.JTextField armorWeightField;
-    private javax.swing.JLabel armorWeightLabel;
-    private javax.swing.JTextField baseHealthField;
-    private javax.swing.JLabel baseHealthLabel;
-    private javax.swing.JTextField baseManaField;
-    private javax.swing.JLabel baseManaLabel;
-    private javax.swing.JTextField baseSanityField;
-    private javax.swing.JLabel baseSanityLabel;
-    private javax.swing.JTextField baseStaminaField;
-    private javax.swing.JLabel baseStaminaLabel;
-    private javax.swing.JTextField bondNameField;
-    private javax.swing.JLabel bondNameLabel;
-    private javax.swing.JTextField bondValueField;
-    private javax.swing.JLabel bondValueLabel;
-    private javax.swing.JPanel bondsButtons;
-    private javax.swing.JPanel bondsFields;
-    private javax.swing.JPanel bondsForm;
-    private javax.swing.JScrollPane bondsScroll;
-    private javax.swing.JPanel bondsTab;
-    private javax.swing.JTable bondsTable;
-    private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.AbilityCategory> categoryCombo;
-    private javax.swing.JLabel categoryLabel;
-    private javax.swing.JButton changePhotoButton;
-    private javax.swing.JPanel characterButtons;
-    private javax.swing.JPanel characterFields;
-    private javax.swing.JList<com.edynu.rpgSheetManager.model.PlayerCharacter> characterList;
-    private javax.swing.JScrollPane characterScroll;
-    private javax.swing.JPanel characterTab;
-    private javax.swing.JTextField classField;
-    private javax.swing.JLabel classLabel;
-    private javax.swing.JTextField costField;
-    private javax.swing.JLabel costLabel;
-    private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.CostType> costTypeCombo;
-    private javax.swing.JLabel costTypeLabel;
-    private javax.swing.JButton deleteAbilityButton;
-    private javax.swing.JButton deleteAmmoButton;
-    private javax.swing.JButton deleteArmorButton;
-    private javax.swing.JButton deleteBondButton;
-    private javax.swing.JButton deleteCharacterButton;
-    private javax.swing.JButton deleteEntryButton;
-    private javax.swing.JButton deleteItemButton;
-    private javax.swing.JButton deleteSkillButton;
-    private javax.swing.JButton deleteWeaponButton;
-    private javax.swing.JTextField elementalAcField;
-    private javax.swing.JLabel elementalAcLabel;
-    private javax.swing.JCheckBox equippedCheck;
-    private javax.swing.JLabel equippedLabel;
-    private javax.swing.JButton forgetButton;
-    private javax.swing.JTextField healthField;
-    private javax.swing.JLabel healthLabel;
-    private javax.swing.JPanel inventoryButtons;
-    private javax.swing.JPanel inventoryFields;
-    private javax.swing.JPanel inventoryForm;
-    private javax.swing.JScrollPane inventoryScroll;
-    private javax.swing.JPanel inventoryTab;
-    private javax.swing.JTable inventoryTable;
-    private javax.swing.JComboBox<String> itemCombo;
-    private javax.swing.JTextField itemDescriptionField;
-    private javax.swing.JLabel itemDescriptionLabel;
-    private javax.swing.JLabel itemLabel;
-    private javax.swing.JTextField itemNameField;
-    private javax.swing.JLabel itemNameLabel;
-    private javax.swing.JTextField itemWeightField;
-    private javax.swing.JLabel itemWeightLabel;
-    private javax.swing.JPanel itemsButtons;
-    private javax.swing.JPanel itemsFields;
-    private javax.swing.JPanel itemsForm;
-    private javax.swing.JScrollPane itemsScroll;
-    private javax.swing.JPanel itemsTab;
-    private javax.swing.JTable itemsTable;
-    private javax.swing.JTextField languagesField;
-    private javax.swing.JLabel languagesLabel;
-    private javax.swing.JButton learnButton;
-    private javax.swing.JPanel leftPanel;
-    private javax.swing.JTextField levelField;
-    private javax.swing.JLabel levelLabel;
-    private javax.swing.JTextField manaField;
-    private javax.swing.JLabel manaLabel;
-    private javax.swing.JTextField nameField;
-    private javax.swing.JLabel nameLabel;
-    private javax.swing.JButton newAbilityButton;
-    private javax.swing.JButton newAmmoButton;
-    private javax.swing.JButton newArmorButton;
-    private javax.swing.JButton newBondButton;
-    private javax.swing.JButton newCharacterButton;
-    private javax.swing.JButton newEntryButton;
-    private javax.swing.JButton newItemButton;
-    private javax.swing.JButton newSkillButton;
-    private javax.swing.JButton newWeaponButton;
-    private javax.swing.JTextField originField;
-    private javax.swing.JLabel originLabel;
-    private javax.swing.JTextField physicalAcField;
-    private javax.swing.JLabel physicalAcLabel;
-    private javax.swing.JTextField quantityField;
-    private javax.swing.JLabel quantityLabel;
-    private javax.swing.JTextField raceField;
-    private javax.swing.JLabel raceLabel;
-    private javax.swing.JTextField sanityField;
-    private javax.swing.JLabel sanityLabel;
-    private javax.swing.JButton saveAbilityButton;
-    private javax.swing.JButton saveAmmoButton;
-    private javax.swing.JButton saveArmorButton;
-    private javax.swing.JButton saveBondButton;
-    private javax.swing.JButton saveCharacterButton;
-    private javax.swing.JButton saveEntryButton;
-    private javax.swing.JButton saveItemButton;
-    private javax.swing.JButton saveSkillButton;
-    private javax.swing.JButton saveWeaponButton;
-    private javax.swing.JTextField searchField;
-    private javax.swing.JLabel searchLabel;
-    private javax.swing.JPanel searchPanel;
-    private javax.swing.JTextField skillNameField;
-    private javax.swing.JLabel skillNameLabel;
-    private javax.swing.JTextField skillValueField;
-    private javax.swing.JLabel skillValueLabel;
-    private javax.swing.JPanel skillsButtons;
-    private javax.swing.JPanel skillsFields;
-    private javax.swing.JPanel skillsForm;
-    private javax.swing.JScrollPane skillsScroll;
-    private javax.swing.JPanel skillsTab;
-    private javax.swing.JTable skillsTable;
-    private javax.swing.JTextField staminaField;
-    private javax.swing.JLabel staminaLabel;
-    private javax.swing.JTextField subclassField;
-    private javax.swing.JLabel subclassLabel;
-    private javax.swing.JTabbedPane tabs;
-    private javax.swing.JLabel titleLabel;
-    private javax.swing.JTextField weaponAttributeField;
-    private javax.swing.JLabel weaponAttributeLabel;
-    private javax.swing.JTextField weaponDamageField;
-    private javax.swing.JLabel weaponDamageLabel;
-    private javax.swing.JTextField weaponDescriptionField;
-    private javax.swing.JLabel weaponDescriptionLabel;
-    private javax.swing.JTextField weaponMultiplierField;
-    private javax.swing.JLabel weaponMultiplierLabel;
-    private javax.swing.JTextField weaponNameField;
-    private javax.swing.JLabel weaponNameLabel;
-    private javax.swing.JTextField weaponRangeField;
-    private javax.swing.JLabel weaponRangeLabel;
-    private javax.swing.JTextField weaponWeightField;
-    private javax.swing.JLabel weaponWeightLabel;
-    private javax.swing.JPanel weaponsButtons;
-    private javax.swing.JPanel weaponsFields;
-    private javax.swing.JPanel weaponsForm;
-    private javax.swing.JScrollPane weaponsScroll;
-    private javax.swing.JPanel weaponsTab;
-    private javax.swing.JTable weaponsTable;
+    private javax.swing.JPanel pnlAbilitiesButtons;
+    private javax.swing.JPanel pnlAbilitiesFields;
+    private javax.swing.JPanel pnlAbilitiesForm;
+    private javax.swing.JScrollPane scrAbilities;
+    private javax.swing.JPanel pnlAbilitiesTab;
+    private javax.swing.JTable tblAbilities;
+    private javax.swing.JTextField txtAbilityDescription;
+    private javax.swing.JLabel lblAbilityDescription;
+    private javax.swing.JTextField txtAbilityName;
+    private javax.swing.JLabel lblAbilityName;
+    private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ActionType> cmbActionType;
+    private javax.swing.JLabel lblActionType;
+    private javax.swing.JCheckBox chkActive;
+    private javax.swing.JLabel lblActive;
+    private javax.swing.JTextField txtAge;
+    private javax.swing.JLabel lblAge;
+    private javax.swing.JTextField txtAmmoDamage;
+    private javax.swing.JLabel lblAmmoDamage;
+    private javax.swing.JTextField txtAmmoDescription;
+    private javax.swing.JLabel lblAmmoDescription;
+    private javax.swing.JTextField txtAmmoName;
+    private javax.swing.JLabel lblAmmoName;
+    private javax.swing.JTextField txtAmmoWeight;
+    private javax.swing.JLabel lblAmmoWeight;
+    private javax.swing.JPanel pnlAmmunitionButtons;
+    private javax.swing.JPanel pnlAmmunitionFields;
+    private javax.swing.JPanel pnlAmmunitionForm;
+    private javax.swing.JScrollPane scrAmmunition;
+    private javax.swing.JPanel pnlAmmunitionTab;
+    private javax.swing.JTable tblAmmunition;
+    private javax.swing.JPanel pnlArmorButtons;
+    private javax.swing.JTextField txtArmorDescription;
+    private javax.swing.JLabel lblArmorDescription;
+    private javax.swing.JPanel pnlArmorFields;
+    private javax.swing.JPanel pnlArmorForm;
+    private javax.swing.JTextField txtArmorName;
+    private javax.swing.JLabel lblArmorName;
+    private javax.swing.JScrollPane scrArmor;
+    private javax.swing.JPanel pnlArmorTab;
+    private javax.swing.JTable tblArmor;
+    private javax.swing.JTextField txtArmorWeight;
+    private javax.swing.JLabel lblArmorWeight;
+    private javax.swing.JTextField txtBaseHealth;
+    private javax.swing.JLabel lblBaseHealth;
+    private javax.swing.JTextField txtBaseMana;
+    private javax.swing.JLabel lblBaseMana;
+    private javax.swing.JTextField txtBaseSanity;
+    private javax.swing.JLabel lblBaseSanity;
+    private javax.swing.JTextField txtBaseStamina;
+    private javax.swing.JLabel lblBaseStamina;
+    private javax.swing.JTextField txtBondName;
+    private javax.swing.JLabel lblBondName;
+    private javax.swing.JTextField txtBondValue;
+    private javax.swing.JLabel lblBondValue;
+    private javax.swing.JPanel pnlBondsButtons;
+    private javax.swing.JPanel pnlBondsFields;
+    private javax.swing.JPanel pnlBondsForm;
+    private javax.swing.JScrollPane scrBonds;
+    private javax.swing.JPanel pnlBondsTab;
+    private javax.swing.JTable tblBonds;
+    private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.AbilityCategory> cmbCategory;
+    private javax.swing.JLabel lblCategory;
+    private javax.swing.JButton btnChangePhoto;
+    private javax.swing.JPanel pnlCharacterButtons;
+    private javax.swing.JPanel pnlCharacterFields;
+    private javax.swing.JList<com.edynu.rpgSheetManager.model.PlayerCharacter> lstCharacter;
+    private javax.swing.JScrollPane scrCharacter;
+    private javax.swing.JPanel pnlCharacterTab;
+    private javax.swing.JTextField txtClass;
+    private javax.swing.JLabel lblClass;
+    private javax.swing.JTextField txtCost;
+    private javax.swing.JLabel lblCost;
+    private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.CostType> cmbCostType;
+    private javax.swing.JLabel lblCostType;
+    private javax.swing.JButton btnDeleteAbility;
+    private javax.swing.JButton btnDeleteAmmo;
+    private javax.swing.JButton btnDeleteArmor;
+    private javax.swing.JButton btnDeleteBond;
+    private javax.swing.JButton btnDeleteCharacter;
+    private javax.swing.JButton btnDeleteEntry;
+    private javax.swing.JButton btnDeleteItem;
+    private javax.swing.JButton btnDeleteSkill;
+    private javax.swing.JButton btnDeleteWeapon;
+    private javax.swing.JTextField txtElementalAc;
+    private javax.swing.JLabel lblElementalAc;
+    private javax.swing.JCheckBox chkEquipped;
+    private javax.swing.JLabel lblEquipped;
+    private javax.swing.JButton btnForget;
+    private javax.swing.JTextField txtHealth;
+    private javax.swing.JLabel lblHealth;
+    private javax.swing.JPanel pnlInventoryButtons;
+    private javax.swing.JPanel pnlInventoryFields;
+    private javax.swing.JPanel pnlInventoryForm;
+    private javax.swing.JScrollPane scrInventory;
+    private javax.swing.JPanel pnlInventoryTab;
+    private javax.swing.JTable tblInventory;
+    private javax.swing.JComboBox<String> cmbItem;
+    private javax.swing.JTextField txtItemDescription;
+    private javax.swing.JLabel lblItemDescription;
+    private javax.swing.JLabel lblItem;
+    private javax.swing.JTextField txtItemName;
+    private javax.swing.JLabel lblItemName;
+    private javax.swing.JTextField txtItemWeight;
+    private javax.swing.JLabel lblItemWeight;
+    private javax.swing.JPanel pnlItemsButtons;
+    private javax.swing.JPanel pnlItemsFields;
+    private javax.swing.JPanel pnlItemsForm;
+    private javax.swing.JScrollPane scrItems;
+    private javax.swing.JPanel pnlItemsTab;
+    private javax.swing.JTable tblItems;
+    private javax.swing.JTextField txtLanguages;
+    private javax.swing.JLabel lblLanguages;
+    private javax.swing.JButton btnLearn;
+    private javax.swing.JPanel pnlLeft;
+    private javax.swing.JTextField txtLevel;
+    private javax.swing.JLabel lblLevel;
+    private javax.swing.JTextField txtMana;
+    private javax.swing.JLabel lblMana;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JButton btnNewAbility;
+    private javax.swing.JButton btnNewAmmo;
+    private javax.swing.JButton btnNewArmor;
+    private javax.swing.JButton btnNewBond;
+    private javax.swing.JButton btnNewCharacter;
+    private javax.swing.JButton btnNewEntry;
+    private javax.swing.JButton btnNewItem;
+    private javax.swing.JButton btnNewSkill;
+    private javax.swing.JButton btnNewWeapon;
+    private javax.swing.JTextField txtOrigin;
+    private javax.swing.JLabel lblOrigin;
+    private javax.swing.JTextField txtPhysicalAc;
+    private javax.swing.JLabel lblPhysicalAc;
+    private javax.swing.JTextField txtQuantity;
+    private javax.swing.JLabel lblQuantity;
+    private javax.swing.JTextField txtRace;
+    private javax.swing.JLabel lblRace;
+    private javax.swing.JTextField txtSanity;
+    private javax.swing.JLabel lblSanity;
+    private javax.swing.JButton btnSaveAbility;
+    private javax.swing.JButton btnSaveAmmo;
+    private javax.swing.JButton btnSaveArmor;
+    private javax.swing.JButton btnSaveBond;
+    private javax.swing.JButton btnSaveCharacter;
+    private javax.swing.JButton btnSaveEntry;
+    private javax.swing.JButton btnSaveItem;
+    private javax.swing.JButton btnSaveSkill;
+    private javax.swing.JButton btnSaveWeapon;
+    private javax.swing.JTextField txtSearch;
+    private javax.swing.JLabel lblSearch;
+    private javax.swing.JPanel pnlSearch;
+    private javax.swing.JTextField txtSkillName;
+    private javax.swing.JLabel lblSkillName;
+    private javax.swing.JTextField txtSkillValue;
+    private javax.swing.JLabel lblSkillValue;
+    private javax.swing.JPanel pnlSkillsButtons;
+    private javax.swing.JPanel pnlSkillsFields;
+    private javax.swing.JPanel pnlSkillsForm;
+    private javax.swing.JScrollPane scrSkills;
+    private javax.swing.JPanel pnlSkillsTab;
+    private javax.swing.JTable tblSkills;
+    private javax.swing.JTextField txtStamina;
+    private javax.swing.JLabel lblStamina;
+    private javax.swing.JTextField txtSubclass;
+    private javax.swing.JLabel lblSubclass;
+    private javax.swing.JTabbedPane tabMain;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTextField txtWeaponAttribute;
+    private javax.swing.JLabel lblWeaponAttribute;
+    private javax.swing.JTextField txtWeaponDamage;
+    private javax.swing.JLabel lblWeaponDamage;
+    private javax.swing.JTextField txtWeaponDescription;
+    private javax.swing.JLabel lblWeaponDescription;
+    private javax.swing.JTextField txtWeaponMultiplier;
+    private javax.swing.JLabel lblWeaponMultiplier;
+    private javax.swing.JTextField txtWeaponName;
+    private javax.swing.JLabel lblWeaponName;
+    private javax.swing.JTextField txtWeaponRange;
+    private javax.swing.JLabel lblWeaponRange;
+    private javax.swing.JTextField txtWeaponWeight;
+    private javax.swing.JLabel lblWeaponWeight;
+    private javax.swing.JPanel pnlWeaponsButtons;
+    private javax.swing.JPanel pnlWeaponsFields;
+    private javax.swing.JPanel pnlWeaponsForm;
+    private javax.swing.JScrollPane scrWeapons;
+    private javax.swing.JPanel pnlWeaponsTab;
+    private javax.swing.JTable tblWeapons;
     // End of variables declaration//GEN-END:variables
 }
