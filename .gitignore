@@ -1,1 +1,17 @@
+# Gradle
+.gradle/
+build/
+
+# NetBeans
 /dist/
+.nb-gradle/
+nbproject/private/
+
+# VS Code Java extension output
+target/
+
+# IDE / OS
+*.class
+.idea/
+*.iml
+.DS_Store
