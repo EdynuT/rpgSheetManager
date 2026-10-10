@@ -27,7 +27,7 @@
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="lblTitle">
+    <Component class="javax.swing.JLabel" name="titleLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="18" style="1"/>
@@ -46,7 +46,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Container class="javax.swing.JPanel" name="pnlLeft">
+    <Container class="javax.swing.JPanel" name="leftPanel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -67,7 +67,7 @@
         <Property name="verticalGap" type="int" value="5"/>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="pnlSearch">
+        <Container class="javax.swing.JPanel" name="searchPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
               <BorderConstraints direction="First"/>
@@ -78,7 +78,7 @@
             <Property name="verticalGap" type="int" value="3"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblSearch">
+            <Component class="javax.swing.JLabel" name="searchLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Character name"/>
               </Properties>
@@ -88,7 +88,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtSearch">
+            <Component class="javax.swing.JTextField" name="searchField">
               <Events>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="searchFieldKeyReleased"/>
               </Events>
@@ -100,7 +100,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JScrollPane" name="scrCharacter">
+        <Container class="javax.swing.JScrollPane" name="characterScroll">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
@@ -112,7 +112,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JList" name="lstCharacter">
+            <Component class="javax.swing.JList" name="characterList">
               <Properties>
                 <Property name="selectionMode" type="int" value="0"/>
                 <Property name="fixedCellHeight" type="int" value="110"/>
@@ -131,7 +131,7 @@
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JTabbedPane" name="tabMain">
+    <Container class="javax.swing.JTabbedPane" name="tabs">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -147,7 +147,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="pnlCharacterTab">
+        <Container class="javax.swing.JPanel" name="characterTab">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -168,7 +168,7 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="pnlCharacterFields">
+            <Container class="javax.swing.JPanel" name="characterFields">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="First"/>
@@ -182,124 +182,124 @@
                 <Property name="rows" type="int" value="0"/>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="lblName">
+                <Component class="javax.swing.JLabel" name="nameLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Name"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtName">
+                <Component class="javax.swing.JTextField" name="nameField">
                   <Properties>
                     <Property name="columns" type="int" value="12"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblLevel">
+                <Component class="javax.swing.JLabel" name="levelLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Level"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtLevel">
+                <Component class="javax.swing.JTextField" name="levelField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblAge">
+                <Component class="javax.swing.JLabel" name="ageLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Age"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtAge">
+                <Component class="javax.swing.JTextField" name="ageField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblRace">
+                <Component class="javax.swing.JLabel" name="raceLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Race"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtRace">
+                <Component class="javax.swing.JTextField" name="raceField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblClass">
+                <Component class="javax.swing.JLabel" name="classLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Class"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtClass">
+                <Component class="javax.swing.JTextField" name="classField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblSubclass">
+                <Component class="javax.swing.JLabel" name="subclassLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Subclass"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtSubclass">
+                <Component class="javax.swing.JTextField" name="subclassField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblOrigin">
+                <Component class="javax.swing.JLabel" name="originLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Origin"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtOrigin">
+                <Component class="javax.swing.JTextField" name="originField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblLanguages">
+                <Component class="javax.swing.JLabel" name="languagesLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Languages"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtLanguages">
+                <Component class="javax.swing.JTextField" name="languagesField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblHealth">
+                <Component class="javax.swing.JLabel" name="healthLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Health"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtHealth">
+                <Component class="javax.swing.JTextField" name="healthField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblBaseHealth">
+                <Component class="javax.swing.JLabel" name="baseHealthLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Base health"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtBaseHealth">
+                <Component class="javax.swing.JTextField" name="baseHealthField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblMana">
+                <Component class="javax.swing.JLabel" name="manaLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Mana"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtMana">
+                <Component class="javax.swing.JTextField" name="manaField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblBaseMana">
+                <Component class="javax.swing.JLabel" name="baseManaLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Base mana"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtBaseMana">
+                <Component class="javax.swing.JTextField" name="baseManaField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblStamina">
+                <Component class="javax.swing.JLabel" name="staminaLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Stamina"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtStamina">
+                <Component class="javax.swing.JTextField" name="staminaField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblBaseStamina">
+                <Component class="javax.swing.JLabel" name="baseStaminaLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Base stamina"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtBaseStamina">
+                <Component class="javax.swing.JTextField" name="baseStaminaField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblSanity">
+                <Component class="javax.swing.JLabel" name="sanityLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Sanity"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtSanity">
+                <Component class="javax.swing.JTextField" name="sanityField">
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblBaseSanity">
+                <Component class="javax.swing.JLabel" name="baseSanityLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Base sanity"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtBaseSanity">
+                <Component class="javax.swing.JTextField" name="baseSanityField">
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="pnlCharacterButtons">
+            <Container class="javax.swing.JPanel" name="characterButtons">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="Center"/>
@@ -310,7 +310,7 @@
                 <Property name="alignment" type="int" value="0"/>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="btnNewCharacter">
+                <Component class="javax.swing.JButton" name="newCharacterButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="New"/>
                   </Properties>
@@ -318,7 +318,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newCharacterButtonActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnSaveCharacter">
+                <Component class="javax.swing.JButton" name="saveCharacterButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Save"/>
                   </Properties>
@@ -326,7 +326,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveCharacterButtonActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnDeleteCharacter">
+                <Component class="javax.swing.JButton" name="deleteCharacterButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Delete"/>
                   </Properties>
@@ -334,7 +334,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteCharacterButtonActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnChangePhoto">
+                <Component class="javax.swing.JButton" name="changePhotoButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Change photo"/>
                   </Properties>
@@ -346,7 +346,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlSkillsTab">
+        <Container class="javax.swing.JPanel" name="skillsTab">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -367,7 +367,7 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrSkills">
+            <Container class="javax.swing.JScrollPane" name="skillsScroll">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -379,7 +379,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblSkills">
+                <Component class="javax.swing.JTable" name="skillsTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="2" rowCount="0">
@@ -394,7 +394,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="pnlSkillsForm">
+            <Container class="javax.swing.JPanel" name="skillsForm">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="After"/>
@@ -405,7 +405,7 @@
                 <Property name="verticalGap" type="int" value="10"/>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="pnlSkillsFields">
+                <Container class="javax.swing.JPanel" name="skillsFields">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="First"/>
@@ -419,26 +419,26 @@
                     <Property name="rows" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblSkillName">
+                    <Component class="javax.swing.JLabel" name="skillNameLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Skill"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtSkillName">
+                    <Component class="javax.swing.JTextField" name="skillNameField">
                       <Properties>
                         <Property name="columns" type="int" value="12"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblSkillValue">
+                    <Component class="javax.swing.JLabel" name="skillValueLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Value"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtSkillValue">
+                    <Component class="javax.swing.JTextField" name="skillValueField">
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="pnlSkillsButtons">
+                <Container class="javax.swing.JPanel" name="skillsButtons">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -449,7 +449,7 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnNewSkill">
+                    <Component class="javax.swing.JButton" name="newSkillButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="New"/>
                       </Properties>
@@ -457,7 +457,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newSkillButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSaveSkill">
+                    <Component class="javax.swing.JButton" name="saveSkillButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Save"/>
                       </Properties>
@@ -465,7 +465,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveSkillButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnDeleteSkill">
+                    <Component class="javax.swing.JButton" name="deleteSkillButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Delete"/>
                       </Properties>
@@ -479,7 +479,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlBondsTab">
+        <Container class="javax.swing.JPanel" name="bondsTab">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -500,7 +500,7 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrBonds">
+            <Container class="javax.swing.JScrollPane" name="bondsScroll">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -512,7 +512,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblBonds">
+                <Component class="javax.swing.JTable" name="bondsTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="2" rowCount="0">
@@ -527,7 +527,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="pnlBondsForm">
+            <Container class="javax.swing.JPanel" name="bondsForm">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="After"/>
@@ -538,7 +538,7 @@
                 <Property name="verticalGap" type="int" value="10"/>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="pnlBondsFields">
+                <Container class="javax.swing.JPanel" name="bondsFields">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="First"/>
@@ -552,26 +552,26 @@
                     <Property name="rows" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblBondName">
+                    <Component class="javax.swing.JLabel" name="bondNameLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Bond"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtBondName">
+                    <Component class="javax.swing.JTextField" name="bondNameField">
                       <Properties>
                         <Property name="columns" type="int" value="12"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblBondValue">
+                    <Component class="javax.swing.JLabel" name="bondValueLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Value"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtBondValue">
+                    <Component class="javax.swing.JTextField" name="bondValueField">
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="pnlBondsButtons">
+                <Container class="javax.swing.JPanel" name="bondsButtons">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -582,7 +582,7 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnNewBond">
+                    <Component class="javax.swing.JButton" name="newBondButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="New"/>
                       </Properties>
@@ -590,7 +590,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newBondButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSaveBond">
+                    <Component class="javax.swing.JButton" name="saveBondButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Save"/>
                       </Properties>
@@ -598,7 +598,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveBondButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnDeleteBond">
+                    <Component class="javax.swing.JButton" name="deleteBondButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Delete"/>
                       </Properties>
@@ -612,7 +612,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlAbilitiesTab">
+        <Container class="javax.swing.JPanel" name="abilitiesTab">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -633,7 +633,7 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrAbilities">
+            <Container class="javax.swing.JScrollPane" name="abilitiesScroll">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -645,7 +645,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblAbilities">
+                <Component class="javax.swing.JTable" name="abilitiesTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="7" rowCount="0">
@@ -665,7 +665,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="pnlAbilitiesForm">
+            <Container class="javax.swing.JPanel" name="abilitiesForm">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="After"/>
@@ -676,7 +676,7 @@
                 <Property name="verticalGap" type="int" value="10"/>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="pnlAbilitiesFields">
+                <Container class="javax.swing.JPanel" name="abilitiesFields">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="First"/>
@@ -690,70 +690,70 @@
                     <Property name="rows" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblAbilityName">
+                    <Component class="javax.swing.JLabel" name="abilityNameLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Name"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtAbilityName">
+                    <Component class="javax.swing.JTextField" name="abilityNameField">
                       <Properties>
                         <Property name="columns" type="int" value="12"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblCategory">
+                    <Component class="javax.swing.JLabel" name="categoryLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Category"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="cmbCategory">
+                    <Component class="javax.swing.JComboBox" name="categoryCombo">
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;com.edynu.rpgSheetManager.model.AbilityCategory&gt;"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblActionType">
+                    <Component class="javax.swing.JLabel" name="actionTypeLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Action"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="cmbActionType">
+                    <Component class="javax.swing.JComboBox" name="actionTypeCombo">
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;com.edynu.rpgSheetManager.model.ActionType&gt;"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblCostType">
+                    <Component class="javax.swing.JLabel" name="costTypeLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Cost type"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="cmbCostType">
+                    <Component class="javax.swing.JComboBox" name="costTypeCombo">
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;com.edynu.rpgSheetManager.model.CostType&gt;"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblCost">
+                    <Component class="javax.swing.JLabel" name="costLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Cost"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtCost">
+                    <Component class="javax.swing.JTextField" name="costField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblAbilityDescription">
+                    <Component class="javax.swing.JLabel" name="abilityDescriptionLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Description"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtAbilityDescription">
+                    <Component class="javax.swing.JTextField" name="abilityDescriptionField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblActive">
+                    <Component class="javax.swing.JLabel" name="activeLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Active"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="chkActive">
+                    <Component class="javax.swing.JCheckBox" name="activeCheck">
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="pnlAbilitiesButtons">
+                <Container class="javax.swing.JPanel" name="abilitiesButtons">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -764,7 +764,7 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnNewAbility">
+                    <Component class="javax.swing.JButton" name="newAbilityButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="New"/>
                       </Properties>
@@ -772,7 +772,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newAbilityButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSaveAbility">
+                    <Component class="javax.swing.JButton" name="saveAbilityButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Save"/>
                       </Properties>
@@ -780,7 +780,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveAbilityButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnDeleteAbility">
+                    <Component class="javax.swing.JButton" name="deleteAbilityButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Delete"/>
                       </Properties>
@@ -788,7 +788,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteAbilityButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnLearn">
+                    <Component class="javax.swing.JButton" name="learnButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Learn"/>
                       </Properties>
@@ -796,7 +796,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="learnButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnForget">
+                    <Component class="javax.swing.JButton" name="forgetButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Forget"/>
                       </Properties>
@@ -810,7 +810,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlInventoryTab">
+        <Container class="javax.swing.JPanel" name="inventoryTab">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -831,7 +831,7 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrInventory">
+            <Container class="javax.swing.JScrollPane" name="inventoryScroll">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -843,7 +843,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblInventory">
+                <Component class="javax.swing.JTable" name="inventoryTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="0">
@@ -861,7 +861,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="pnlInventoryForm">
+            <Container class="javax.swing.JPanel" name="inventoryForm">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="After"/>
@@ -872,7 +872,7 @@
                 <Property name="verticalGap" type="int" value="10"/>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="pnlInventoryFields">
+                <Container class="javax.swing.JPanel" name="inventoryFields">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="First"/>
@@ -886,33 +886,33 @@
                     <Property name="rows" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblItem">
+                    <Component class="javax.swing.JLabel" name="itemLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Item"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="cmbItem">
+                    <Component class="javax.swing.JComboBox" name="itemCombo">
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblQuantity">
+                    <Component class="javax.swing.JLabel" name="quantityLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Quantity"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtQuantity">
+                    <Component class="javax.swing.JTextField" name="quantityField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblEquipped">
+                    <Component class="javax.swing.JLabel" name="equippedLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Equipped"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="chkEquipped">
+                    <Component class="javax.swing.JCheckBox" name="equippedCheck">
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="pnlInventoryButtons">
+                <Container class="javax.swing.JPanel" name="inventoryButtons">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -923,7 +923,7 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnNewEntry">
+                    <Component class="javax.swing.JButton" name="newEntryButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="New"/>
                       </Properties>
@@ -931,7 +931,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newEntryButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSaveEntry">
+                    <Component class="javax.swing.JButton" name="saveEntryButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Save"/>
                       </Properties>
@@ -939,7 +939,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveEntryButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnDeleteEntry">
+                    <Component class="javax.swing.JButton" name="deleteEntryButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Delete"/>
                       </Properties>
@@ -953,7 +953,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlItemsTab">
+        <Container class="javax.swing.JPanel" name="itemsTab">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -974,7 +974,7 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrItems">
+            <Container class="javax.swing.JScrollPane" name="itemsScroll">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -986,7 +986,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblItems">
+                <Component class="javax.swing.JTable" name="itemsTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="0">
@@ -1002,7 +1002,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="pnlItemsForm">
+            <Container class="javax.swing.JPanel" name="itemsForm">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="After"/>
@@ -1013,7 +1013,7 @@
                 <Property name="verticalGap" type="int" value="10"/>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="pnlItemsFields">
+                <Container class="javax.swing.JPanel" name="itemsFields">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="First"/>
@@ -1027,33 +1027,33 @@
                     <Property name="rows" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblItemName">
+                    <Component class="javax.swing.JLabel" name="itemNameLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Name"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtItemName">
+                    <Component class="javax.swing.JTextField" name="itemNameField">
                       <Properties>
                         <Property name="columns" type="int" value="12"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblItemWeight">
+                    <Component class="javax.swing.JLabel" name="itemWeightLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Weight"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtItemWeight">
+                    <Component class="javax.swing.JTextField" name="itemWeightField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblItemDescription">
+                    <Component class="javax.swing.JLabel" name="itemDescriptionLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Description"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtItemDescription">
+                    <Component class="javax.swing.JTextField" name="itemDescriptionField">
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="pnlItemsButtons">
+                <Container class="javax.swing.JPanel" name="itemsButtons">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -1064,7 +1064,7 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnNewItem">
+                    <Component class="javax.swing.JButton" name="newItemButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="New"/>
                       </Properties>
@@ -1072,7 +1072,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newItemButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSaveItem">
+                    <Component class="javax.swing.JButton" name="saveItemButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Save"/>
                       </Properties>
@@ -1080,7 +1080,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveItemButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnDeleteItem">
+                    <Component class="javax.swing.JButton" name="deleteItemButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Delete"/>
                       </Properties>
@@ -1094,7 +1094,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlWeaponsTab">
+        <Container class="javax.swing.JPanel" name="weaponsTab">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -1115,7 +1115,7 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrWeapons">
+            <Container class="javax.swing.JScrollPane" name="weaponsScroll">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -1127,7 +1127,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblWeapons">
+                <Component class="javax.swing.JTable" name="weaponsTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="6" rowCount="0">
@@ -1146,7 +1146,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="pnlWeaponsForm">
+            <Container class="javax.swing.JPanel" name="weaponsForm">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="After"/>
@@ -1157,7 +1157,7 @@
                 <Property name="verticalGap" type="int" value="10"/>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="pnlWeaponsFields">
+                <Container class="javax.swing.JPanel" name="weaponsFields">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="First"/>
@@ -1171,61 +1171,61 @@
                     <Property name="rows" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblWeaponName">
+                    <Component class="javax.swing.JLabel" name="weaponNameLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Name"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtWeaponName">
+                    <Component class="javax.swing.JTextField" name="weaponNameField">
                       <Properties>
                         <Property name="columns" type="int" value="12"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblWeaponWeight">
+                    <Component class="javax.swing.JLabel" name="weaponWeightLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Weight"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtWeaponWeight">
+                    <Component class="javax.swing.JTextField" name="weaponWeightField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblWeaponAttribute">
+                    <Component class="javax.swing.JLabel" name="weaponAttributeLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Attribute"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtWeaponAttribute">
+                    <Component class="javax.swing.JTextField" name="weaponAttributeField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblWeaponDamage">
+                    <Component class="javax.swing.JLabel" name="weaponDamageLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Damage"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtWeaponDamage">
+                    <Component class="javax.swing.JTextField" name="weaponDamageField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblWeaponRange">
+                    <Component class="javax.swing.JLabel" name="weaponRangeLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Critical range"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtWeaponRange">
+                    <Component class="javax.swing.JTextField" name="weaponRangeField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblWeaponMultiplier">
+                    <Component class="javax.swing.JLabel" name="weaponMultiplierLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Critical multiplier"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtWeaponMultiplier">
+                    <Component class="javax.swing.JTextField" name="weaponMultiplierField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblWeaponDescription">
+                    <Component class="javax.swing.JLabel" name="weaponDescriptionLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Description"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtWeaponDescription">
+                    <Component class="javax.swing.JTextField" name="weaponDescriptionField">
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="pnlWeaponsButtons">
+                <Container class="javax.swing.JPanel" name="weaponsButtons">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -1236,7 +1236,7 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnNewWeapon">
+                    <Component class="javax.swing.JButton" name="newWeaponButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="New"/>
                       </Properties>
@@ -1244,7 +1244,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newWeaponButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSaveWeapon">
+                    <Component class="javax.swing.JButton" name="saveWeaponButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Save"/>
                       </Properties>
@@ -1252,7 +1252,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveWeaponButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnDeleteWeapon">
+                    <Component class="javax.swing.JButton" name="deleteWeaponButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Delete"/>
                       </Properties>
@@ -1266,7 +1266,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlArmorTab">
+        <Container class="javax.swing.JPanel" name="armorTab">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -1287,7 +1287,7 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrArmor">
+            <Container class="javax.swing.JScrollPane" name="armorScroll">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -1299,7 +1299,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblArmor">
+                <Component class="javax.swing.JTable" name="armorTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">
@@ -1316,7 +1316,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="pnlArmorForm">
+            <Container class="javax.swing.JPanel" name="armorForm">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="After"/>
@@ -1327,7 +1327,7 @@
                 <Property name="verticalGap" type="int" value="10"/>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="pnlArmorFields">
+                <Container class="javax.swing.JPanel" name="armorFields">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="First"/>
@@ -1341,47 +1341,47 @@
                     <Property name="rows" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblArmorName">
+                    <Component class="javax.swing.JLabel" name="armorNameLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Name"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtArmorName">
+                    <Component class="javax.swing.JTextField" name="armorNameField">
                       <Properties>
                         <Property name="columns" type="int" value="12"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblArmorWeight">
+                    <Component class="javax.swing.JLabel" name="armorWeightLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Weight"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtArmorWeight">
+                    <Component class="javax.swing.JTextField" name="armorWeightField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblPhysicalAc">
+                    <Component class="javax.swing.JLabel" name="physicalAcLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Physical AC"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtPhysicalAc">
+                    <Component class="javax.swing.JTextField" name="physicalAcField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblElementalAc">
+                    <Component class="javax.swing.JLabel" name="elementalAcLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Elemental AC"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtElementalAc">
+                    <Component class="javax.swing.JTextField" name="elementalAcField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblArmorDescription">
+                    <Component class="javax.swing.JLabel" name="armorDescriptionLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Description"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtArmorDescription">
+                    <Component class="javax.swing.JTextField" name="armorDescriptionField">
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="pnlArmorButtons">
+                <Container class="javax.swing.JPanel" name="armorButtons">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -1392,7 +1392,7 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnNewArmor">
+                    <Component class="javax.swing.JButton" name="newArmorButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="New"/>
                       </Properties>
@@ -1400,7 +1400,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newArmorButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSaveArmor">
+                    <Component class="javax.swing.JButton" name="saveArmorButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Save"/>
                       </Properties>
@@ -1408,7 +1408,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveArmorButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnDeleteArmor">
+                    <Component class="javax.swing.JButton" name="deleteArmorButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Delete"/>
                       </Properties>
@@ -1422,7 +1422,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlAmmunitionTab">
+        <Container class="javax.swing.JPanel" name="ammunitionTab">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -1443,7 +1443,7 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrAmmunition">
+            <Container class="javax.swing.JScrollPane" name="ammunitionScroll">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -1455,7 +1455,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblAmmunition">
+                <Component class="javax.swing.JTable" name="ammunitionTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="0">
@@ -1471,7 +1471,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="pnlAmmunitionForm">
+            <Container class="javax.swing.JPanel" name="ammunitionForm">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="After"/>
@@ -1482,7 +1482,7 @@
                 <Property name="verticalGap" type="int" value="10"/>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="pnlAmmunitionFields">
+                <Container class="javax.swing.JPanel" name="ammunitionFields">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="First"/>
@@ -1496,40 +1496,40 @@
                     <Property name="rows" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblAmmoName">
+                    <Component class="javax.swing.JLabel" name="ammoNameLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Name"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtAmmoName">
+                    <Component class="javax.swing.JTextField" name="ammoNameField">
                       <Properties>
                         <Property name="columns" type="int" value="12"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblAmmoWeight">
+                    <Component class="javax.swing.JLabel" name="ammoWeightLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Weight"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtAmmoWeight">
+                    <Component class="javax.swing.JTextField" name="ammoWeightField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblAmmoDamage">
+                    <Component class="javax.swing.JLabel" name="ammoDamageLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Damage"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtAmmoDamage">
+                    <Component class="javax.swing.JTextField" name="ammoDamageField">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblAmmoDescription">
+                    <Component class="javax.swing.JLabel" name="ammoDescriptionLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Description"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtAmmoDescription">
+                    <Component class="javax.swing.JTextField" name="ammoDescriptionField">
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="pnlAmmunitionButtons">
+                <Container class="javax.swing.JPanel" name="ammunitionButtons">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -1540,7 +1540,7 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnNewAmmo">
+                    <Component class="javax.swing.JButton" name="newAmmoButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="New"/>
                       </Properties>
@@ -1548,7 +1548,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newAmmoButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSaveAmmo">
+                    <Component class="javax.swing.JButton" name="saveAmmoButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Save"/>
                       </Properties>
@@ -1556,7 +1556,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveAmmoButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnDeleteAmmo">
+                    <Component class="javax.swing.JButton" name="deleteAmmoButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Delete"/>
                       </Properties>
