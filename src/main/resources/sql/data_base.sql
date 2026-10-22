@@ -48,7 +48,7 @@ CREATE TABLE skill (
     UNIQUE (character_id, skill_name)
 );
 
-CREATE TABLE secondary_bond (
+CREATE TABLE second_skill (
     id SERIAL PRIMARY KEY,
     character_id INT NOT NULL REFERENCES player_character(id) ON DELETE CASCADE,
     name VARCHAR(100) NOT NULL,

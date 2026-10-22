@@ -1,21 +1,21 @@
 package com.edynu.rpgSheetManager.model;
 
-public class SecondBound {
+public class SecondSkill {
     private Integer id;
     private Integer characterId;
-    private String boundName;
+    private String secondSkillName;
     private Integer value = 0;
 
-    public SecondBound() {
+    public SecondSkill() {
     }
 
-    public SecondBound(Integer id, Integer characterId, String boundName, Integer value) {
+    public SecondSkill(Integer id, Integer characterId, String secondSkillName, Integer value) {
         this.id = id;
         this.characterId = characterId;
-        if (boundName != null && !boundName.trim().isEmpty()) {
-            this.boundName = boundName;
+        if (secondSkillName != null && !secondSkillName.trim().isEmpty()) {
+            this.secondSkillName = secondSkillName;
         } else {
-            throw new IllegalArgumentException("Bound name must not be null!");
+            throw new IllegalArgumentException("Second skill name must not be null!");
         }
         this.value = (value != null) ? value : 0;
     }
@@ -36,12 +36,12 @@ public class SecondBound {
         this.characterId = characterId;
     }
 
-    public String getBoundName() {
-        return boundName;
+    public String getSecondSkillName() {
+        return secondSkillName;
     }
 
-    public void setBoundName(String boundName) {
-        this.boundName = boundName;
+    public void setSecondSkillName(String secondSkillName) {
+        this.secondSkillName = secondSkillName;
     }
 
 

@@ -1,23 +1,23 @@
 package com.edynu.rpgSheetManager.dao;
 
 import com.edynu.rpgSheetManager.config.Database;
-import com.edynu.rpgSheetManager.model.SecondBound;
+import com.edynu.rpgSheetManager.model.SecondSkill;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SecondBoundDAO implements DAO<SecondBound> {
+public class SecondSkillDAO implements DAO<SecondSkill> {
 
     @Override
-    public SecondBound insert(SecondBound obj) throws SQLException {
-        String sql = "INSERT INTO secondary_bond (character_id, name, value) " +
+    public SecondSkill insert(SecondSkill obj) throws SQLException {
+        String sql = "INSERT INTO second_skill (character_id, name, value) " +
                      "VALUES (?, ?, ?) RETURNING id";
 
         try (Connection con = Database.connect();
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setInt(1, obj.getCharacterId());
-            stmt.setString(2, obj.getBoundName());
+            stmt.setString(2, obj.getSecondSkillName());
             stmt.setInt(3, obj.getValue());
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -30,14 +30,14 @@ public class SecondBoundDAO implements DAO<SecondBound> {
     }
 
     @Override
-    public void update(SecondBound obj) throws SQLException {
-        String sql = "UPDATE secondary_bond SET character_id = ?, name = ?, value = ? WHERE id = ?";
+    public void update(SecondSkill obj) throws SQLException {
+        String sql = "UPDATE second_skill SET character_id = ?, name = ?, value = ? WHERE id = ?";
 
         try (Connection con = Database.connect();
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setInt(1, obj.getCharacterId());
-            stmt.setString(2, obj.getBoundName());
+            stmt.setString(2, obj.getSecondSkillName());
             stmt.setInt(3, obj.getValue());
             stmt.setInt(4, obj.getId());
             stmt.executeUpdate();
@@ -46,7 +46,7 @@ public class SecondBoundDAO implements DAO<SecondBound> {
 
     @Override
     public void delete(int id) throws SQLException {
-        String sql = "DELETE FROM secondary_bond WHERE id = ?";
+        String sql = "DELETE FROM second_skill WHERE id = ?";
         try (Connection con = Database.connect();
              PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -55,24 +55,24 @@ public class SecondBoundDAO implements DAO<SecondBound> {
     }
 
     @Override
-    public List<SecondBound> list() throws SQLException {
-        String sql = "SELECT * FROM secondary_bond";
-        List<SecondBound> bonds = new ArrayList<>();
+    public List<SecondSkill> list() throws SQLException {
+        String sql = "SELECT * FROM second_skill";
+        List<SecondSkill> secondSkills = new ArrayList<>();
 
         try (Connection con = Database.connect();
              PreparedStatement stmt = con.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                bonds.add(mapRow(rs));
+                secondSkills.add(mapRow(rs));
             }
         }
-        return bonds;
+        return secondSkills;
     }
 
-    public List<SecondBound> listByCharacter(int characterId) throws SQLException {
-        String sql = "SELECT * FROM secondary_bond WHERE character_id = ? ORDER BY name";
-        List<SecondBound> bonds = new ArrayList<>();
+    public List<SecondSkill> listByCharacter(int characterId) throws SQLException {
+        String sql = "SELECT * FROM second_skill WHERE character_id = ? ORDER BY name";
+        List<SecondSkill> secondSkills = new ArrayList<>();
 
         try (Connection con = Database.connect();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -80,16 +80,16 @@ public class SecondBoundDAO implements DAO<SecondBound> {
             stmt.setInt(1, characterId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    bonds.add(mapRow(rs));
+                    secondSkills.add(mapRow(rs));
                 }
             }
         }
-        return bonds;
+        return secondSkills;
     }
 
     @Override
-    public SecondBound findById(int id) throws SQLException {
-        String sql = "SELECT * FROM secondary_bond WHERE id = ?";
+    public SecondSkill findById(int id) throws SQLException {
+        String sql = "SELECT * FROM second_skill WHERE id = ?";
 
         try (Connection con = Database.connect();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -101,8 +101,8 @@ public class SecondBoundDAO implements DAO<SecondBound> {
         }
     }
 
-    private SecondBound mapRow(ResultSet rs) throws SQLException {
-        return new SecondBound(
+    private SecondSkill mapRow(ResultSet rs) throws SQLException {
+        return new SecondSkill(
                 rs.getInt("id"),
                 rs.getInt("character_id"),
                 rs.getString("name"),

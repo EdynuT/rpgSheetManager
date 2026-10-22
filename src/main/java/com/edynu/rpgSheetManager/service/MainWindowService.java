@@ -7,7 +7,7 @@ import com.edynu.rpgSheetManager.dao.CharacterAbilityDAO;
 import com.edynu.rpgSheetManager.dao.InventoryDAO;
 import com.edynu.rpgSheetManager.dao.ItemDAO;
 import com.edynu.rpgSheetManager.dao.PlayerCharacterDAO;
-import com.edynu.rpgSheetManager.dao.SecondBoundDAO;
+import com.edynu.rpgSheetManager.dao.SecondSkillDAO;
 import com.edynu.rpgSheetManager.dao.SkillDAO;
 import com.edynu.rpgSheetManager.dao.WeaponDAO;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ import com.edynu.rpgSheetManager.model.Inventory;
 import com.edynu.rpgSheetManager.model.Item;
 import com.edynu.rpgSheetManager.model.ItemCategory;
 import com.edynu.rpgSheetManager.model.PlayerCharacter;
-import com.edynu.rpgSheetManager.model.SecondBound;
+import com.edynu.rpgSheetManager.model.SecondSkill;
 import com.edynu.rpgSheetManager.model.Skill;
 import com.edynu.rpgSheetManager.model.Weapon;
 
@@ -31,7 +31,7 @@ import com.edynu.rpgSheetManager.model.Weapon;
 public class MainWindowService {
     private final PlayerCharacterDAO characterDAO = new PlayerCharacterDAO();
     private final SkillDAO skillDAO = new SkillDAO();
-    private final SecondBoundDAO bondDAO = new SecondBoundDAO();
+    private final SecondSkillDAO secondSkillDAO = new SecondSkillDAO();
     private final AbilityDAO abilityDAO = new AbilityDAO();
     private final CharacterAbilityDAO characterAbilityDAO = new CharacterAbilityDAO();
     private final InventoryDAO inventoryDAO = new InventoryDAO();
@@ -76,22 +76,22 @@ public class MainWindowService {
         skillDAO.delete(id);
     }
 
-    // Secondary bonds
+    // Second skills
 
-    public List<SecondBound> listBonds(int characterId) throws SQLException {
-        return bondDAO.listByCharacter(characterId);
+    public List<SecondSkill> listSecondSkills(int characterId) throws SQLException {
+        return secondSkillDAO.listByCharacter(characterId);
     }
 
-    public void saveBond(SecondBound bond) throws SQLException {
-        if (bond.getId() == null) {
-            bondDAO.insert(bond);
+    public void saveSecondSkill(SecondSkill secondSkill) throws SQLException {
+        if (secondSkill.getId() == null) {
+            secondSkillDAO.insert(secondSkill);
         } else {
-            bondDAO.update(bond);
+            secondSkillDAO.update(secondSkill);
         }
     }
 
-    public void deleteBond(int id) throws SQLException {
-        bondDAO.delete(id);
+    public void deleteSecondSkill(int id) throws SQLException {
+        secondSkillDAO.delete(id);
     }
 
     // Abilities

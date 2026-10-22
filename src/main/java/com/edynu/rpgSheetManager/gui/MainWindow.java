@@ -40,10 +40,11 @@ import com.edynu.rpgSheetManager.model.Inventory;
 import com.edynu.rpgSheetManager.model.Item;
 import com.edynu.rpgSheetManager.model.ItemCategory;
 import com.edynu.rpgSheetManager.model.PlayerCharacter;
-import com.edynu.rpgSheetManager.model.SecondBound;
+import com.edynu.rpgSheetManager.model.SecondSkill;
 import com.edynu.rpgSheetManager.model.Skill;
 import com.edynu.rpgSheetManager.model.Weapon;
 import com.edynu.rpgSheetManager.service.MainWindowService;
+import com.edynu.rpgSheetManager.utils.DiceRoller;
 
 /**
  * Characters on the left and one tab per model on the right. Each tab has a table, the
@@ -61,7 +62,7 @@ public class MainWindow extends javax.swing.JFrame {
     private List<PlayerCharacter> characters = new ArrayList<>();
     private PlayerCharacter selected; // character clicked in the gallery, null when there is none
     private List<Skill> skills = new ArrayList<>();
-    private List<SecondBound> bonds = new ArrayList<>();
+    private List<SecondSkill> secondSkills = new ArrayList<>();
     private List<Ability> abilities = new ArrayList<>();
     private List<CharacterAbility> learned = new ArrayList<>();
     private List<Inventory> inventory = new ArrayList<>();
@@ -157,7 +158,7 @@ public class MainWindow extends javax.swing.JFrame {
         txtSanity.setText(String.valueOf(selected.getCurrentSanity()));
         txtBaseSanity.setText(String.valueOf(selected.getBaseSanity()));
         loadSkills();
-        loadBonds();
+        loadSecondSkills();
         loadAbilities();
         loadInventory();
     }
@@ -168,7 +169,7 @@ public class MainWindow extends javax.swing.JFrame {
         clear(txtName, txtLevel, txtAge, txtRace, txtClass, txtSubclass, txtOrigin, txtLanguages,
                 txtHealth, txtBaseHealth, txtMana, txtBaseMana, txtStamina, txtBaseStamina, txtSanity, txtBaseSanity);
         loadSkills();
-        loadBonds();
+        loadSecondSkills();
         loadAbilities();
         loadInventory();
     }
@@ -197,28 +198,28 @@ public class MainWindow extends javax.swing.JFrame {
         clear(txtSkillName, txtSkillValue);
     }
 
-    // ---------------------------------------------------------------- Bonds
+    // ---------------------------------------------------------------- Second skills
 
-    private void loadBonds() {
-        bonds = new ArrayList<>();
+    private void loadSecondSkills() {
+        secondSkills = new ArrayList<>();
         try {
             if (selected != null) {
-                bonds = service.listBonds(selected.getId());
+                secondSkills = service.listSecondSkills(selected.getId());
             }
         } catch (SQLException e) {
             showError(e);
         }
-        DefaultTableModel model = (DefaultTableModel) tblBonds.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblSecondSkills.getModel();
         model.setRowCount(0);
-        for (SecondBound bond : bonds) {
-            model.addRow(new Object[] {bond.getBoundName(), bond.getValue()});
+        for (SecondSkill secondSkill : secondSkills) {
+            model.addRow(new Object[] {secondSkill.getSecondSkillName(), secondSkill.getValue()});
         }
-        clearBondForm();
+        clearSecondSkillForm();
     }
 
-    private void clearBondForm() {
-        tblBonds.clearSelection();
-        clear(txtBondName, txtBondValue);
+    private void clearSecondSkillForm() {
+        tblSecondSkills.clearSelection();
+        clear(txtSecondSkillName, txtSecondSkillValue);
     }
 
     // ---------------------------------------------------------------- Abilities
@@ -405,6 +406,32 @@ public class MainWindow extends javax.swing.JFrame {
 
     // ---------------------------------------------------------------- Helpers
 
+    /**
+     * Rolls the dice typed in a "Dice" field and shows the result in a message.
+     * Used by the Roll buttons of the Skills and Second Skills tabs.
+     * <p>
+     * Accepts what {@link DiceRoller#diceParser(String)} accepts: dice ("1d20"), numbers,
+     * + - * / and parentheses, with or without spaces, e.g. "1d20 + 5" or "(2d6 + 3) * 2".
+     *
+     * @param field the text field with the dice expression
+     * @param name  the name of the skill being rolled, shown as the title of the result
+     */
+    private void rollCustomDice(JTextField field, String name) {
+        String expression = field.getText().trim();
+        if (expression.isEmpty()) {
+            showMessage("Type the dice to roll first, e.g. 1d20 + 5.");
+            return;
+        }
+        try {
+            int result = new DiceRoller().diceParser(expression);
+            String title = name.trim().isEmpty() ? "Roll" : name.trim();
+            showMessage(title + "\n" + expression + " = " + result);
+        } catch (RuntimeException e) {
+            // DiceRoller throws IllegalStateException when the text is not a valid dice expression.
+            showMessage("\"" + expression + "\" is not a valid roll. Use something like 1d20 + 5 or 2d6 - 1.");
+        }
+    }
+
     private void clear(JTextField... fields) {
         for (JTextField field : fields) {
             field.setText("");
@@ -505,23 +532,29 @@ public class MainWindow extends javax.swing.JFrame {
         txtSkillName = new javax.swing.JTextField();
         lblSkillValue = new javax.swing.JLabel();
         txtSkillValue = new javax.swing.JTextField();
+        lblSkillDice = new javax.swing.JLabel();
+        txtSkillDice = new javax.swing.JTextField();
         pnlSkillsButtons = new javax.swing.JPanel();
         btnNewSkill = new javax.swing.JButton();
         btnSaveSkill = new javax.swing.JButton();
         btnDeleteSkill = new javax.swing.JButton();
-        pnlBondsTab = new javax.swing.JPanel();
-        scrBonds = new javax.swing.JScrollPane();
-        tblBonds = new javax.swing.JTable();
-        pnlBondsForm = new javax.swing.JPanel();
-        pnlBondsFields = new javax.swing.JPanel();
-        lblBondName = new javax.swing.JLabel();
-        txtBondName = new javax.swing.JTextField();
-        lblBondValue = new javax.swing.JLabel();
-        txtBondValue = new javax.swing.JTextField();
-        pnlBondsButtons = new javax.swing.JPanel();
-        btnNewBond = new javax.swing.JButton();
-        btnSaveBond = new javax.swing.JButton();
-        btnDeleteBond = new javax.swing.JButton();
+        btnRollSkillDice = new javax.swing.JButton();
+        pnlSecondSkillsTab = new javax.swing.JPanel();
+        scrSecondSkills = new javax.swing.JScrollPane();
+        tblSecondSkills = new javax.swing.JTable();
+        pnlSecondSkillsForm = new javax.swing.JPanel();
+        pnlSecondSkillsFields = new javax.swing.JPanel();
+        lblSecondSkillName = new javax.swing.JLabel();
+        txtSecondSkillName = new javax.swing.JTextField();
+        lblSecondSkillValue = new javax.swing.JLabel();
+        txtSecondSkillValue = new javax.swing.JTextField();
+        lblSecondSkillDice = new javax.swing.JLabel();
+        txtSecondSkillDice = new javax.swing.JTextField();
+        pnlSecondSkillsButtons = new javax.swing.JPanel();
+        btnNewSecondSkill = new javax.swing.JButton();
+        btnSaveSecondSkill = new javax.swing.JButton();
+        btnDeleteSecondSkill = new javax.swing.JButton();
+        btnRollSecondSkillDice = new javax.swing.JButton();
         pnlAbilitiesTab = new javax.swing.JPanel();
         scrAbilities = new javax.swing.JScrollPane();
         tblAbilities = new javax.swing.JTable();
@@ -547,6 +580,7 @@ public class MainWindow extends javax.swing.JFrame {
         btnDeleteAbility = new javax.swing.JButton();
         btnLearn = new javax.swing.JButton();
         btnForget = new javax.swing.JButton();
+        btnRollDamage = new javax.swing.JButton();
         pnlInventoryTab = new javax.swing.JPanel();
         scrInventory = new javax.swing.JScrollPane();
         tblInventory = new javax.swing.JTable();
@@ -836,6 +870,12 @@ public class MainWindow extends javax.swing.JFrame {
         pnlSkillsFields.add(lblSkillValue);
         pnlSkillsFields.add(txtSkillValue);
 
+        lblSkillDice.setText("Dice");
+        pnlSkillsFields.add(lblSkillDice);
+
+        txtSkillDice.setToolTipText("Dice to roll, e.g. 1d20 + 5");
+        pnlSkillsFields.add(txtSkillDice);
+
         pnlSkillsForm.add(pnlSkillsFields, java.awt.BorderLayout.PAGE_START);
 
         pnlSkillsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -864,21 +904,29 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlSkillsButtons.add(btnDeleteSkill);
 
+        btnRollSkillDice.setText("Roll");
+        btnRollSkillDice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rollSkillDiceButtonActionPerformed(evt);
+            }
+        });
+        pnlSkillsButtons.add(btnRollSkillDice);
+
         pnlSkillsForm.add(pnlSkillsButtons, java.awt.BorderLayout.CENTER);
 
         pnlSkillsTab.add(pnlSkillsForm, java.awt.BorderLayout.LINE_END);
 
         tabMain.addTab("Skills", pnlSkillsTab);
 
-        pnlBondsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        pnlBondsTab.setLayout(new java.awt.BorderLayout(10, 10));
+        pnlSecondSkillsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlSecondSkillsTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        tblBonds.setModel(new javax.swing.table.DefaultTableModel(
+        tblSecondSkills.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Bond", "Value"
+                "Second Skill", "Value"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -889,62 +937,76 @@ public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblBonds.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblSecondSkills.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                bondsTableMouseClicked(evt);
+                secondSkillsTableMouseClicked(evt);
             }
         });
-        scrBonds.setViewportView(tblBonds);
+        scrSecondSkills.setViewportView(tblSecondSkills);
 
-        pnlBondsTab.add(scrBonds, java.awt.BorderLayout.CENTER);
+        pnlSecondSkillsTab.add(scrSecondSkills, java.awt.BorderLayout.CENTER);
 
-        pnlBondsForm.setLayout(new java.awt.BorderLayout(0, 10));
+        pnlSecondSkillsForm.setLayout(new java.awt.BorderLayout(0, 10));
 
-        pnlBondsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
+        pnlSecondSkillsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        lblBondName.setText("Bond");
-        pnlBondsFields.add(lblBondName);
+        lblSecondSkillName.setText("Second Skill");
+        pnlSecondSkillsFields.add(lblSecondSkillName);
 
-        txtBondName.setColumns(12);
-        pnlBondsFields.add(txtBondName);
+        txtSecondSkillName.setColumns(12);
+        pnlSecondSkillsFields.add(txtSecondSkillName);
 
-        lblBondValue.setText("Value");
-        pnlBondsFields.add(lblBondValue);
-        pnlBondsFields.add(txtBondValue);
+        lblSecondSkillValue.setText("Value");
+        pnlSecondSkillsFields.add(lblSecondSkillValue);
+        pnlSecondSkillsFields.add(txtSecondSkillValue);
 
-        pnlBondsForm.add(pnlBondsFields, java.awt.BorderLayout.PAGE_START);
+        lblSecondSkillDice.setText("Dice");
+        pnlSecondSkillsFields.add(lblSecondSkillDice);
 
-        pnlBondsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        txtSecondSkillDice.setToolTipText("Dice to roll, e.g. 1d20 + 5");
+        pnlSecondSkillsFields.add(txtSecondSkillDice);
 
-        btnNewBond.setText("New");
-        btnNewBond.addActionListener(new java.awt.event.ActionListener() {
+        pnlSecondSkillsForm.add(pnlSecondSkillsFields, java.awt.BorderLayout.PAGE_START);
+
+        pnlSecondSkillsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        btnNewSecondSkill.setText("New");
+        btnNewSecondSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newBondButtonActionPerformed(evt);
+                newSecondSkillButtonActionPerformed(evt);
             }
         });
-        pnlBondsButtons.add(btnNewBond);
+        pnlSecondSkillsButtons.add(btnNewSecondSkill);
 
-        btnSaveBond.setText("Save");
-        btnSaveBond.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveSecondSkill.setText("Save");
+        btnSaveSecondSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveBondButtonActionPerformed(evt);
+                saveSecondSkillButtonActionPerformed(evt);
             }
         });
-        pnlBondsButtons.add(btnSaveBond);
+        pnlSecondSkillsButtons.add(btnSaveSecondSkill);
 
-        btnDeleteBond.setText("Delete");
-        btnDeleteBond.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteSecondSkill.setText("Delete");
+        btnDeleteSecondSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteBondButtonActionPerformed(evt);
+                deleteSecondSkillButtonActionPerformed(evt);
             }
         });
-        pnlBondsButtons.add(btnDeleteBond);
+        pnlSecondSkillsButtons.add(btnDeleteSecondSkill);
 
-        pnlBondsForm.add(pnlBondsButtons, java.awt.BorderLayout.CENTER);
+        btnRollSecondSkillDice.setText("Roll");
+        btnRollSecondSkillDice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rollSecondSkillDiceButtonActionPerformed(evt);
+            }
+        });
+        pnlSecondSkillsButtons.add(btnRollSecondSkillDice);
 
-        pnlBondsTab.add(pnlBondsForm, java.awt.BorderLayout.LINE_END);
+        pnlSecondSkillsForm.add(pnlSecondSkillsButtons, java.awt.BorderLayout.CENTER);
 
-        tabMain.addTab("Bonds", pnlBondsTab);
+        pnlSecondSkillsTab.add(pnlSecondSkillsForm, java.awt.BorderLayout.LINE_END);
+
+        tabMain.addTab("Second Skills", pnlSecondSkillsTab);
 
         pnlAbilitiesTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlAbilitiesTab.setLayout(new java.awt.BorderLayout(10, 10));
@@ -1051,6 +1113,14 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         pnlAbilitiesButtons.add(btnForget);
+
+        btnRollDamage.setText("Roll damage");
+        btnRollDamage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rollDamageButtonActionPerformed(evt);
+            }
+        });
+        pnlAbilitiesButtons.add(btnRollDamage);
 
         pnlAbilitiesForm.add(pnlAbilitiesButtons, java.awt.BorderLayout.CENTER);
 
@@ -1613,51 +1683,61 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteSkillButtonActionPerformed
 
-    private void bondsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bondsTableMouseClicked
-        int row = tblBonds.getSelectedRow();
+    // Rolls the dice typed in the "Dice" field of this tab.
+    private void rollSkillDiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollSkillDiceButtonActionPerformed
+        rollCustomDice(txtSkillDice, txtSkillName.getText());
+    }//GEN-LAST:event_rollSkillDiceButtonActionPerformed
+
+    private void secondSkillsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_secondSkillsTableMouseClicked
+        int row = tblSecondSkills.getSelectedRow();
         if (row < 0) {
             return;
         }
-        SecondBound bond = bonds.get(row);
-        txtBondName.setText(bond.getBoundName());
-        txtBondValue.setText(String.valueOf(bond.getValue()));
-    }//GEN-LAST:event_bondsTableMouseClicked
+        SecondSkill secondSkill = secondSkills.get(row);
+        txtSecondSkillName.setText(secondSkill.getSecondSkillName());
+        txtSecondSkillValue.setText(String.valueOf(secondSkill.getValue()));
+    }//GEN-LAST:event_secondSkillsTableMouseClicked
 
-    private void newBondButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBondButtonActionPerformed
-        clearBondForm();
-    }//GEN-LAST:event_newBondButtonActionPerformed
+    private void newSecondSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSecondSkillButtonActionPerformed
+        clearSecondSkillForm();
+    }//GEN-LAST:event_newSecondSkillButtonActionPerformed
 
-    private void saveBondButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBondButtonActionPerformed
+    private void saveSecondSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSecondSkillButtonActionPerformed
         if (selected == null) {
             showMessage("Select a character first.");
             return;
         }
         try {
-            int row = tblBonds.getSelectedRow();
-            Integer id = row >= 0 ? bonds.get(row).getId() : null;
-            service.saveBond(new SecondBound(id, selected.getId(), txtBondName.getText(), number(txtBondValue, "Value")));
-            loadBonds();
+            int row = tblSecondSkills.getSelectedRow();
+            Integer id = row >= 0 ? secondSkills.get(row).getId() : null;
+            service.saveSecondSkill(new SecondSkill(id, selected.getId(), txtSecondSkillName.getText(), number(txtSecondSkillValue, "Value")));
+            loadSecondSkills();
         } catch (Exception e) {
             showError(e);
         }
-    }//GEN-LAST:event_saveBondButtonActionPerformed
+    }//GEN-LAST:event_saveSecondSkillButtonActionPerformed
 
-    private void deleteBondButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBondButtonActionPerformed
-        int row = tblBonds.getSelectedRow();
+    private void deleteSecondSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSecondSkillButtonActionPerformed
+        int row = tblSecondSkills.getSelectedRow();
         if (row < 0) {
-            showMessage("Click a bond in the table first.");
+            showMessage("Click a second skill in the table first.");
             return;
         }
-        if (!confirm("Delete the bond " + bonds.get(row).getBoundName() + "?")) {
+        if (!confirm("Delete the second skill " + secondSkills.get(row).getSecondSkillName() + "?")) {
             return;
         }
         try {
-            service.deleteBond(bonds.get(row).getId());
-            loadBonds();
+            service.deleteSecondSkill(secondSkills.get(row).getId());
+            loadSecondSkills();
         } catch (SQLException e) {
             showError(e);
         }
-    }//GEN-LAST:event_deleteBondButtonActionPerformed
+    }//GEN-LAST:event_deleteSecondSkillButtonActionPerformed
+
+    // Rolls the dice typed in the "Dice" field of this tab.
+    private void rollSecondSkillDiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollSecondSkillDiceButtonActionPerformed
+        rollCustomDice(txtSecondSkillDice, txtSecondSkillName.getText());
+    }//GEN-LAST:event_rollSecondSkillDiceButtonActionPerformed
 
     private void abilitiesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abilitiesTableMouseClicked
         int row = tblAbilities.getSelectedRow();
@@ -1736,6 +1816,37 @@ public class MainWindow extends javax.swing.JFrame {
             showError(e);
         }
     }//GEN-LAST:event_forgetButtonActionPerformed
+
+    /**
+     * Rolls the damage of the ability clicked in the table.
+     * <p>
+     * Abilities have no damage field, only a free description, so the damage dice are
+     * searched inside the description ("Deals 2d6 + 3 fire damage" gives "2d6 + 3").
+     * See {@link DiceRoller#findDamageExpression(String)} for how the expression is chosen.
+     */
+    private void rollDamageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollDamageButtonActionPerformed
+        int row = tblAbilities.getSelectedRow();
+        if (row < 0) {
+            showMessage("Click an ability in the table first.");
+            return;
+        }
+        Ability ability = abilities.get(row);
+
+        // 1. Find the damage dice written in the description.
+        String expression = DiceRoller.findDamageExpression(ability.getDescription());
+        if (expression == null) {
+            showMessage("The description of " + ability.getName() + " has no damage dice (like 2d6 + 3).");
+            return;
+        }
+
+        // 2. Roll them and show the result.
+        try {
+            int damage = new DiceRoller().diceParser(expression);
+            showMessage(ability.getName() + "\nDamage: " + expression + " = " + damage);
+        } catch (RuntimeException e) {
+            showError(e); // the library rejected the expression
+        }
+    }//GEN-LAST:event_rollDamageButtonActionPerformed
 
     private void inventoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryTableMouseClicked
         int row = tblInventory.getSelectedRow();
@@ -2019,18 +2130,21 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteAbility;
     private javax.swing.JButton btnDeleteAmmo;
     private javax.swing.JButton btnDeleteArmor;
-    private javax.swing.JButton btnDeleteBond;
+    private javax.swing.JButton btnDeleteSecondSkill;
+    private javax.swing.JButton btnRollSecondSkillDice;
     private javax.swing.JButton btnDeleteCharacter;
     private javax.swing.JButton btnDeleteEntry;
     private javax.swing.JButton btnDeleteItem;
     private javax.swing.JButton btnDeleteSkill;
+    private javax.swing.JButton btnRollSkillDice;
     private javax.swing.JButton btnDeleteWeapon;
     private javax.swing.JButton btnForget;
     private javax.swing.JButton btnLearn;
+    private javax.swing.JButton btnRollDamage;
     private javax.swing.JButton btnNewAbility;
     private javax.swing.JButton btnNewAmmo;
     private javax.swing.JButton btnNewArmor;
-    private javax.swing.JButton btnNewBond;
+    private javax.swing.JButton btnNewSecondSkill;
     private javax.swing.JButton btnNewCharacter;
     private javax.swing.JButton btnNewEntry;
     private javax.swing.JButton btnNewItem;
@@ -2039,7 +2153,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnSaveAbility;
     private javax.swing.JButton btnSaveAmmo;
     private javax.swing.JButton btnSaveArmor;
-    private javax.swing.JButton btnSaveBond;
+    private javax.swing.JButton btnSaveSecondSkill;
     private javax.swing.JButton btnSaveCharacter;
     private javax.swing.JButton btnSaveEntry;
     private javax.swing.JButton btnSaveItem;
@@ -2067,8 +2181,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblBaseMana;
     private javax.swing.JLabel lblBaseSanity;
     private javax.swing.JLabel lblBaseStamina;
-    private javax.swing.JLabel lblBondName;
-    private javax.swing.JLabel lblBondValue;
+    private javax.swing.JLabel lblSecondSkillName;
+    private javax.swing.JLabel lblSecondSkillDice;
+    private javax.swing.JLabel lblSecondSkillValue;
     private javax.swing.JLabel lblCategory;
     private javax.swing.JLabel lblClass;
     private javax.swing.JLabel lblCost;
@@ -2091,6 +2206,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblSanity;
     private javax.swing.JLabel lblSearch;
     private javax.swing.JLabel lblSkillName;
+    private javax.swing.JLabel lblSkillDice;
     private javax.swing.JLabel lblSkillValue;
     private javax.swing.JLabel lblStamina;
     private javax.swing.JLabel lblSubclass;
@@ -2115,10 +2231,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel pnlArmorFields;
     private javax.swing.JPanel pnlArmorForm;
     private javax.swing.JPanel pnlArmorTab;
-    private javax.swing.JPanel pnlBondsButtons;
-    private javax.swing.JPanel pnlBondsFields;
-    private javax.swing.JPanel pnlBondsForm;
-    private javax.swing.JPanel pnlBondsTab;
+    private javax.swing.JPanel pnlSecondSkillsButtons;
+    private javax.swing.JPanel pnlSecondSkillsFields;
+    private javax.swing.JPanel pnlSecondSkillsForm;
+    private javax.swing.JPanel pnlSecondSkillsTab;
     private javax.swing.JPanel pnlCharacterButtons;
     private javax.swing.JPanel pnlCharacterFields;
     private javax.swing.JPanel pnlCharacterTab;
@@ -2143,7 +2259,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrAbilities;
     private javax.swing.JScrollPane scrAmmunition;
     private javax.swing.JScrollPane scrArmor;
-    private javax.swing.JScrollPane scrBonds;
+    private javax.swing.JScrollPane scrSecondSkills;
     private javax.swing.JScrollPane scrCharacter;
     private javax.swing.JScrollPane scrInventory;
     private javax.swing.JScrollPane scrItems;
@@ -2153,7 +2269,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTable tblAbilities;
     private javax.swing.JTable tblAmmunition;
     private javax.swing.JTable tblArmor;
-    private javax.swing.JTable tblBonds;
+    private javax.swing.JTable tblSecondSkills;
     private javax.swing.JTable tblInventory;
     private javax.swing.JTable tblItems;
     private javax.swing.JTable tblSkills;
@@ -2172,8 +2288,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField txtBaseMana;
     private javax.swing.JTextField txtBaseSanity;
     private javax.swing.JTextField txtBaseStamina;
-    private javax.swing.JTextField txtBondName;
-    private javax.swing.JTextField txtBondValue;
+    private javax.swing.JTextField txtSecondSkillName;
+    private javax.swing.JTextField txtSecondSkillDice;
+    private javax.swing.JTextField txtSecondSkillValue;
     private javax.swing.JTextField txtClass;
     private javax.swing.JTextField txtCost;
     private javax.swing.JTextField txtElementalAc;
@@ -2192,6 +2309,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField txtSanity;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtSkillName;
+    private javax.swing.JTextField txtSkillDice;
     private javax.swing.JTextField txtSkillValue;
     private javax.swing.JTextField txtStamina;
     private javax.swing.JTextField txtSubclass;

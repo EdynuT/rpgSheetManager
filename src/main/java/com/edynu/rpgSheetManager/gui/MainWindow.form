@@ -436,6 +436,16 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtSkillValue">
                     </Component>
+                    <Component class="javax.swing.JLabel" name="lblSkillDice">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Dice"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtSkillDice">
+                      <Properties>
+                        <Property name="toolTipText" type="java.lang.String" value="Dice to roll, e.g. 1d20 + 5"/>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="pnlSkillsButtons">
@@ -473,13 +483,21 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteSkillButtonActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JButton" name="btnRollSkillDice">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Roll"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollSkillDiceButtonActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlBondsTab">
+        <Container class="javax.swing.JPanel" name="pnlSecondSkillsTab">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -489,8 +507,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Bonds">
-                <Property name="tabTitle" type="java.lang.String" value="Bonds"/>
+              <JTabbedPaneConstraints tabName="Second Skills">
+                <Property name="tabTitle" type="java.lang.String" value="Second Skills"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -500,7 +518,7 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrBonds">
+            <Container class="javax.swing.JScrollPane" name="scrSecondSkills">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -512,22 +530,22 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblBonds">
+                <Component class="javax.swing.JTable" name="tblSecondSkills">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="2" rowCount="0">
-                        <Column editable="false" title="Bond" type="java.lang.Object"/>
+                        <Column editable="false" title="Second Skill" type="java.lang.Object"/>
                         <Column editable="false" title="Value" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bondsTableMouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="secondSkillsTableMouseClicked"/>
                   </Events>
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="pnlBondsForm">
+            <Container class="javax.swing.JPanel" name="pnlSecondSkillsForm">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="After"/>
@@ -538,7 +556,7 @@
                 <Property name="verticalGap" type="int" value="10"/>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="pnlBondsFields">
+                <Container class="javax.swing.JPanel" name="pnlSecondSkillsFields">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="First"/>
@@ -552,26 +570,36 @@
                     <Property name="rows" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblBondName">
+                    <Component class="javax.swing.JLabel" name="lblSecondSkillName">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Bond"/>
+                        <Property name="text" type="java.lang.String" value="Second Skill"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtBondName">
+                    <Component class="javax.swing.JTextField" name="txtSecondSkillName">
                       <Properties>
                         <Property name="columns" type="int" value="12"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblBondValue">
+                    <Component class="javax.swing.JLabel" name="lblSecondSkillValue">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Value"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtBondValue">
+                    <Component class="javax.swing.JTextField" name="txtSecondSkillValue">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblSecondSkillDice">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Dice"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtSecondSkillDice">
+                      <Properties>
+                        <Property name="toolTipText" type="java.lang.String" value="Dice to roll, e.g. 1d20 + 5"/>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="pnlBondsButtons">
+                <Container class="javax.swing.JPanel" name="pnlSecondSkillsButtons">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -582,28 +610,36 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnNewBond">
+                    <Component class="javax.swing.JButton" name="btnNewSecondSkill">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="New"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newBondButtonActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newSecondSkillButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSaveBond">
+                    <Component class="javax.swing.JButton" name="btnSaveSecondSkill">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Save"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveBondButtonActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveSecondSkillButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnDeleteBond">
+                    <Component class="javax.swing.JButton" name="btnDeleteSecondSkill">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Delete"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteBondButtonActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteSecondSkillButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnRollSecondSkillDice">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Roll"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollSecondSkillDiceButtonActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -802,6 +838,14 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="forgetButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnRollDamage">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Roll damage"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollDamageButtonActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
