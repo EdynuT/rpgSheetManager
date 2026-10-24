@@ -1,5 +1,10 @@
 package com.edynu.rpgSheetManager.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
 import com.edynu.rpgSheetManager.dao.AbilityDAO;
 import com.edynu.rpgSheetManager.dao.AmunitionDAO;
 import com.edynu.rpgSheetManager.dao.ArmorDAO;
@@ -10,8 +15,6 @@ import com.edynu.rpgSheetManager.dao.PlayerCharacterDAO;
 import com.edynu.rpgSheetManager.dao.SecondSkillDAO;
 import com.edynu.rpgSheetManager.dao.SkillDAO;
 import com.edynu.rpgSheetManager.dao.WeaponDAO;
-import java.sql.SQLException;
-import java.util.List;
 import com.edynu.rpgSheetManager.model.Ability;
 import com.edynu.rpgSheetManager.model.Amunition;
 import com.edynu.rpgSheetManager.model.Armor;
@@ -23,6 +26,7 @@ import com.edynu.rpgSheetManager.model.PlayerCharacter;
 import com.edynu.rpgSheetManager.model.SecondSkill;
 import com.edynu.rpgSheetManager.model.Skill;
 import com.edynu.rpgSheetManager.model.Weapon;
+import com.edynu.rpgSheetManager.utils.Utils;
 
 /**
  * Operations used by the MainWindow. "save" inserts the object when it has no id yet,
@@ -43,7 +47,11 @@ public class MainWindowService {
     // Characters
 
     public List<PlayerCharacter> listCharacters() throws SQLException {
-        return characterDAO.list();
+        List<PlayerCharacter> characters = characterDAO.list();
+        for (PlayerCharacter character : characters) {
+            character.setPhoto(Utils.loadCharacterPhoto(character.getId()));
+        }
+        return characters;
     }
 
     public void saveCharacter(PlayerCharacter character) throws SQLException {
@@ -54,8 +62,14 @@ public class MainWindowService {
         }
     }
 
+    public void saveCharacterPhoto(PlayerCharacter character, File imageFile) throws IOException {
+        byte[] jpegBytes = Utils.saveCharacterPhoto(character.getId(), imageFile, 160);
+        character.setPhoto(jpegBytes);
+    }
+
     public void deleteCharacter(int id) throws SQLException {
         characterDAO.delete(id);
+        Utils.deleteCharacterPhoto(id);
     }
 
     // Skills

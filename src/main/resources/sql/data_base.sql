@@ -19,7 +19,6 @@ CREATE TABLE player_character (
     current_stamina INT NOT NULL,
     base_sanity INT NOT NULL,
     current_sanity INT NOT NULL,
-    photo BYTEA
 );
 
 CREATE TABLE ability (

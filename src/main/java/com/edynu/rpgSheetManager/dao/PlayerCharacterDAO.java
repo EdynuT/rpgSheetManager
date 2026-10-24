@@ -12,8 +12,8 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
     public PlayerCharacter insert(PlayerCharacter p) throws SQLException {
         String sql = "INSERT INTO player_character (level, name, age, race, character_class, subclass, origin, languages, " +
                      "base_health, current_health, base_mana, current_mana, " +
-                     "base_stamina, current_stamina, base_sanity, current_sanity, photo) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
+                     "base_stamina, current_stamina, base_sanity, current_sanity) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
                      
         try (Connection con = Database.connect();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -40,7 +40,6 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
             stmt.setInt(14, p.getCurrentStamina());
             stmt.setInt(15, p.getBaseSanity());
             stmt.setInt(16, p.getCurrentSanity());
-            stmt.setBytes(17, p.getPhoto()); // a null photo is stored as SQL NULL
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -55,7 +54,7 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
     public void update(PlayerCharacter p) throws SQLException {
         String sql = "UPDATE player_character SET level = ?, name = ?, age = ?, race = ?, character_class = ?, subclass = ?, " +
                      "origin = ?, languages = ?, base_health = ?, current_health = ?, base_mana = ?, current_mana = ?, " +
-                     "base_stamina = ?, current_stamina = ?, base_sanity = ?, current_sanity = ?, photo = ? WHERE id = ?";
+                     "base_stamina = ?, current_stamina = ?, base_sanity = ?, current_sanity = ? WHERE id = ?";
 
         try (Connection con = Database.connect();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -81,8 +80,7 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
             stmt.setInt(14, p.getCurrentStamina());
             stmt.setInt(15, p.getBaseSanity());
             stmt.setInt(16, p.getCurrentSanity());
-            stmt.setBytes(17, p.getPhoto());
-            stmt.setInt(18, p.getId());
+            stmt.setInt(17, p.getId());
 
             stmt.executeUpdate();
         }
@@ -133,7 +131,7 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
     private PlayerCharacter mapRow(ResultSet rs) throws SQLException {
         int age = rs.getInt("age");
         Integer ageOrNull = rs.wasNull() ? null : age;
-        PlayerCharacter p = new PlayerCharacter(
+        return new PlayerCharacter(
                 rs.getInt("id"),
                 rs.getInt("level"),
                 rs.getString("name"),
@@ -151,7 +149,5 @@ public class PlayerCharacterDAO implements DAO<PlayerCharacter> {
                 rs.getInt("current_stamina"),
                 rs.getInt("base_sanity"),
                 rs.getInt("current_sanity"));
-        p.setPhoto(rs.getBytes("photo"));
-        return p;
     }
 }

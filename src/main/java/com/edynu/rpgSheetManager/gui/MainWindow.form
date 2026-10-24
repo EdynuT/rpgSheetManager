@@ -1267,6 +1267,16 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtWeaponDescription">
                     </Component>
+                    <Component class="javax.swing.JLabel" name="lblWeaponDice">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Dice"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtWeaponDice">
+                      <Properties>
+                        <Property name="toolTipText" type="java.lang.String" value="Dice to roll, e.g. 1d20 + 5"/>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="pnlWeaponsButtons">
@@ -1302,6 +1312,30 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteWeaponButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnRollWeaponDamage">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Roll damage"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollWeaponDamageButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnRollWeaponCritical">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Roll critical"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollWeaponCriticalButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnRollWeaponDice">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Roll"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollWeaponDiceButtonActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -1571,6 +1605,16 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtAmmoDescription">
                     </Component>
+                    <Component class="javax.swing.JLabel" name="lblAmmoDice">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Dice"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtAmmoDice">
+                      <Properties>
+                        <Property name="toolTipText" type="java.lang.String" value="Dice to roll, e.g. 1d20 + 5"/>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="pnlAmmunitionButtons">
@@ -1606,6 +1650,22 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteAmmoButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnRollAmmoDamage">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Roll damage"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollAmmoDamageButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnRollAmmoDice">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Roll"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollAmmoDiceButtonActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>

@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
@@ -353,7 +355,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void clearWeaponForm() {
         tblWeapons.clearSelection();
         clear(txtWeaponName, txtWeaponWeight, txtWeaponAttribute, txtWeaponDamage, txtWeaponRange,
-                txtWeaponMultiplier, txtWeaponDescription);
+                txtWeaponMultiplier, txtWeaponDescription, txtWeaponDice);
     }
 
     private void clearArmorForm() {
@@ -363,7 +365,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void clearAmmoForm() {
         tblAmmunition.clearSelection();
-        clear(txtAmmoName, txtAmmoWeight, txtAmmoDamage, txtAmmoDescription);
+        clear(txtAmmoName, txtAmmoWeight, txtAmmoDamage, txtAmmoDescription, txtAmmoDice);
     }
 
     // ---------------------------------------------------------------- Photos
@@ -408,13 +410,13 @@ public class MainWindow extends javax.swing.JFrame {
 
     /**
      * Rolls the dice typed in a "Dice" field and shows the result in a message.
-     * Used by the Roll buttons of the Skills and Second Skills tabs.
+     * Used by the Roll buttons of the Skills, Second Skills, Weapons and Ammunition tabs.
      * <p>
      * Accepts what {@link DiceRoller#diceParser(String)} accepts: dice ("1d20"), numbers,
      * + - * / and parentheses, with or without spaces, e.g. "1d20 + 5" or "(2d6 + 3) * 2".
      *
      * @param field the text field with the dice expression
-     * @param name  the name of the skill being rolled, shown as the title of the result
+     * @param name  the name of the entry being rolled, shown as the title of the result
      */
     private void rollCustomDice(JTextField field, String name) {
         String expression = field.getText().trim();
@@ -429,6 +431,61 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (RuntimeException e) {
             // DiceRoller throws IllegalStateException when the text is not a valid dice expression.
             showMessage("\"" + expression + "\" is not a valid roll. Use something like 1d20 + 5 or 2d6 - 1.");
+        }
+    }
+
+    /**
+     * Multiplies only the dice count (N in NdX) by the given critical multiplier,
+     * keeping flat modifiers intact (e.g. "2d6 + 3" with multiplier 3 becomes "6d6 + 3").
+     */
+    private String multiplyDiceCount(String expression, int multiplier) {
+        if (multiplier <= 1) {
+            return expression;
+        }
+        Matcher matcher = Pattern.compile("(?i)(\\d*)d(\\d+)").matcher(expression);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            String countStr = matcher.group(1);
+            int count = countStr.isEmpty() ? 1 : Integer.parseInt(countStr);
+            int multipliedCount = count * multiplier;
+            matcher.appendReplacement(sb, multipliedCount + "d" + matcher.group(2));
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    /**
+     * Helper to roll weapon damage (normal or critical) and display the dialog.
+     */
+    private void rollWeaponDamage(boolean critical) {
+        int row = tblWeapons.getSelectedRow();
+        if (row < 0) {
+            showMessage("Click a weapon in the table first.");
+            return;
+        }
+        Weapon weapon = weapons.get(row);
+
+        String expression = DiceRoller.findDamageExpression(weapon.getDamageDice());
+        if (expression == null && weapon.getDamageDice() != null && !weapon.getDamageDice().trim().isEmpty()) {
+            expression = weapon.getDamageDice().trim();
+        }
+        if (expression == null) {
+            showMessage("The weapon " + weapon.getName() + " has no damage dice (like 2d6 + 3).");
+            return;
+        }
+
+        String label = "Damage: ";
+        if (critical) {
+            int multiplier = Math.max(1, weapon.getCriticalMultiplier());
+            expression = multiplyDiceCount(expression, multiplier);
+            label = "Critical damage (x" + multiplier + "): ";
+        }
+
+        try {
+            int damage = new DiceRoller().diceParser(expression);
+            showMessage(weapon.getName() + "\n" + label + expression + " = " + damage);
+        } catch (RuntimeException e) {
+            showError(e);
         }
     }
 
@@ -630,10 +687,15 @@ public class MainWindow extends javax.swing.JFrame {
         txtWeaponMultiplier = new javax.swing.JTextField();
         lblWeaponDescription = new javax.swing.JLabel();
         txtWeaponDescription = new javax.swing.JTextField();
+        lblWeaponDice = new javax.swing.JLabel();
+        txtWeaponDice = new javax.swing.JTextField();
         pnlWeaponsButtons = new javax.swing.JPanel();
         btnNewWeapon = new javax.swing.JButton();
         btnSaveWeapon = new javax.swing.JButton();
         btnDeleteWeapon = new javax.swing.JButton();
+        btnRollWeaponDamage = new javax.swing.JButton();
+        btnRollWeaponCritical = new javax.swing.JButton();
+        btnRollWeaponDice = new javax.swing.JButton();
         pnlArmorTab = new javax.swing.JPanel();
         scrArmor = new javax.swing.JScrollPane();
         tblArmor = new javax.swing.JTable();
@@ -666,10 +728,14 @@ public class MainWindow extends javax.swing.JFrame {
         txtAmmoDamage = new javax.swing.JTextField();
         lblAmmoDescription = new javax.swing.JLabel();
         txtAmmoDescription = new javax.swing.JTextField();
+        lblAmmoDice = new javax.swing.JLabel();
+        txtAmmoDice = new javax.swing.JTextField();
         pnlAmmunitionButtons = new javax.swing.JPanel();
         btnNewAmmo = new javax.swing.JButton();
         btnSaveAmmo = new javax.swing.JButton();
         btnDeleteAmmo = new javax.swing.JButton();
+        btnRollAmmoDamage = new javax.swing.JButton();
+        btnRollAmmoDice = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("RPG Sheet Manager");
@@ -1348,6 +1414,12 @@ public class MainWindow extends javax.swing.JFrame {
         pnlWeaponsFields.add(lblWeaponDescription);
         pnlWeaponsFields.add(txtWeaponDescription);
 
+        lblWeaponDice.setText("Dice");
+        pnlWeaponsFields.add(lblWeaponDice);
+
+        txtWeaponDice.setToolTipText("Dice to roll, e.g. 1d20 + 5");
+        pnlWeaponsFields.add(txtWeaponDice);
+
         pnlWeaponsForm.add(pnlWeaponsFields, java.awt.BorderLayout.PAGE_START);
 
         pnlWeaponsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -1375,6 +1447,30 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         pnlWeaponsButtons.add(btnDeleteWeapon);
+
+        btnRollWeaponDamage.setText("Roll damage");
+        btnRollWeaponDamage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rollWeaponDamageButtonActionPerformed(evt);
+            }
+        });
+        pnlWeaponsButtons.add(btnRollWeaponDamage);
+
+        btnRollWeaponCritical.setText("Roll critical");
+        btnRollWeaponCritical.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rollWeaponCriticalButtonActionPerformed(evt);
+            }
+        });
+        pnlWeaponsButtons.add(btnRollWeaponCritical);
+
+        btnRollWeaponDice.setText("Roll");
+        btnRollWeaponDice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rollWeaponDiceButtonActionPerformed(evt);
+            }
+        });
+        pnlWeaponsButtons.add(btnRollWeaponDice);
 
         pnlWeaponsForm.add(pnlWeaponsButtons, java.awt.BorderLayout.CENTER);
 
@@ -1520,6 +1616,12 @@ public class MainWindow extends javax.swing.JFrame {
         pnlAmmunitionFields.add(lblAmmoDescription);
         pnlAmmunitionFields.add(txtAmmoDescription);
 
+        lblAmmoDice.setText("Dice");
+        pnlAmmunitionFields.add(lblAmmoDice);
+
+        txtAmmoDice.setToolTipText("Dice to roll, e.g. 1d20 + 5");
+        pnlAmmunitionFields.add(txtAmmoDice);
+
         pnlAmmunitionForm.add(pnlAmmunitionFields, java.awt.BorderLayout.PAGE_START);
 
         pnlAmmunitionButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -1547,6 +1649,22 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         pnlAmmunitionButtons.add(btnDeleteAmmo);
+
+        btnRollAmmoDamage.setText("Roll damage");
+        btnRollAmmoDamage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rollAmmoDamageButtonActionPerformed(evt);
+            }
+        });
+        pnlAmmunitionButtons.add(btnRollAmmoDamage);
+
+        btnRollAmmoDice.setText("Roll");
+        btnRollAmmoDice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rollAmmoDiceButtonActionPerformed(evt);
+            }
+        });
+        pnlAmmunitionButtons.add(btnRollAmmoDice);
 
         pnlAmmunitionForm.add(pnlAmmunitionButtons, java.awt.BorderLayout.CENTER);
 
@@ -1613,7 +1731,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteCharacterButtonActionPerformed
 
-    private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePhotoButtonActionPerformed
+private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePhotoButtonActionPerformed
         if (selected == null) {
             showMessage("Select a character first.");
             return;
@@ -1623,13 +1741,7 @@ public class MainWindow extends javax.swing.JFrame {
             return;
         }
         try {
-            BufferedImage image = ImageIO.read(chooser.getSelectedFile());
-            if (image == null) {
-                showMessage("This file is not an image.");
-                return;
-            }
-            selected.setPhoto(toJpeg(image, 160));
-            service.saveCharacter(selected);
+            service.saveCharacterPhoto(selected, chooser.getSelectedFile());
             loadCharacters();
             selectInGallery(selected.getId());
         } catch (Exception e) {
@@ -1990,6 +2102,18 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteWeaponButtonActionPerformed
 
+    private void rollWeaponDamageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollWeaponDamageButtonActionPerformed
+        rollWeaponDamage(false);
+    }//GEN-LAST:event_rollWeaponDamageButtonActionPerformed
+
+    private void rollWeaponCriticalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollWeaponCriticalButtonActionPerformed
+        rollWeaponDamage(true);
+    }//GEN-LAST:event_rollWeaponCriticalButtonActionPerformed
+
+    private void rollWeaponDiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollWeaponDiceButtonActionPerformed
+        rollCustomDice(txtWeaponDice, txtWeaponName.getText());
+    }//GEN-LAST:event_rollWeaponDiceButtonActionPerformed
+
     private void armorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_armorTableMouseClicked
         int row = tblArmor.getSelectedRow();
         if (row < 0) {
@@ -2090,6 +2214,37 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteAmmoButtonActionPerformed
 
+    // Rolls the damage of the ammunition clicked in the table.
+    private void rollAmmoDamageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollAmmoDamageButtonActionPerformed
+        int row = tblAmmunition.getSelectedRow();
+        if (row < 0) {
+            showMessage("Click an ammunition in the table first.");
+            return;
+        }
+        Amunition ammo = ammunition.get(row);
+
+        String expression = DiceRoller.findDamageExpression(ammo.getDamageDice());
+        if (expression == null && ammo.getDamageDice() != null && !ammo.getDamageDice().trim().isEmpty()) {
+            expression = ammo.getDamageDice().trim();
+        }
+        if (expression == null) {
+            showMessage("The ammunition " + ammo.getName() + " has no damage dice (like 1d6 + 1).");
+            return;
+        }
+
+        try {
+            int damage = new DiceRoller().diceParser(expression);
+            showMessage(ammo.getName() + "\nDamage: " + expression + " = " + damage);
+        } catch (RuntimeException e) {
+            showError(e);
+        }
+    }//GEN-LAST:event_rollAmmoDamageButtonActionPerformed
+
+    // Rolls the custom dice expression typed in the "Dice" field of the Ammunition tab.
+    private void rollAmmoDiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollAmmoDiceButtonActionPerformed
+        rollCustomDice(txtAmmoDice, txtAmmoName.getText());
+    }//GEN-LAST:event_rollAmmoDiceButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2130,33 +2285,38 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteAbility;
     private javax.swing.JButton btnDeleteAmmo;
     private javax.swing.JButton btnDeleteArmor;
-    private javax.swing.JButton btnDeleteSecondSkill;
-    private javax.swing.JButton btnRollSecondSkillDice;
     private javax.swing.JButton btnDeleteCharacter;
     private javax.swing.JButton btnDeleteEntry;
     private javax.swing.JButton btnDeleteItem;
+    private javax.swing.JButton btnDeleteSecondSkill;
     private javax.swing.JButton btnDeleteSkill;
-    private javax.swing.JButton btnRollSkillDice;
     private javax.swing.JButton btnDeleteWeapon;
     private javax.swing.JButton btnForget;
     private javax.swing.JButton btnLearn;
-    private javax.swing.JButton btnRollDamage;
     private javax.swing.JButton btnNewAbility;
     private javax.swing.JButton btnNewAmmo;
     private javax.swing.JButton btnNewArmor;
-    private javax.swing.JButton btnNewSecondSkill;
     private javax.swing.JButton btnNewCharacter;
     private javax.swing.JButton btnNewEntry;
     private javax.swing.JButton btnNewItem;
+    private javax.swing.JButton btnNewSecondSkill;
     private javax.swing.JButton btnNewSkill;
     private javax.swing.JButton btnNewWeapon;
+    private javax.swing.JButton btnRollAmmoDamage;
+    private javax.swing.JButton btnRollAmmoDice;
+    private javax.swing.JButton btnRollDamage;
+    private javax.swing.JButton btnRollSecondSkillDice;
+    private javax.swing.JButton btnRollSkillDice;
+    private javax.swing.JButton btnRollWeaponCritical;
+    private javax.swing.JButton btnRollWeaponDamage;
+    private javax.swing.JButton btnRollWeaponDice;
     private javax.swing.JButton btnSaveAbility;
     private javax.swing.JButton btnSaveAmmo;
     private javax.swing.JButton btnSaveArmor;
-    private javax.swing.JButton btnSaveSecondSkill;
     private javax.swing.JButton btnSaveCharacter;
     private javax.swing.JButton btnSaveEntry;
     private javax.swing.JButton btnSaveItem;
+    private javax.swing.JButton btnSaveSecondSkill;
     private javax.swing.JButton btnSaveSkill;
     private javax.swing.JButton btnSaveWeapon;
     private javax.swing.JCheckBox chkActive;
@@ -2172,6 +2332,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblAmmoDamage;
     private javax.swing.JLabel lblAmmoDescription;
+    private javax.swing.JLabel lblAmmoDice;
     private javax.swing.JLabel lblAmmoName;
     private javax.swing.JLabel lblAmmoWeight;
     private javax.swing.JLabel lblArmorDescription;
@@ -2181,9 +2342,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblBaseMana;
     private javax.swing.JLabel lblBaseSanity;
     private javax.swing.JLabel lblBaseStamina;
-    private javax.swing.JLabel lblSecondSkillName;
-    private javax.swing.JLabel lblSecondSkillDice;
-    private javax.swing.JLabel lblSecondSkillValue;
     private javax.swing.JLabel lblCategory;
     private javax.swing.JLabel lblClass;
     private javax.swing.JLabel lblCost;
@@ -2205,8 +2363,11 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblRace;
     private javax.swing.JLabel lblSanity;
     private javax.swing.JLabel lblSearch;
-    private javax.swing.JLabel lblSkillName;
+    private javax.swing.JLabel lblSecondSkillDice;
+    private javax.swing.JLabel lblSecondSkillName;
+    private javax.swing.JLabel lblSecondSkillValue;
     private javax.swing.JLabel lblSkillDice;
+    private javax.swing.JLabel lblSkillName;
     private javax.swing.JLabel lblSkillValue;
     private javax.swing.JLabel lblStamina;
     private javax.swing.JLabel lblSubclass;
@@ -2214,6 +2375,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblWeaponAttribute;
     private javax.swing.JLabel lblWeaponDamage;
     private javax.swing.JLabel lblWeaponDescription;
+    private javax.swing.JLabel lblWeaponDice;
     private javax.swing.JLabel lblWeaponMultiplier;
     private javax.swing.JLabel lblWeaponName;
     private javax.swing.JLabel lblWeaponRange;
@@ -2231,10 +2393,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel pnlArmorFields;
     private javax.swing.JPanel pnlArmorForm;
     private javax.swing.JPanel pnlArmorTab;
-    private javax.swing.JPanel pnlSecondSkillsButtons;
-    private javax.swing.JPanel pnlSecondSkillsFields;
-    private javax.swing.JPanel pnlSecondSkillsForm;
-    private javax.swing.JPanel pnlSecondSkillsTab;
     private javax.swing.JPanel pnlCharacterButtons;
     private javax.swing.JPanel pnlCharacterFields;
     private javax.swing.JPanel pnlCharacterTab;
@@ -2248,6 +2406,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel pnlItemsTab;
     private javax.swing.JPanel pnlLeft;
     private javax.swing.JPanel pnlSearch;
+    private javax.swing.JPanel pnlSecondSkillsButtons;
+    private javax.swing.JPanel pnlSecondSkillsFields;
+    private javax.swing.JPanel pnlSecondSkillsForm;
+    private javax.swing.JPanel pnlSecondSkillsTab;
     private javax.swing.JPanel pnlSkillsButtons;
     private javax.swing.JPanel pnlSkillsFields;
     private javax.swing.JPanel pnlSkillsForm;
@@ -2259,19 +2421,19 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrAbilities;
     private javax.swing.JScrollPane scrAmmunition;
     private javax.swing.JScrollPane scrArmor;
-    private javax.swing.JScrollPane scrSecondSkills;
     private javax.swing.JScrollPane scrCharacter;
     private javax.swing.JScrollPane scrInventory;
     private javax.swing.JScrollPane scrItems;
+    private javax.swing.JScrollPane scrSecondSkills;
     private javax.swing.JScrollPane scrSkills;
     private javax.swing.JScrollPane scrWeapons;
     private javax.swing.JTabbedPane tabMain;
     private javax.swing.JTable tblAbilities;
     private javax.swing.JTable tblAmmunition;
     private javax.swing.JTable tblArmor;
-    private javax.swing.JTable tblSecondSkills;
     private javax.swing.JTable tblInventory;
     private javax.swing.JTable tblItems;
+    private javax.swing.JTable tblSecondSkills;
     private javax.swing.JTable tblSkills;
     private javax.swing.JTable tblWeapons;
     private javax.swing.JTextField txtAbilityDescription;
@@ -2279,6 +2441,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtAmmoDamage;
     private javax.swing.JTextField txtAmmoDescription;
+    private javax.swing.JTextField txtAmmoDice;
     private javax.swing.JTextField txtAmmoName;
     private javax.swing.JTextField txtAmmoWeight;
     private javax.swing.JTextField txtArmorDescription;
@@ -2288,9 +2451,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField txtBaseMana;
     private javax.swing.JTextField txtBaseSanity;
     private javax.swing.JTextField txtBaseStamina;
-    private javax.swing.JTextField txtSecondSkillName;
-    private javax.swing.JTextField txtSecondSkillDice;
-    private javax.swing.JTextField txtSecondSkillValue;
     private javax.swing.JTextField txtClass;
     private javax.swing.JTextField txtCost;
     private javax.swing.JTextField txtElementalAc;
@@ -2308,14 +2468,18 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField txtRace;
     private javax.swing.JTextField txtSanity;
     private javax.swing.JTextField txtSearch;
-    private javax.swing.JTextField txtSkillName;
+    private javax.swing.JTextField txtSecondSkillDice;
+    private javax.swing.JTextField txtSecondSkillName;
+    private javax.swing.JTextField txtSecondSkillValue;
     private javax.swing.JTextField txtSkillDice;
+    private javax.swing.JTextField txtSkillName;
     private javax.swing.JTextField txtSkillValue;
     private javax.swing.JTextField txtStamina;
     private javax.swing.JTextField txtSubclass;
     private javax.swing.JTextField txtWeaponAttribute;
     private javax.swing.JTextField txtWeaponDamage;
     private javax.swing.JTextField txtWeaponDescription;
+    private javax.swing.JTextField txtWeaponDice;
     private javax.swing.JTextField txtWeaponMultiplier;
     private javax.swing.JTextField txtWeaponName;
     private javax.swing.JTextField txtWeaponRange;

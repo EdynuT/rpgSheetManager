@@ -16,3 +16,7 @@ target/
 .idea/
 *.iml
 .DS_Store
+
+# Other stuff
+data/images/*
+/bin/
