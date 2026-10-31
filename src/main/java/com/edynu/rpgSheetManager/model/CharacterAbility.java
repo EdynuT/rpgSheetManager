@@ -4,15 +4,13 @@ package com.edynu.rpgSheetManager.model;
 public class CharacterAbility {
     private Integer characterId;
     private Integer abilityId;
-    private boolean toggled;
 
     public CharacterAbility() {
     }
 
-    public CharacterAbility(Integer characterId, Integer abilityId, boolean toggled) {
+    public CharacterAbility(Integer characterId, Integer abilityId) {
         this.characterId = characterId;
         this.abilityId = abilityId;
-        this.toggled = toggled;
     }
 
     public Integer getCharacterId() {
@@ -29,13 +27,5 @@ public class CharacterAbility {
 
     public void setAbilityId(Integer abilityId) {
         this.abilityId = abilityId;
-    }
-
-    public boolean isToggled() {
-        return toggled;
-    }
-
-    public void setToggled(boolean toggled) {
-        this.toggled = toggled;
     }
 }

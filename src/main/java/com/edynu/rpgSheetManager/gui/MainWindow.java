@@ -230,7 +230,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     // ---------------------------------------------------------------- Abilities
 
-    // All abilities; "Learned" and "Active" refer to the selected character.
+    // All abilities; "Learned" refers to the selected character.
     private void loadAbilities() {
         learned = new ArrayList<>();
         try {
@@ -245,9 +245,14 @@ public class MainWindow extends javax.swing.JFrame {
         model.setRowCount(0);
         for (Ability ability : abilities) {
             CharacterAbility link = findLearned(ability.getAbilityId());
-            model.addRow(new Object[] {ability.getName(), ability.getCategory(), ability.getActionType(),
-                ability.getCostType(), ability.getCostValue(), link != null ? "Yes" : "No",
-                link != null && link.isToggled() ? "Yes" : "No"});
+            model.addRow(new Object[] {
+                ability.getName(),
+                ability.getCategory(),
+                ability.getActionType(),
+                ability.getCostType(),
+                ability.getCostValue(),
+                link != null ? "Yes" : "No"
+            });
         }
         clearAbilityForm();
     }
@@ -264,7 +269,6 @@ public class MainWindow extends javax.swing.JFrame {
     private void clearAbilityForm() {
         tblAbilities.clearSelection();
         clear(txtAbilityName, txtCost, txtAbilityDescription);
-        chkActive.setSelected(false);
     }
 
     // ---------------------------------------------------------------- Inventory
@@ -626,8 +630,6 @@ public class MainWindow extends javax.swing.JFrame {
         txtCost = new javax.swing.JTextField();
         lblAbilityDescription = new javax.swing.JLabel();
         txtAbilityDescription = new javax.swing.JTextField();
-        lblActive = new javax.swing.JLabel();
-        chkActive = new javax.swing.JCheckBox();
         pnlAbilitiesButtons = new javax.swing.JPanel();
         btnNewAbility = new javax.swing.JButton();
         btnSaveAbility = new javax.swing.JButton();
@@ -1079,11 +1081,11 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Category", "Action", "Cost type", "Cost", "Learned", "Active"
+                "Name", "Category", "Action", "Cost type", "Cost", "Learned"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1128,10 +1130,6 @@ public class MainWindow extends javax.swing.JFrame {
         lblAbilityDescription.setText("Description");
         pnlAbilitiesFields.add(lblAbilityDescription);
         pnlAbilitiesFields.add(txtAbilityDescription);
-
-        lblActive.setText("Active");
-        pnlAbilitiesFields.add(lblActive);
-        pnlAbilitiesFields.add(chkActive);
 
         pnlAbilitiesForm.add(pnlAbilitiesFields, java.awt.BorderLayout.PAGE_START);
 
@@ -1860,8 +1858,6 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
         cmbCostType.setSelectedItem(ability.getCostType());
         txtCost.setText(String.valueOf(ability.getCostValue()));
         txtAbilityDescription.setText(ability.getDescription());
-        CharacterAbility link = findLearned(ability.getAbilityId());
-        chkActive.setSelected(link != null && link.isToggled());
     }//GEN-LAST:event_abilitiesTableMouseClicked
 
     private void newAbilityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAbilityButtonActionPerformed
@@ -1905,7 +1901,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             return;
         }
         try {
-            service.learnAbility(selected.getId(), abilities.get(row).getAbilityId(), chkActive.isSelected());
+            service.learnAbility(selected.getId(), abilities.get(row).getAbilityId());
             loadAbilities();
         } catch (SQLException e) {
             showError(e);
@@ -2273,7 +2269,6 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JButton btnSaveSecondSkill;
     private javax.swing.JButton btnSaveSkill;
     private javax.swing.JButton btnSaveWeapon;
-    private javax.swing.JCheckBox chkActive;
     private javax.swing.JCheckBox chkEquipped;
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ActionType> cmbActionType;
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.AbilityCategory> cmbCategory;
@@ -2282,7 +2277,6 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JLabel lblAbilityDescription;
     private javax.swing.JLabel lblAbilityName;
     private javax.swing.JLabel lblActionType;
-    private javax.swing.JLabel lblActive;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblAmmoDamage;
     private javax.swing.JLabel lblAmmoDescription;

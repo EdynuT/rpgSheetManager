@@ -153,16 +153,14 @@ public class MainWindowService {
         return characterAbilityDAO.listByCharacter(characterId);
     }
 
-    // Links the ability to the character, or just changes "active" when it is already linked.
-    public void learnAbility(int characterId, int abilityId, boolean active) throws SQLException {
-        CharacterAbility link = new CharacterAbility(characterId, abilityId, active);
+    // Links the ability to the character if not already learned.
+    public void learnAbility(int characterId, int abilityId) throws SQLException {
         for (CharacterAbility learned : characterAbilityDAO.listByCharacter(characterId)) {
             if (learned.getAbilityId() == abilityId) {
-                characterAbilityDAO.update(link);
                 return;
             }
         }
-        characterAbilityDAO.insert(link);
+        characterAbilityDAO.insert(new CharacterAbility(characterId, abilityId));
     }
 
     public void forgetAbility(int characterId, int abilityId) throws SQLException {

@@ -58,7 +58,6 @@ CREATE TABLE second_skill (
 CREATE TABLE character_ability (
     character_id INT NOT NULL REFERENCES player_character(id) ON DELETE CASCADE,
     ability_id INT NOT NULL REFERENCES ability(id) ON DELETE CASCADE,
-    is_toggled BOOL NOT NULL DEFAULT false,
     PRIMARY KEY (character_id, ability_id)
 );
 
@@ -73,7 +72,8 @@ CREATE TABLE weapon (
 CREATE TABLE armor (
     item_id INT PRIMARY KEY REFERENCES item(id) ON DELETE CASCADE,
     physical_ac INT NOT NULL DEFAULT 0,
-    elemental_ac INT NOT NULL DEFAULT 0
+    elemental_ac INT NOT NULL DEFAULT 0,
+    is_equipped BOOL NOT NULL DEFAULT false
 );
 
 CREATE TABLE ammunition (
