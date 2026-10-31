@@ -18,5 +18,5 @@ target/
 .DS_Store
 
 # Other stuff
-data/images/*
+data/characterImages/*
 /bin/

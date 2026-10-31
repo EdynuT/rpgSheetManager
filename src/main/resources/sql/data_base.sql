@@ -18,7 +18,7 @@ CREATE TABLE player_character (
     base_stamina INT NOT NULL,
     current_stamina INT NOT NULL,
     base_sanity INT NOT NULL,
-    current_sanity INT NOT NULL,
+    current_sanity INT NOT NULL
 );
 
 CREATE TABLE ability (
@@ -66,7 +66,6 @@ CREATE TABLE weapon (
     item_id INT PRIMARY KEY REFERENCES item(id) ON DELETE CASCADE,
     scaling_attribute VARCHAR(20) NOT NULL,
     damage_dice TEXT,
-    flat_damage INT DEFAULT 0,
     critical_range INT NOT NULL DEFAULT 20,
     critical_multiplier INT NOT NULL DEFAULT 2
 );

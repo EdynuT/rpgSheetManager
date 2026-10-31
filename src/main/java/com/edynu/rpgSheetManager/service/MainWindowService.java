@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.edynu.rpgSheetManager.dao.AbilityDAO;
-import com.edynu.rpgSheetManager.dao.AmunitionDAO;
+import com.edynu.rpgSheetManager.dao.AmmunitionDAO;
 import com.edynu.rpgSheetManager.dao.ArmorDAO;
 import com.edynu.rpgSheetManager.dao.CharacterAbilityDAO;
 import com.edynu.rpgSheetManager.dao.InventoryDAO;
@@ -16,7 +16,7 @@ import com.edynu.rpgSheetManager.dao.SecondSkillDAO;
 import com.edynu.rpgSheetManager.dao.SkillDAO;
 import com.edynu.rpgSheetManager.dao.WeaponDAO;
 import com.edynu.rpgSheetManager.model.Ability;
-import com.edynu.rpgSheetManager.model.Amunition;
+import com.edynu.rpgSheetManager.model.Ammunition;
 import com.edynu.rpgSheetManager.model.Armor;
 import com.edynu.rpgSheetManager.model.CharacterAbility;
 import com.edynu.rpgSheetManager.model.Inventory;
@@ -42,7 +42,7 @@ public class MainWindowService {
     private final ItemDAO itemDAO = new ItemDAO();
     private final WeaponDAO weaponDAO = new WeaponDAO();
     private final ArmorDAO armorDAO = new ArmorDAO();
-    private final AmunitionDAO amunitionDAO = new AmunitionDAO();
+    private final AmmunitionDAO ammunitionDAO = new AmmunitionDAO();
 
     // Characters
 
@@ -55,6 +55,11 @@ public class MainWindowService {
     }
 
     public void saveCharacter(PlayerCharacter character) throws SQLException {
+        for (PlayerCharacter other : characterDAO.list()) {
+            if (!other.getId().equals(character.getId()) && sameName(other.getName(), character.getName())) {
+                throw new IllegalArgumentException("A character with the name \"" + other.getName() + "\" already exists.");
+            }
+        }
         if (character.getId() == null) {
             characterDAO.insert(character);
         } else {
@@ -78,7 +83,13 @@ public class MainWindowService {
         return skillDAO.listByCharacter(characterId);
     }
 
+    // Refuses the name when the character already has another skill with it (see sameName).
     public void saveSkill(Skill skill) throws SQLException {
+        for (Skill other : skillDAO.listByCharacter(skill.getCharacterId())) {
+            if (!other.getId().equals(skill.getId()) && sameName(other.getSkillName(), skill.getSkillName())) {
+                throw new IllegalArgumentException("This character already has the skill \"" + other.getSkillName() + "\".");
+            }
+        }
         if (skill.getId() == null) {
             skillDAO.insert(skill);
         } else {
@@ -96,7 +107,13 @@ public class MainWindowService {
         return secondSkillDAO.listByCharacter(characterId);
     }
 
+    // Refuses the name when the character already has another second skill with it (see sameName).
     public void saveSecondSkill(SecondSkill secondSkill) throws SQLException {
+        for (SecondSkill other : secondSkillDAO.listByCharacter(secondSkill.getCharacterId())) {
+            if (!other.getId().equals(secondSkill.getId()) && sameName(other.getSecondSkillName(), secondSkill.getSecondSkillName())) {
+                throw new IllegalArgumentException("This character already has the second skill \"" + other.getSecondSkillName() + "\".");
+            }
+        }
         if (secondSkill.getId() == null) {
             secondSkillDAO.insert(secondSkill);
         } else {
@@ -114,7 +131,13 @@ public class MainWindowService {
         return abilityDAO.list();
     }
 
+    // Refuses the name when another ability already has it (see sameName).
     public void saveAbility(Ability ability) throws SQLException {
+        for (Ability other : abilityDAO.list()) {
+            if (!other.getAbilityId().equals(ability.getAbilityId()) && sameName(other.getName(), ability.getName())) {
+                throw new IllegalArgumentException("The ability \"" + other.getName() + "\" already exists.");
+            }
+        }
         if (ability.getAbilityId() == null) {
             abilityDAO.insert(ability);
         } else {
@@ -152,7 +175,20 @@ public class MainWindowService {
         return inventoryDAO.listByCharacter(characterId);
     }
 
+    // Refuses a quantity below 1 and an item the character already has with the same "equipped"
+    // state (the table allows one row per character, item and equipped).
     public void saveInventory(Inventory entry) throws SQLException {
+        if (entry.getQuantity() < 0) {
+            throw new IllegalArgumentException("Quantity must be above or equal to 0.");
+        }
+        for (Inventory other : inventoryDAO.listByCharacter(entry.getCharacterId())) {
+            if (!other.getId().equals(entry.getId()) && other.getItemId().equals(entry.getItemId())
+                    && other.isEquipped() == entry.isEquipped()) {
+                String state = entry.isEquipped() ? "equipped" : "not equipped";
+                throw new IllegalArgumentException("This character already has \"" + itemDAO.findById(entry.getItemId()).getName()
+                        + "\" (" + state + ") in the inventory. Change the quantity of that entry instead.");
+            }
+        }
         if (entry.getId() == null) {
             inventoryDAO.insert(entry);
         } else {
@@ -174,7 +210,18 @@ public class MainWindowService {
         return itemDAO.listByCategory(ItemCategory.GENERAL);
     }
 
+    // Weapons, armors and ammunition are items too, so they all share the same names.
+    // Refuses the name when another item of any category already has it (see sameName).
+    private void checkItemName(Item item) throws SQLException {
+        for (Item other : itemDAO.list()) {
+            if (!other.getId().equals(item.getId()) && sameName(other.getName(), item.getName())) {
+                throw new IllegalArgumentException("The item \"" + other.getName() + "\" (" + other.getCategory() + ") already exists.");
+            }
+        }
+    }
+
     public void saveGeneralItem(Item item) throws SQLException {
+        checkItemName(item);
         if (item.getId() == null) {
             itemDAO.insert(item);
         } else {
@@ -187,6 +234,7 @@ public class MainWindowService {
     }
 
     public void saveWeapon(Weapon weapon) throws SQLException {
+        checkItemName(weapon);
         if (weapon.getId() == null) {
             weaponDAO.insert(weapon);
         } else {
@@ -199,6 +247,7 @@ public class MainWindowService {
     }
 
     public void saveArmor(Armor armor) throws SQLException {
+        checkItemName(armor);
         if (armor.getId() == null) {
             armorDAO.insert(armor);
         } else {
@@ -206,19 +255,25 @@ public class MainWindowService {
         }
     }
 
-    public List<Amunition> listAmmunition() throws SQLException {
-        return amunitionDAO.list();
+    public List<Ammunition> listAmmunition() throws SQLException {
+        return ammunitionDAO.list();
     }
 
-    public void saveAmmunition(Amunition ammunition) throws SQLException {
+    public void saveAmmunition(Ammunition ammunition) throws SQLException {
+        checkItemName(ammunition);
         if (ammunition.getId() == null) {
-            amunitionDAO.insert(ammunition);
+            ammunitionDAO.insert(ammunition);
         } else {
-            amunitionDAO.update(ammunition);
+            ammunitionDAO.update(ammunition);
         }
     }
 
     public void deleteItem(int id) throws SQLException {
         itemDAO.delete(id);
+    }
+
+    // Names are the same when they only differ in upper/lower case or in spaces at the start/end.
+    private static boolean sameName(String a, String b) {
+        return a.trim().toLowerCase().equals(b.trim().toLowerCase());
     }
 }

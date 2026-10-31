@@ -16,7 +16,7 @@ public class ItemDAO implements DAO<Item> {
         }
     }
 
-    // Package-visible: lets DAOs of Item subtypes (WeaponDAO, ArmorDAO, AmunitionDAO)
+    // Package-visible: lets DAOs of Item subtypes (WeaponDAO, ArmorDAO, AmmunitionDAO)
     // create the shared "item" row as part of their own transaction, instead of
     // duplicating this SQL or opening a second, uncoordinated connection.
     Item insert(Item obj, Connection con) throws SQLException {

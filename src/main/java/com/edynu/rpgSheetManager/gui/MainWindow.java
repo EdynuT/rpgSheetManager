@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.edynu.rpgSheetManager.gui;
 
 import java.awt.Color;
@@ -10,8 +5,6 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -34,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import com.edynu.rpgSheetManager.model.Ability;
 import com.edynu.rpgSheetManager.model.AbilityCategory;
 import com.edynu.rpgSheetManager.model.ActionType;
-import com.edynu.rpgSheetManager.model.Amunition;
+import com.edynu.rpgSheetManager.model.Ammunition;
 import com.edynu.rpgSheetManager.model.Armor;
 import com.edynu.rpgSheetManager.model.CharacterAbility;
 import com.edynu.rpgSheetManager.model.CostType;
@@ -72,7 +64,7 @@ public class MainWindow extends javax.swing.JFrame {
     private List<Item> generalItems = new ArrayList<>();
     private List<Weapon> weapons = new ArrayList<>();
     private List<Armor> armors = new ArrayList<>();
-    private List<Amunition> ammunition = new ArrayList<>();
+    private List<Ammunition> ammunition = new ArrayList<>();
 
     /**
      * Creates new form MainWindow
@@ -95,6 +87,18 @@ public class MainWindow extends javax.swing.JFrame {
                 return cell;
             }
         });
+        // The ...TableMouseClicked methods fill the form with the selected row. The selected row
+        // also changes with the arrow keys or when the mouse moves during the click, and that is
+        // not a mouse click, so they also run on every selection change. Without this, Save and
+        // Delete could act on a row that is not the one shown in the form.
+        tblSkills.getSelectionModel().addListSelectionListener(e -> skillsTableMouseClicked(null));
+        tblSecondSkills.getSelectionModel().addListSelectionListener(e -> secondSkillsTableMouseClicked(null));
+        tblAbilities.getSelectionModel().addListSelectionListener(e -> abilitiesTableMouseClicked(null));
+        tblInventory.getSelectionModel().addListSelectionListener(e -> inventoryTableMouseClicked(null));
+        tblItems.getSelectionModel().addListSelectionListener(e -> itemsTableMouseClicked(null));
+        tblWeapons.getSelectionModel().addListSelectionListener(e -> weaponsTableMouseClicked(null));
+        tblArmor.getSelectionModel().addListSelectionListener(e -> armorTableMouseClicked(null));
+        tblAmmunition.getSelectionModel().addListSelectionListener(e -> ammunitionTableMouseClicked(null));
         loadCharacters();
         loadItems();
         loadAbilities();
@@ -332,7 +336,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
         model = (DefaultTableModel) tblAmmunition.getModel();
         model.setRowCount(0);
-        for (Amunition ammo : ammunition) {
+        for (Ammunition ammo : ammunition) {
             model.addRow(new Object[] {ammo.getName(), ammo.getDamageDice(), ammo.getWeight()});
         }
 
@@ -370,18 +374,6 @@ public class MainWindow extends javax.swing.JFrame {
 
     // ---------------------------------------------------------------- Photos
 
-    // Image reduced to fit in size x size pixels and saved as JPEG, to keep the database small.
-    private byte[] toJpeg(BufferedImage image, int size) throws IOException {
-        double scale = Math.min(1.0, (double) size / Math.max(image.getWidth(), image.getHeight()));
-        int width = Math.max(1, (int) (image.getWidth() * scale));
-        int height = Math.max(1, (int) (image.getHeight() * scale));
-        BufferedImage small = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        small.getGraphics().drawImage(new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH)).getImage(), 0, 0, null);
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        ImageIO.write(small, "jpg", bytes);
-        return bytes.toByteArray();
-    }
-
     // Photo reduced to fit in size x size pixels, or the "Foto" box when there is no photo.
     private Icon photoIcon(byte[] photo, int size) {
         if (photo == null) {
@@ -412,7 +404,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Rolls the dice typed in a "Dice" field and shows the result in a message.
      * Used by the Roll buttons of the Skills, Second Skills, Weapons and Ammunition tabs.
      * <p>
-     * Accepts what {@link DiceRoller#diceParser(String)} accepts: dice ("1d20"), numbers,
+     * Accepts what {@link DiceRoller#rollDice(String)} accepts: dice ("1d20"), numbers,
      * + - * / and parentheses, with or without spaces, e.g. "1d20 + 5" or "(2d6 + 3) * 2".
      *
      * @param field the text field with the dice expression
@@ -425,13 +417,18 @@ public class MainWindow extends javax.swing.JFrame {
             return;
         }
         try {
-            int result = new DiceRoller().diceParser(expression);
+            int result = new DiceRoller().rollDice(expression);
             String title = name.trim().isEmpty() ? "Roll" : name.trim();
             showMessage(title + "\n" + expression + " = " + result);
         } catch (RuntimeException e) {
-            // DiceRoller throws IllegalStateException when the text is not a valid dice expression.
-            showMessage("\"" + expression + "\" is not a valid roll. Use something like 1d20 + 5 or 2d6 - 1.");
+            showInvalidRoll(expression);
         }
+    }
+
+    // The dice library throws a RuntimeException with a technical message when it cannot read the
+    // text (e.g. "fire"), so the Roll buttons show this message instead.
+    private void showInvalidRoll(String expression) {
+        showMessage("\"" + expression + "\" is not a valid roll. Use something like 1d20 + 5 or 2d6 - 1.");
     }
 
     /**
@@ -482,10 +479,10 @@ public class MainWindow extends javax.swing.JFrame {
         }
 
         try {
-            int damage = new DiceRoller().diceParser(expression);
+            int damage = new DiceRoller().rollDice(expression);
             showMessage(weapon.getName() + "\n" + label + expression + " = " + damage);
         } catch (RuntimeException e) {
-            showError(e);
+            showInvalidRoll(expression);
         }
     }
 
@@ -1953,10 +1950,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 
         // 2. Roll them and show the result.
         try {
-            int damage = new DiceRoller().diceParser(expression);
+            int damage = new DiceRoller().rollDice(expression);
             showMessage(ability.getName() + "\nDamage: " + expression + " = " + damage);
         } catch (RuntimeException e) {
-            showError(e); // the library rejected the expression
+            showInvalidRoll(expression);
         }
     }//GEN-LAST:event_rollDamageButtonActionPerformed
 
@@ -2076,7 +2073,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             int row = tblWeapons.getSelectedRow();
             Integer id = row >= 0 ? weapons.get(row).getId() : null;
             service.saveWeapon(new Weapon(id, txtWeaponName.getText(), txtWeaponDescription.getText(),
-                    decimal(txtWeaponWeight, "Weight"), ItemCategory.WEAPON, txtWeaponAttribute.getText(),
+                    decimal(txtWeaponWeight, "Weight"), txtWeaponAttribute.getText(),
                     txtWeaponDamage.getText(), number(txtWeaponRange, "Critical range"),
                     number(txtWeaponMultiplier, "Critical multiplier")));
             loadItems();
@@ -2166,7 +2163,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
         if (row < 0) {
             return;
         }
-        Amunition ammo = ammunition.get(row);
+        Ammunition ammo = ammunition.get(row);
         txtAmmoName.setText(ammo.getName());
         txtAmmoWeight.setText(String.valueOf(ammo.getWeight()));
         txtAmmoDamage.setText(ammo.getDamageDice());
@@ -2179,18 +2176,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 
     private void saveAmmoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAmmoButtonActionPerformed
         try {
-            if (txtAmmoName.getText().trim().isEmpty()) {
-                throw new IllegalArgumentException("Ammunition name must not be null");
-            }
             int row = tblAmmunition.getSelectedRow();
-            Amunition ammo = new Amunition();
-            ammo.setId(row >= 0 ? ammunition.get(row).getId() : null);
-            ammo.setName(txtAmmoName.getText());
-            ammo.setWeight(decimal(txtAmmoWeight, "Weight"));
-            ammo.setDamageDice(txtAmmoDamage.getText());
-            ammo.setDescription(txtAmmoDescription.getText());
-            ammo.setCategory(ItemCategory.AMMUNITION);
-            service.saveAmmunition(ammo);
+            Integer id = row >= 0 ? ammunition.get(row).getId() : null;
+            service.saveAmmunition(new Ammunition(id, txtAmmoName.getText(), txtAmmoDescription.getText(),
+                    decimal(txtAmmoWeight, "Weight"), txtAmmoDamage.getText()));
             loadItems();
         } catch (Exception e) {
             showError(e);
@@ -2221,7 +2210,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             showMessage("Click an ammunition in the table first.");
             return;
         }
-        Amunition ammo = ammunition.get(row);
+        Ammunition ammo = ammunition.get(row);
 
         String expression = DiceRoller.findDamageExpression(ammo.getDamageDice());
         if (expression == null && ammo.getDamageDice() != null && !ammo.getDamageDice().trim().isEmpty()) {
@@ -2233,10 +2222,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
         }
 
         try {
-            int damage = new DiceRoller().diceParser(expression);
+            int damage = new DiceRoller().rollDice(expression);
             showMessage(ammo.getName() + "\nDamage: " + expression + " = " + damage);
         } catch (RuntimeException e) {
-            showError(e);
+            showInvalidRoll(expression);
         }
     }//GEN-LAST:event_rollAmmoDamageButtonActionPerformed
 
@@ -2244,41 +2233,6 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void rollAmmoDiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollAmmoDiceButtonActionPerformed
         rollCustomDice(txtAmmoDice, txtAmmoName.getText());
     }//GEN-LAST:event_rollAmmoDiceButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainWindow().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChangePhoto;

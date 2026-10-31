@@ -1,26 +1,26 @@
 package com.edynu.rpgSheetManager.model;
 
 public class PlayerCharacter {
-    protected Integer id;
-    protected Integer level;
-    protected String name;
-    protected Integer age;
-    protected String race;
-    protected String characterClass;
-    protected String subclass;
-    protected String origin;
-    protected String language;
+    private Integer id;
+    private Integer level;
+    private String name;
+    private Integer age;
+    private String race;
+    private String characterClass;
+    private String subclass;
+    private String origin;
+    private String language;
     // Stats
-    protected int baseHealth;
-    protected int currentHealth;
-    protected int baseMana;
-    protected int currentMana;
-    protected int baseStamina;
-    protected int currentStamina;
-    protected int baseSanity;
-    protected int currentSanity;
+    private int baseHealth;
+    private int currentHealth;
+    private int baseMana;
+    private int currentMana;
+    private int baseStamina;
+    private int currentStamina;
+    private int baseSanity;
+    private int currentSanity;
 
-    protected byte[] photo;
+    private byte[] photo;
 
     // Empty constructor required for instantiation via DAO
     public PlayerCharacter() {
@@ -33,9 +33,9 @@ public class PlayerCharacter {
         this.id = id;
         this.level = level;
         if (name != null && !name.trim().isEmpty()) {
-                this.name = name;
+            this.name = name;
         } else {
-            throw new IllegalArgumentException("Character name must not be null!");
+            throw new IllegalArgumentException("Character name is required.");
         }
         this.age = age;
         this.race = race;
@@ -53,7 +53,7 @@ public class PlayerCharacter {
         this.currentSanity = currentSanity;
     }
 
-    // Getters and Setters with strict encapsulation
+    // Getters and setters
     public Integer getId() {
         return id;
     }

@@ -10,23 +10,42 @@ public class DiceRoller {
     private static final DiceParser parser = new DefaultDiceParser();
 
     /**
-    * <p>Example inputs:
-    * - 1d20
-    * - 1d20 +(or)- 5d10
-    * - 1d20 *(or)/ 5d10 + 10
-    * - 2 / (1d20 + 5d10) * 10
-    *<p>
-    * The output should be the result of the dice roll calculation based on the input expression.
-    * Exemple: 2d20 would mean rolling two 20-sided dice and summing the results.
-    * The function should correctly handle the order of operations and parentheses in the expression.
-    * The result must be an integer representing the final calculated value of the dice roll expression.
-    */
-    public int diceParser(String textWithDice) {
+     * Rolls a dice expression and returns its total.
+     * <p>
+     * "NdX" means rolling N dice of X sides and adding them up, so "2d20" rolls two
+     * 20-sided dice. Dice and numbers can be combined with + - * / and parentheses, following
+     * the usual order of operations. Examples:
+     * <ul>
+     * <li>{@code 1d20}</li>
+     * <li>{@code 1d20 + 5d10} or {@code 1d20 - 5d10}</li>
+     * <li>{@code 1d20 * 5d10 + 10} or {@code 1d20 / 5d10 + 10}</li>
+     * <li>{@code 2 / (1d20 + 5d10) * 10}</li>
+     * </ul>
+     * Spaces are allowed and division drops the decimals: 2 / 28 = 0.
+     *
+     * @param textWithDice the dice expression, e.g. "2d6 + 3"
+     * @return the total of the roll
+     * @throws IllegalArgumentException when the text is empty
+     * @throws RuntimeException when the text is not a valid dice expression
+     */
+    public int rollDice(String textWithDice) {
         return roll(textWithDice).getTotalRoll();
     }
 
     /**
-     * Same as {@link #diceParser(String)}, but also keeps every individual die rolled
+     * Rolls {@code numberOfDice} dice of {@code sides} sides and returns their sum.
+     * Same as {@code rollDice("NdX")}: {@code rollDice(3, 6)} rolls "3d6".
+     *
+     * @param numberOfDice how many dice to roll
+     * @param sides        how many sides each die has
+     * @return the sum of all dice
+     */
+    public int rollDice(int numberOfDice, int sides) {
+        return rollDice(numberOfDice + "d" + sides);
+    }
+
+    /**
+     * Same as {@link #rollDice(String)}, but also keeps every individual die rolled
      * ({@code getRollResults()}), so the interface can show what was rolled.
      */
     public RollHistory roll(String textWithDice) {
@@ -38,10 +57,6 @@ public class DiceRoller {
         // Invalid expressions throw IllegalStateException.
         return parser.parse(textWithDice.replaceAll("\\s+", ""),
                 new com.bernardomg.tabletop.dice.interpreter.DiceRoller());
-    }
-
-    public static int rollDice(int numberOfDice, int sides) {
-        return new DiceRoller().diceParser(numberOfDice + "d" + sides);
     }
 
     // ---------------------------------------------------------------- Damage inside free text
@@ -84,7 +99,7 @@ public class DiceRoller {
      * </ol>
      *
      * @param description the free text of the ability
-     * @return the damage expression, ready for {@link #diceParser(String)}, or {@code null}
+     * @return the damage expression, ready for {@link #rollDice(String)}, or {@code null}
      */
     public static String findDamageExpression(String description) {
         if (description == null) {

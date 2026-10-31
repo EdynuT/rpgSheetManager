@@ -15,7 +15,7 @@ public class Skill {
         if (skillName != null && !skillName.trim().isEmpty()) {
             this.skillName = skillName;
         } else {
-            throw new IllegalArgumentException("Skill name must not be null!");
+            throw new IllegalArgumentException("Skill name is required.");
         }
         this.value = value;
     }

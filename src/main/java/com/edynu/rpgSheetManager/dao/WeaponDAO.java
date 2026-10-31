@@ -8,68 +8,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WeaponDAO implements DAO<Weapon> {
-    private final com.edynu.rpgSheetManager.dao.ItemDAO itemDAO = new com.edynu.rpgSheetManager.dao.ItemDAO();
+    private final ItemDAO itemDAO = new ItemDAO();
 
     @Override
     public Weapon insert(Weapon obj) throws SQLException {
-        Connection con = null;
-        try {
-            con = Database.connect();
+        // The item row and this row are saved in one transaction: both or neither.
+        try (Connection con = Database.connect()) {
             con.setAutoCommit(false);
+            try {
+                itemDAO.insert(obj, con); // creates the shared "item" row and sets obj's id
 
-            itemDAO.insert(obj, con); // creates the shared "item" row and sets obj's id
+                String sqlWeapon = "INSERT INTO weapon (item_id, scaling_attribute, damage_dice, critical_range, critical_multiplier) " +
+                                    "VALUES (?, ?, ?, ?, ?)";
+                try (PreparedStatement stmt = con.prepareStatement(sqlWeapon)) {
+                    stmt.setInt(1, obj.getId());
+                    stmt.setString(2, obj.getScalingAttribute());
+                    stmt.setString(3, obj.getDamageDice());
+                    stmt.setInt(4, obj.getCriticalRange());
+                    stmt.setInt(5, obj.getCriticalMultiplier());
+                    stmt.executeUpdate();
+                }
 
-            String sqlWeapon = "INSERT INTO weapon (item_id, scaling_attribute, damage_dice, critical_range, critical_multiplier) " +
-                                "VALUES (?, ?, ?, ?, ?)";
-            try (PreparedStatement stmt = con.prepareStatement(sqlWeapon)) {
-                stmt.setInt(1, obj.getId());
-                stmt.setString(2, obj.getScalingAttribute());
-                stmt.setString(3, obj.getDamageDice());
-                stmt.setInt(4, obj.getCriticalRange());
-                stmt.setInt(5, obj.getCriticalMultiplier());
-                stmt.executeUpdate();
-            }
-
-            con.commit();
-            return obj;
-        } catch (SQLException e) {
-            if (con != null) con.rollback();
-            throw e;
-        } finally {
-            if (con != null) {
-                con.setAutoCommit(true);
-                con.close();
+                con.commit();
+            } catch (SQLException e) {
+                con.rollback();
+                throw e;
             }
         }
+        return obj;
     }
 
     @Override
     public void update(Weapon obj) throws SQLException {
-        Connection con = null;
-        try {
-            con = Database.connect();
+        // The item row and this row are saved in one transaction: both or neither.
+        try (Connection con = Database.connect()) {
             con.setAutoCommit(false);
+            try {
+                itemDAO.update(obj, con);
 
-            itemDAO.update(obj, con);
+                String sqlWeapon = "UPDATE weapon SET scaling_attribute = ?, damage_dice = ?, critical_range = ?, critical_multiplier = ? WHERE item_id = ?";
+                try (PreparedStatement stmt = con.prepareStatement(sqlWeapon)) {
+                    stmt.setString(1, obj.getScalingAttribute());
+                    stmt.setString(2, obj.getDamageDice());
+                    stmt.setInt(3, obj.getCriticalRange());
+                    stmt.setInt(4, obj.getCriticalMultiplier());
+                    stmt.setInt(5, obj.getId());
+                    stmt.executeUpdate();
+                }
 
-            String sqlWeapon = "UPDATE weapon SET scaling_attribute = ?, damage_dice = ?, critical_range = ?, critical_multiplier = ? WHERE item_id = ?";
-            try (PreparedStatement stmt = con.prepareStatement(sqlWeapon)) {
-                stmt.setString(1, obj.getScalingAttribute());
-                stmt.setString(2, obj.getDamageDice());
-                stmt.setInt(3, obj.getCriticalRange());
-                stmt.setInt(4, obj.getCriticalMultiplier());
-                stmt.setInt(5, obj.getId());
-                stmt.executeUpdate();
-            }
-
-            con.commit();
-        } catch (SQLException e) {
-            if (con != null) con.rollback();
-            throw e;
-        } finally {
-            if (con != null) {
-                con.setAutoCommit(true);
-                con.close();
+                con.commit();
+            } catch (SQLException e) {
+                con.rollback();
+                throw e;
             }
         }
     }

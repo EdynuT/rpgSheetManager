@@ -17,15 +17,4 @@ public class Database {
             throw e;
         }
     }
-
-    public static void disconnect(Connection con) {
-        if (con != null) {
-            try {
-                con.close();
-                System.out.println("Disconnected from the database!");
-            } catch (SQLException e) {
-                System.out.println("Failed to disconnect from the database!");
-            }
-        }
-    }
 }

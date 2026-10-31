@@ -10,9 +10,9 @@ public class Weapon extends Item {
         super();
     }
 
-    public Weapon(Integer id, String name, String description, double weight, ItemCategory category,
+    public Weapon(Integer id, String name, String description, double weight,
                   String scalingAttribute, String damageDice, int criticalRange, int criticalMultiplier) {
-        super(id, name, description, weight, category);
+        super(id, name, description, weight, ItemCategory.WEAPON);
         this.scalingAttribute = scalingAttribute;
         this.damageDice = damageDice;
         this.criticalRange = criticalRange;

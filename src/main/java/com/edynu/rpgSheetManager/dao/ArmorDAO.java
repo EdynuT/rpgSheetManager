@@ -8,64 +8,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArmorDAO implements DAO<Armor> {
-    private final com.edynu.rpgSheetManager.dao.ItemDAO itemDAO = new com.edynu.rpgSheetManager.dao.ItemDAO();
+    private final ItemDAO itemDAO = new ItemDAO();
 
     @Override
     public Armor insert(Armor obj) throws SQLException {
-        Connection con = null;
-        try {
-            con = Database.connect();
+        // The item row and this row are saved in one transaction: both or neither.
+        try (Connection con = Database.connect()) {
             con.setAutoCommit(false);
+            try {
+                itemDAO.insert(obj, con); // creates the shared "item" row and sets obj's id
 
-            itemDAO.insert(obj, con); // creates the shared "item" row and sets obj's id
+                String sqlArmor = "INSERT INTO armor (item_id, physical_ac, elemental_ac) " +
+                                   "VALUES (?, ?, ?)";
+                try (PreparedStatement stmt = con.prepareStatement(sqlArmor)) {
+                    stmt.setInt(1, obj.getId());
+                    stmt.setInt(2, obj.getPhysicalAC());
+                    stmt.setInt(3, obj.getElementalAC());
+                    stmt.executeUpdate();
+                }
 
-            String sqlArmor = "INSERT INTO armor (item_id, physical_ac, elemental_ac) " +
-                               "VALUES (?, ?, ?)";
-            try (PreparedStatement stmt = con.prepareStatement(sqlArmor)) {
-                stmt.setInt(1, obj.getId());
-                stmt.setInt(2, obj.getPhysicalAC());
-                stmt.setInt(3, obj.getElementalAC());
-                stmt.executeUpdate();
-            }
-
-            con.commit();
-            return obj;
-        } catch (SQLException e) {
-            if (con != null) con.rollback();
-            throw e;
-        } finally {
-            if (con != null) {
-                con.setAutoCommit(true);
-                con.close();
+                con.commit();
+            } catch (SQLException e) {
+                con.rollback();
+                throw e;
             }
         }
+        return obj;
     }
 
     @Override
     public void update(Armor obj) throws SQLException {
-        Connection con = null;
-        try {
-            con = Database.connect();
+        // The item row and this row are saved in one transaction: both or neither.
+        try (Connection con = Database.connect()) {
             con.setAutoCommit(false);
+            try {
+                itemDAO.update(obj, con);
 
-            itemDAO.update(obj, con);
+                String sqlArmor = "UPDATE armor SET physical_ac = ?, elemental_ac = ? WHERE item_id = ?";
+                try (PreparedStatement stmt = con.prepareStatement(sqlArmor)) {
+                    stmt.setInt(1, obj.getPhysicalAC());
+                    stmt.setInt(2, obj.getElementalAC());
+                    stmt.setInt(3, obj.getId());
+                    stmt.executeUpdate();
+                }
 
-            String sqlArmor = "UPDATE armor SET physical_ac = ?, elemental_ac = ? WHERE item_id = ?";
-            try (PreparedStatement stmt = con.prepareStatement(sqlArmor)) {
-                stmt.setInt(1, obj.getPhysicalAC());
-                stmt.setInt(2, obj.getElementalAC());
-                stmt.setInt(3, obj.getId());
-                stmt.executeUpdate();
-            }
-
-            con.commit();
-        } catch (SQLException e) {
-            if (con != null) con.rollback();
-            throw e;
-        } finally {
-            if (con != null) {
-                con.setAutoCommit(true);
-                con.close();
+                con.commit();
+            } catch (SQLException e) {
+                con.rollback();
+                throw e;
             }
         }
     }

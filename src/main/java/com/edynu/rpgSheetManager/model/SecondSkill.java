@@ -15,7 +15,7 @@ public class SecondSkill {
         if (secondSkillName != null && !secondSkillName.trim().isEmpty()) {
             this.secondSkillName = secondSkillName;
         } else {
-            throw new IllegalArgumentException("Second skill name must not be null!");
+            throw new IllegalArgumentException("Second skill name is required.");
         }
         this.value = (value != null) ? value : 0;
     }
