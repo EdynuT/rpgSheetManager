@@ -5,4 +5,20 @@ public enum ItemCategory {
     ARMOR,
     AMMUNITION,
     GENERAL;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case WEAPON:
+                return "Arma";
+            case ARMOR:
+                return "Armadura";
+            case AMMUNITION:
+                return "Munição";
+            case GENERAL:
+                return "Geral";
+            default:
+                return name();
+        }
+    }
 }

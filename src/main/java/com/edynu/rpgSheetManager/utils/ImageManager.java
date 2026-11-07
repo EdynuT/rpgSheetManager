@@ -36,7 +36,7 @@ public class ImageManager {
     public static byte[] saveCharacterPhoto(int characterId, File sourceFile, int maxSize) throws IOException {
         BufferedImage image = ImageIO.read(sourceFile);
         if (image == null) {
-            throw new IllegalArgumentException("This file is not an image.");
+            throw new IllegalArgumentException("Este arquivo não é uma imagem válida.");
         }
         double scale = Math.min(1.0, (double) maxSize / Math.max(image.getWidth(), image.getHeight()));
         int width = Math.max(1, (int) (image.getWidth() * scale));

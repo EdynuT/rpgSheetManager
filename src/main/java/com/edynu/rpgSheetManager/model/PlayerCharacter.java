@@ -35,7 +35,7 @@ public class PlayerCharacter {
         if (name != null && !name.trim().isEmpty()) {
             this.name = name;
         } else {
-            throw new IllegalArgumentException("Character name is required.");
+            throw new IllegalArgumentException("O nome do personagem é obrigatório.");
         }
         this.age = age;
         this.race = race;

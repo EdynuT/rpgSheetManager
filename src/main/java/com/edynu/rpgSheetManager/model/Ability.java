@@ -18,7 +18,7 @@ public class Ability {
         if (name != null && !name.trim().isEmpty()) {
             this.name = name;
         } else {
-            throw new IllegalArgumentException("Ability name is required.");
+            throw new IllegalArgumentException("O nome da habilidade é obrigatório.");
         }
         this.category = category;
         this.actionType = actionType;

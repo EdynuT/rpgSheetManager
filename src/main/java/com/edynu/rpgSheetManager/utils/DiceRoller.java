@@ -50,7 +50,7 @@ public class DiceRoller {
      */
     public RollHistory roll(String textWithDice) {
         if (textWithDice == null || textWithDice.trim().isEmpty()) {
-            throw new IllegalArgumentException("Dice expression must not be empty!");
+            throw new IllegalArgumentException("A expressão dos dados não pode estar vazia.");
         }
         // The library grammar does not accept whitespace, so it is stripped first.
         // Division is integer division: 2 / 28 = 0.

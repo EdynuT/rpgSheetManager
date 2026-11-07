@@ -10,10 +10,10 @@ public class Database {
     public static Connection connect() throws SQLException {
         try {
             Connection con = DriverManager.getConnection(URL);
-            System.out.println("Connected to the database!");
+            System.out.println("Conectado ao banco de dados!");
             return con;
         } catch(SQLException e) {
-            System.out.println("Database connection failed!");
+            System.out.println("Falha ao conectar ao banco de dados!");
             throw e;
         }
     }

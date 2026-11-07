@@ -3,7 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="RPG Sheet Manager"/>
+    <Property name="title" type="java.lang.String" value="Gerenciador de Fichas de RPG"/>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1100, 650]"/>
     </Property>
@@ -22,7 +22,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,23,0,0,3,-105"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,123,0,0,4,-90"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -33,7 +33,7 @@
           <Font name="Dialog" size="18" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="RPG SHEET MANAGER"/>
+        <Property name="text" type="java.lang.String" value="GERENCIADOR DE FICHAS DE RPG"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
             <EmptyBorder bottom="10" left="0" right="0" top="10"/>
@@ -80,7 +80,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="lblSearch">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Character name"/>
+                <Property name="text" type="java.lang.String" value="Nome do personagem"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -157,8 +157,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Character">
-                <Property name="tabTitle" type="java.lang.String" value="Character"/>
+              <JTabbedPaneConstraints tabName="Personagem">
+                <Property name="tabTitle" type="java.lang.String" value="Personagem"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -184,7 +184,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblName">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Name"/>
+                    <Property name="text" type="java.lang.String" value="Nome"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtName">
@@ -194,63 +194,63 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblLevel">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Level"/>
+                    <Property name="text" type="java.lang.String" value="N&#xed;vel"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtLevel">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblAge">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Age"/>
+                    <Property name="text" type="java.lang.String" value="Idade"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtAge">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblRace">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Race"/>
+                    <Property name="text" type="java.lang.String" value="Ra&#xe7;a"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtRace">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblClass">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Class"/>
+                    <Property name="text" type="java.lang.String" value="Classe"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtClass">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblSubclass">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Subclass"/>
+                    <Property name="text" type="java.lang.String" value="Subclasse"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtSubclass">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblOrigin">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Origin"/>
+                    <Property name="text" type="java.lang.String" value="Origem"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtOrigin">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblLanguages">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Languages"/>
+                    <Property name="text" type="java.lang.String" value="Idiomas"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtLanguages">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblHealth">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Health"/>
+                    <Property name="text" type="java.lang.String" value="Vida"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtHealth">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblBaseHealth">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Base health"/>
+                    <Property name="text" type="java.lang.String" value="Vida base"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtBaseHealth">
@@ -264,35 +264,35 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblBaseMana">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Base mana"/>
+                    <Property name="text" type="java.lang.String" value="Mana base"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtBaseMana">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblStamina">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Stamina"/>
+                    <Property name="text" type="java.lang.String" value="Vigor"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtStamina">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblBaseStamina">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Base stamina"/>
+                    <Property name="text" type="java.lang.String" value="Vigor base"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtBaseStamina">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblSanity">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Sanity"/>
+                    <Property name="text" type="java.lang.String" value="Sanidade"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtSanity">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblBaseSanity">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Base sanity"/>
+                    <Property name="text" type="java.lang.String" value="Sanidade base"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtBaseSanity">
@@ -312,7 +312,7 @@
               <SubComponents>
                 <Component class="javax.swing.JButton" name="btnNewCharacter">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="New"/>
+                    <Property name="text" type="java.lang.String" value="Novo"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newCharacterButtonActionPerformed"/>
@@ -320,7 +320,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSaveCharacter">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Save"/>
+                    <Property name="text" type="java.lang.String" value="Salvar"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveCharacterButtonActionPerformed"/>
@@ -328,7 +328,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnDeleteCharacter">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Delete"/>
+                    <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteCharacterButtonActionPerformed"/>
@@ -336,7 +336,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnChangePhoto">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Change photo"/>
+                    <Property name="text" type="java.lang.String" value="Alterar foto"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changePhotoButtonActionPerformed"/>
@@ -356,8 +356,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Skills">
-                <Property name="tabTitle" type="java.lang.String" value="Skills"/>
+              <JTabbedPaneConstraints tabName="Per&#xed;cias">
+                <Property name="tabTitle" type="java.lang.String" value="Per&#xed;cias"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -383,8 +383,8 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="2" rowCount="0">
-                        <Column editable="false" title="Skill" type="java.lang.Object"/>
-                        <Column editable="false" title="Value" type="java.lang.Object"/>
+                        <Column editable="false" title="Per&#xed;cia" type="java.lang.Object"/>
+                        <Column editable="false" title="Valor" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -421,7 +421,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblSkillName">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Skill"/>
+                        <Property name="text" type="java.lang.String" value="Per&#xed;cia"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtSkillName">
@@ -431,19 +431,19 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblSkillValue">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Value"/>
+                        <Property name="text" type="java.lang.String" value="Valor"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtSkillValue">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblSkillDice">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Dice"/>
+                        <Property name="text" type="java.lang.String" value="Dados"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtSkillDice">
                       <Properties>
-                        <Property name="toolTipText" type="java.lang.String" value="Dice to roll, e.g. 1d20 + 5"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Dados para rolar, por exemplo, 1d20 + 5"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -461,7 +461,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="btnNewSkill">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="New"/>
+                        <Property name="text" type="java.lang.String" value="Novo"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newSkillButtonActionPerformed"/>
@@ -469,7 +469,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnSaveSkill">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Save"/>
+                        <Property name="text" type="java.lang.String" value="Salvar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveSkillButtonActionPerformed"/>
@@ -477,7 +477,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnDeleteSkill">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Delete"/>
+                        <Property name="text" type="java.lang.String" value="Excluir"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteSkillButtonActionPerformed"/>
@@ -485,7 +485,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRollSkillDice">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Roll"/>
+                        <Property name="text" type="java.lang.String" value="Rolar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollSkillDiceButtonActionPerformed"/>
@@ -507,8 +507,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Second Skills">
-                <Property name="tabTitle" type="java.lang.String" value="Second Skills"/>
+              <JTabbedPaneConstraints tabName="Per&#xed;cias secund&#xe1;rias">
+                <Property name="tabTitle" type="java.lang.String" value="Per&#xed;cias secund&#xe1;rias"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -534,8 +534,8 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="2" rowCount="0">
-                        <Column editable="false" title="Second Skill" type="java.lang.Object"/>
-                        <Column editable="false" title="Value" type="java.lang.Object"/>
+                        <Column editable="false" title="Per&#xed;cia secund&#xe1;ria" type="java.lang.Object"/>
+                        <Column editable="false" title="Valor" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -572,7 +572,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblSecondSkillName">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Second Skill"/>
+                        <Property name="text" type="java.lang.String" value="Per&#xed;cia secund&#xe1;ria"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtSecondSkillName">
@@ -582,19 +582,19 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblSecondSkillValue">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Value"/>
+                        <Property name="text" type="java.lang.String" value="Valor"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtSecondSkillValue">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblSecondSkillDice">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Dice"/>
+                        <Property name="text" type="java.lang.String" value="Dados"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtSecondSkillDice">
                       <Properties>
-                        <Property name="toolTipText" type="java.lang.String" value="Dice to roll, e.g. 1d20 + 5"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Dados para rolar, por exemplo, 1d20 + 5"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -612,7 +612,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="btnNewSecondSkill">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="New"/>
+                        <Property name="text" type="java.lang.String" value="Novo"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newSecondSkillButtonActionPerformed"/>
@@ -620,7 +620,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnSaveSecondSkill">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Save"/>
+                        <Property name="text" type="java.lang.String" value="Salvar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveSecondSkillButtonActionPerformed"/>
@@ -628,7 +628,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnDeleteSecondSkill">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Delete"/>
+                        <Property name="text" type="java.lang.String" value="Excluir"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteSecondSkillButtonActionPerformed"/>
@@ -636,7 +636,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRollSecondSkillDice">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Roll"/>
+                        <Property name="text" type="java.lang.String" value="Rolar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollSecondSkillDiceButtonActionPerformed"/>
@@ -658,8 +658,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Abilities">
-                <Property name="tabTitle" type="java.lang.String" value="Abilities"/>
+              <JTabbedPaneConstraints tabName="Habilidades">
+                <Property name="tabTitle" type="java.lang.String" value="Habilidades"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -715,7 +715,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblAbilityName">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Name"/>
+                        <Property name="text" type="java.lang.String" value="Nome"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtAbilityName">
@@ -725,7 +725,7 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblCategory">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Category"/>
+                        <Property name="text" type="java.lang.String" value="Categoria"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="cmbCategory">
@@ -735,7 +735,7 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblActionType">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Action"/>
+                        <Property name="text" type="java.lang.String" value="A&#xe7;&#xe3;o"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="cmbActionType">
@@ -745,7 +745,7 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblCostType">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Cost type"/>
+                        <Property name="text" type="java.lang.String" value="Tipo de custo"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="cmbCostType">
@@ -755,14 +755,14 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblCost">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Cost"/>
+                        <Property name="text" type="java.lang.String" value="Custo"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtCost">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblAbilityDescription">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Description"/>
+                        <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtAbilityDescription">
@@ -782,7 +782,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="btnNewAbility">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="New"/>
+                        <Property name="text" type="java.lang.String" value="Novo"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newAbilityButtonActionPerformed"/>
@@ -790,7 +790,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnSaveAbility">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Save"/>
+                        <Property name="text" type="java.lang.String" value="Salvar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveAbilityButtonActionPerformed"/>
@@ -798,7 +798,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnDeleteAbility">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Delete"/>
+                        <Property name="text" type="java.lang.String" value="Excluir"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteAbilityButtonActionPerformed"/>
@@ -806,7 +806,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnLearn">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Learn"/>
+                        <Property name="text" type="java.lang.String" value="Aprender"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="learnButtonActionPerformed"/>
@@ -814,7 +814,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnForget">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Forget"/>
+                        <Property name="text" type="java.lang.String" value="Esquecer"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="forgetButtonActionPerformed"/>
@@ -822,7 +822,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRollDamage">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Roll damage"/>
+                        <Property name="text" type="java.lang.String" value="Rolar dano"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollDamageButtonActionPerformed"/>
@@ -844,8 +844,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Inventory">
-                <Property name="tabTitle" type="java.lang.String" value="Inventory"/>
+              <JTabbedPaneConstraints tabName="Invent&#xe1;rio">
+                <Property name="tabTitle" type="java.lang.String" value="Invent&#xe1;rio"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -872,10 +872,10 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="0">
                         <Column editable="false" title="Item" type="java.lang.Object"/>
-                        <Column editable="false" title="Category" type="java.lang.Object"/>
-                        <Column editable="false" title="Quantity" type="java.lang.Object"/>
-                        <Column editable="false" title="Equipped" type="java.lang.Object"/>
-                        <Column editable="false" title="Weight" type="java.lang.Object"/>
+                        <Column editable="false" title="Categoria" type="java.lang.Object"/>
+                        <Column editable="false" title="Quantidade" type="java.lang.Object"/>
+                        <Column editable="false" title="Equipado" type="java.lang.Object"/>
+                        <Column editable="false" title="Peso" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -922,14 +922,14 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblQuantity">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Quantity"/>
+                        <Property name="text" type="java.lang.String" value="Quantidade"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtQuantity">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblEquipped">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Equipped"/>
+                        <Property name="text" type="java.lang.String" value="Equipado"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="chkEquipped">
@@ -949,7 +949,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="btnNewEntry">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="New"/>
+                        <Property name="text" type="java.lang.String" value="Novo"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newEntryButtonActionPerformed"/>
@@ -957,7 +957,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnSaveEntry">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Save"/>
+                        <Property name="text" type="java.lang.String" value="Salvar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveEntryButtonActionPerformed"/>
@@ -965,7 +965,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnDeleteEntry">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Delete"/>
+                        <Property name="text" type="java.lang.String" value="Excluir"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteEntryButtonActionPerformed"/>
@@ -987,8 +987,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Items">
-                <Property name="tabTitle" type="java.lang.String" value="Items"/>
+              <JTabbedPaneConstraints tabName="Itens">
+                <Property name="tabTitle" type="java.lang.String" value="Itens"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -1014,9 +1014,9 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="0">
-                        <Column editable="false" title="Name" type="java.lang.Object"/>
-                        <Column editable="false" title="Weight" type="java.lang.Object"/>
-                        <Column editable="false" title="Description" type="java.lang.Object"/>
+                        <Column editable="false" title="Nome" type="java.lang.Object"/>
+                        <Column editable="false" title="Peso" type="java.lang.Object"/>
+                        <Column editable="false" title="Descri&#xe7;&#xe3;o" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -1053,7 +1053,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblItemName">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Name"/>
+                        <Property name="text" type="java.lang.String" value="Nome"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtItemName">
@@ -1063,14 +1063,14 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblItemWeight">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Weight"/>
+                        <Property name="text" type="java.lang.String" value="Peso"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtItemWeight">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblItemDescription">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Description"/>
+                        <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtItemDescription">
@@ -1090,7 +1090,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="btnNewItem">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="New"/>
+                        <Property name="text" type="java.lang.String" value="Novo"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newItemButtonActionPerformed"/>
@@ -1098,7 +1098,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnSaveItem">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Save"/>
+                        <Property name="text" type="java.lang.String" value="Salvar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveItemButtonActionPerformed"/>
@@ -1106,7 +1106,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnDeleteItem">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Delete"/>
+                        <Property name="text" type="java.lang.String" value="Excluir"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteItemButtonActionPerformed"/>
@@ -1128,8 +1128,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Weapons">
-                <Property name="tabTitle" type="java.lang.String" value="Weapons"/>
+              <JTabbedPaneConstraints tabName="Armas">
+                <Property name="tabTitle" type="java.lang.String" value="Armas"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -1155,12 +1155,12 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="6" rowCount="0">
-                        <Column editable="false" title="Name" type="java.lang.Object"/>
-                        <Column editable="false" title="Damage" type="java.lang.Object"/>
-                        <Column editable="false" title="Attribute" type="java.lang.Object"/>
-                        <Column editable="false" title="Critical range" type="java.lang.Object"/>
-                        <Column editable="false" title="Critical multiplier" type="java.lang.Object"/>
-                        <Column editable="false" title="Weight" type="java.lang.Object"/>
+                        <Column editable="false" title="Nome" type="java.lang.Object"/>
+                        <Column editable="false" title="Dano" type="java.lang.Object"/>
+                        <Column editable="false" title="Atributo" type="java.lang.Object"/>
+                        <Column editable="false" title="Margem cr&#xed;tica" type="java.lang.Object"/>
+                        <Column editable="false" title="Multiplicador cr&#xed;tico" type="java.lang.Object"/>
+                        <Column editable="false" title="Peso" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -1197,7 +1197,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblWeaponName">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Name"/>
+                        <Property name="text" type="java.lang.String" value="Nome"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtWeaponName">
@@ -1207,54 +1207,54 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblWeaponWeight">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Weight"/>
+                        <Property name="text" type="java.lang.String" value="Peso"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtWeaponWeight">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblWeaponAttribute">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Attribute"/>
+                        <Property name="text" type="java.lang.String" value="Atributo"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtWeaponAttribute">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblWeaponDamage">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Damage"/>
+                        <Property name="text" type="java.lang.String" value="Dano"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtWeaponDamage">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblWeaponRange">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Critical range"/>
+                        <Property name="text" type="java.lang.String" value="Margem cr&#xed;tica"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtWeaponRange">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblWeaponMultiplier">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Critical multiplier"/>
+                        <Property name="text" type="java.lang.String" value="Multiplicador cr&#xed;tico"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtWeaponMultiplier">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblWeaponDescription">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Description"/>
+                        <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtWeaponDescription">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblWeaponDice">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Dice"/>
+                        <Property name="text" type="java.lang.String" value="Dados"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtWeaponDice">
                       <Properties>
-                        <Property name="toolTipText" type="java.lang.String" value="Dice to roll, e.g. 1d20 + 5"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Dados para rolar, por exemplo, 1d20 + 5"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -1272,7 +1272,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="btnNewWeapon">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="New"/>
+                        <Property name="text" type="java.lang.String" value="Novo"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newWeaponButtonActionPerformed"/>
@@ -1280,7 +1280,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnSaveWeapon">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Save"/>
+                        <Property name="text" type="java.lang.String" value="Salvar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveWeaponButtonActionPerformed"/>
@@ -1288,7 +1288,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnDeleteWeapon">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Delete"/>
+                        <Property name="text" type="java.lang.String" value="Excluir"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteWeaponButtonActionPerformed"/>
@@ -1296,7 +1296,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRollWeaponDamage">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Roll damage"/>
+                        <Property name="text" type="java.lang.String" value="Rolar dano"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollWeaponDamageButtonActionPerformed"/>
@@ -1304,7 +1304,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRollWeaponCritical">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Roll critical"/>
+                        <Property name="text" type="java.lang.String" value="Rolar cr&#xed;tico"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollWeaponCriticalButtonActionPerformed"/>
@@ -1312,7 +1312,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRollWeaponDice">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Roll"/>
+                        <Property name="text" type="java.lang.String" value="Rolar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollWeaponDiceButtonActionPerformed"/>
@@ -1334,8 +1334,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Armor">
-                <Property name="tabTitle" type="java.lang.String" value="Armor"/>
+              <JTabbedPaneConstraints tabName="Armaduras">
+                <Property name="tabTitle" type="java.lang.String" value="Armaduras"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -1361,10 +1361,10 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">
-                        <Column editable="false" title="Name" type="java.lang.Object"/>
-                        <Column editable="false" title="Physical AC" type="java.lang.Object"/>
-                        <Column editable="false" title="Elemental AC" type="java.lang.Object"/>
-                        <Column editable="false" title="Weight" type="java.lang.Object"/>
+                        <Column editable="false" title="Nome" type="java.lang.Object"/>
+                        <Column editable="false" title="CA f&#xed;sica" type="java.lang.Object"/>
+                        <Column editable="false" title="CA elemental" type="java.lang.Object"/>
+                        <Column editable="false" title="Peso" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -1401,7 +1401,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblArmorName">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Name"/>
+                        <Property name="text" type="java.lang.String" value="Nome"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtArmorName">
@@ -1411,28 +1411,28 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblArmorWeight">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Weight"/>
+                        <Property name="text" type="java.lang.String" value="Peso"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtArmorWeight">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblPhysicalAc">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Physical AC"/>
+                        <Property name="text" type="java.lang.String" value="CA f&#xed;sica"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtPhysicalAc">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblElementalAc">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Elemental AC"/>
+                        <Property name="text" type="java.lang.String" value="CA elemental"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtElementalAc">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblArmorDescription">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Description"/>
+                        <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtArmorDescription">
@@ -1452,7 +1452,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="btnNewArmor">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="New"/>
+                        <Property name="text" type="java.lang.String" value="Novo"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newArmorButtonActionPerformed"/>
@@ -1460,7 +1460,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnSaveArmor">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Save"/>
+                        <Property name="text" type="java.lang.String" value="Salvar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveArmorButtonActionPerformed"/>
@@ -1468,7 +1468,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnDeleteArmor">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Delete"/>
+                        <Property name="text" type="java.lang.String" value="Excluir"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteArmorButtonActionPerformed"/>
@@ -1490,8 +1490,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Ammunition">
-                <Property name="tabTitle" type="java.lang.String" value="Ammunition"/>
+              <JTabbedPaneConstraints tabName="Muni&#xe7;&#xf5;es">
+                <Property name="tabTitle" type="java.lang.String" value="Muni&#xe7;&#xf5;es"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -1517,9 +1517,9 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="0">
-                        <Column editable="false" title="Name" type="java.lang.Object"/>
-                        <Column editable="false" title="Damage" type="java.lang.Object"/>
-                        <Column editable="false" title="Weight" type="java.lang.Object"/>
+                        <Column editable="false" title="Nome" type="java.lang.Object"/>
+                        <Column editable="false" title="Dano" type="java.lang.Object"/>
+                        <Column editable="false" title="Peso" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -1556,7 +1556,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblAmmoName">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Name"/>
+                        <Property name="text" type="java.lang.String" value="Nome"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtAmmoName">
@@ -1566,33 +1566,33 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblAmmoWeight">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Weight"/>
+                        <Property name="text" type="java.lang.String" value="Peso"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtAmmoWeight">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblAmmoDamage">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Damage"/>
+                        <Property name="text" type="java.lang.String" value="Dano"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtAmmoDamage">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblAmmoDescription">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Description"/>
+                        <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtAmmoDescription">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblAmmoDice">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Dice"/>
+                        <Property name="text" type="java.lang.String" value="Dados"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtAmmoDice">
                       <Properties>
-                        <Property name="toolTipText" type="java.lang.String" value="Dice to roll, e.g. 1d20 + 5"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Dados para rolar, por exemplo, 1d20 + 5"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -1610,7 +1610,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="btnNewAmmo">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="New"/>
+                        <Property name="text" type="java.lang.String" value="Novo"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newAmmoButtonActionPerformed"/>
@@ -1618,7 +1618,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnSaveAmmo">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Save"/>
+                        <Property name="text" type="java.lang.String" value="Salvar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveAmmoButtonActionPerformed"/>
@@ -1626,7 +1626,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnDeleteAmmo">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Delete"/>
+                        <Property name="text" type="java.lang.String" value="Excluir"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteAmmoButtonActionPerformed"/>
@@ -1634,7 +1634,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRollAmmoDamage">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Roll damage"/>
+                        <Property name="text" type="java.lang.String" value="Rolar dano"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollAmmoDamageButtonActionPerformed"/>
@@ -1642,7 +1642,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRollAmmoDice">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Roll"/>
+                        <Property name="text" type="java.lang.String" value="Rolar"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rollAmmoDiceButtonActionPerformed"/>

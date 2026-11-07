@@ -16,7 +16,7 @@ public class Item {
         if (name != null && !name.trim().isEmpty()) {
             this.name = name;
         } else {
-            throw new IllegalArgumentException("Item name is required.");
+            throw new IllegalArgumentException("O nome do item é obrigatório.");
         }
         this.description = description;
         this.weight = weight;

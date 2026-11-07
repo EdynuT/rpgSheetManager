@@ -15,7 +15,7 @@ public class SecondSkill {
         if (secondSkillName != null && !secondSkillName.trim().isEmpty()) {
             this.secondSkillName = secondSkillName;
         } else {
-            throw new IllegalArgumentException("Second skill name is required.");
+            throw new IllegalArgumentException("O nome da perícia secundária é obrigatório.");
         }
         this.value = (value != null) ? value : 0;
     }

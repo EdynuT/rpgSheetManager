@@ -80,7 +80,7 @@ public class MainWindow extends javax.swing.JFrame {
         }));
         javax.swing.JPanel inventoryCategoryPanel = new javax.swing.JPanel(
                 new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        inventoryCategoryPanel.add(new JLabel("Category:"));
+        inventoryCategoryPanel.add(new JLabel("Categoria:"));
         inventoryCategoryPanel.add(cmbInventoryCategory);
         pnlInventoryTab.add(inventoryCategoryPanel, java.awt.BorderLayout.PAGE_START);
         cmbInventoryCategory.addActionListener(evt -> {
@@ -243,7 +243,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     // ---------------------------------------------------------------- Abilities
 
-    // All abilities; "Learned" refers to the selected character.
+    // All abilities; "Aprendida" refers to the selected character.
     private void loadAbilities() {
         learned = new ArrayList<>();
         try {
@@ -264,7 +264,7 @@ public class MainWindow extends javax.swing.JFrame {
                 ability.getActionType(),
                 ability.getCostType(),
                 ability.getCostValue(),
-                link != null ? "Yes" : "No"
+                link != null ? "Sim" : "Não"
             });
         }
         clearAbilityForm();
@@ -311,7 +311,7 @@ public class MainWindow extends javax.swing.JFrame {
         for (Inventory entry : inventory) {
             Item item = findItem(entry.getItemId());
             model.addRow(new Object[] {item.getName(), item.getCategory(), entry.getQuantity(),
-                entry.isEquipped() ? "Yes" : "No", item.getWeight()});
+                entry.isEquipped() ? "Sim" : "Não", item.getWeight()});
         }
         clearInventoryForm();
     }
@@ -442,7 +442,7 @@ public class MainWindow extends javax.swing.JFrame {
     // ---------------------------------------------------------------- Helpers
 
     /**
-     * Rolls the dice typed in a "Dice" field and shows the result in a message.
+     * Rolls the dice typed in a "Dados" field and shows the result in a message.
      * Used by the Roll buttons of the Skills, Second Skills, Weapons and Ammunition tabs.
      * <p>
      * Accepts what {@link DiceRoller#rollDice(String)} accepts: dice ("1d20"), numbers,
@@ -454,12 +454,12 @@ public class MainWindow extends javax.swing.JFrame {
     private void rollCustomDice(JTextField field, String name) {
         String expression = field.getText().trim();
         if (expression.isEmpty()) {
-            showMessage("Type the dice to roll first, e.g. 1d20 + 5.");
+            showMessage("Digite os dados para rolar primeiro, por exemplo, 1d20 + 5.");
             return;
         }
         try {
             int result = new DiceRoller().rollDice(expression);
-            String title = name.trim().isEmpty() ? "Roll" : name.trim();
+            String title = name.trim().isEmpty() ? "Rolar" : name.trim();
             showMessage(title + "\n" + expression + " = " + result);
         } catch (RuntimeException e) {
             showInvalidRoll(expression);
@@ -469,7 +469,7 @@ public class MainWindow extends javax.swing.JFrame {
     // The dice library throws a RuntimeException with a technical message when it cannot read the
     // text (e.g. "fire"), so the Roll buttons show this message instead.
     private void showInvalidRoll(String expression) {
-        showMessage("\"" + expression + "\" is not a valid roll. Use something like 1d20 + 5 or 2d6 - 1.");
+        showMessage("\"" + expression + "\" não é uma rolagem válida. Use algo como 1d20 + 5 ou 2d6 - 1.");
     }
 
     /**
@@ -498,7 +498,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void rollWeaponDamage(boolean critical) {
         int row = tblWeapons.getSelectedRow();
         if (row < 0) {
-            showMessage("Click a weapon in the table first.");
+            showMessage("Selecione uma arma na tabela primeiro.");
             return;
         }
         Weapon weapon = weapons.get(row);
@@ -508,15 +508,15 @@ public class MainWindow extends javax.swing.JFrame {
             expression = weapon.getDamageDice().trim();
         }
         if (expression == null) {
-            showMessage("The weapon " + weapon.getName() + " has no damage dice (like 2d6 + 3).");
+            showMessage("A arma " + weapon.getName() + " não possui dados de dano (como 2d6 + 3).");
             return;
         }
 
-        String label = "Damage: ";
+        String label = "Dano: ";
         if (critical) {
             int multiplier = Math.max(1, weapon.getCriticalMultiplier());
             expression = multiplyDiceCount(expression, multiplier);
-            label = "Critical damage (x" + multiplier + "): ";
+            label = "Dano crítico (x" + multiplier + "): ";
         }
 
         try {
@@ -537,7 +537,7 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             return Integer.parseInt(field.getText().trim());
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(name + " must be a whole number.");
+            throw new IllegalArgumentException(name + " deve ser um número inteiro.");
         }
     }
 
@@ -546,20 +546,22 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             return Double.parseDouble(field.getText().trim().replace(',', '.'));
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(name + " must be a number.");
+            throw new IllegalArgumentException(name + " deve ser um número.");
         }
     }
 
     private boolean confirm(String question) {
-        return JOptionPane.showConfirmDialog(this, question, "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+        Object[] options = {"Sim", "Não"};
+        return JOptionPane.showOptionDialog(this, question, "Confirmar", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[0]) == JOptionPane.YES_OPTION;
     }
 
     private void showMessage(String message) {
-        JOptionPane.showMessageDialog(this, message);
+        JOptionPane.showMessageDialog(this, message, "Mensagem", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void showError(Exception e) {
-        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -774,12 +776,12 @@ public class MainWindow extends javax.swing.JFrame {
         btnRollAmmoDice = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("RPG Sheet Manager");
+        setTitle("Gerenciador de Fichas de RPG");
         setPreferredSize(new java.awt.Dimension(1100, 650));
 
         lblTitle.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("RPG SHEET MANAGER");
+        lblTitle.setText("GERENCIADOR DE FICHAS DE RPG");
         lblTitle.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
         getContentPane().add(lblTitle, java.awt.BorderLayout.PAGE_START);
 
@@ -789,7 +791,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlSearch.setLayout(new java.awt.BorderLayout(0, 3));
 
-        lblSearch.setText("Character name");
+        lblSearch.setText("Nome do personagem");
         pnlSearch.add(lblSearch, java.awt.BorderLayout.PAGE_START);
 
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -824,45 +826,45 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlCharacterFields.setLayout(new java.awt.GridLayout(0, 4, 8, 8));
 
-        lblName.setText("Name");
+        lblName.setText("Nome");
         pnlCharacterFields.add(lblName);
 
         txtName.setColumns(12);
         pnlCharacterFields.add(txtName);
 
-        lblLevel.setText("Level");
+        lblLevel.setText("Nível");
         pnlCharacterFields.add(lblLevel);
         pnlCharacterFields.add(txtLevel);
 
-        lblAge.setText("Age");
+        lblAge.setText("Idade");
         pnlCharacterFields.add(lblAge);
         pnlCharacterFields.add(txtAge);
 
-        lblRace.setText("Race");
+        lblRace.setText("Raça");
         pnlCharacterFields.add(lblRace);
         pnlCharacterFields.add(txtRace);
 
-        lblClass.setText("Class");
+        lblClass.setText("Classe");
         pnlCharacterFields.add(lblClass);
         pnlCharacterFields.add(txtClass);
 
-        lblSubclass.setText("Subclass");
+        lblSubclass.setText("Subclasse");
         pnlCharacterFields.add(lblSubclass);
         pnlCharacterFields.add(txtSubclass);
 
-        lblOrigin.setText("Origin");
+        lblOrigin.setText("Origem");
         pnlCharacterFields.add(lblOrigin);
         pnlCharacterFields.add(txtOrigin);
 
-        lblLanguages.setText("Languages");
+        lblLanguages.setText("Idiomas");
         pnlCharacterFields.add(lblLanguages);
         pnlCharacterFields.add(txtLanguages);
 
-        lblHealth.setText("Health");
+        lblHealth.setText("Vida");
         pnlCharacterFields.add(lblHealth);
         pnlCharacterFields.add(txtHealth);
 
-        lblBaseHealth.setText("Base health");
+        lblBaseHealth.setText("Vida base");
         pnlCharacterFields.add(lblBaseHealth);
         pnlCharacterFields.add(txtBaseHealth);
 
@@ -870,23 +872,23 @@ public class MainWindow extends javax.swing.JFrame {
         pnlCharacterFields.add(lblMana);
         pnlCharacterFields.add(txtMana);
 
-        lblBaseMana.setText("Base mana");
+        lblBaseMana.setText("Mana base");
         pnlCharacterFields.add(lblBaseMana);
         pnlCharacterFields.add(txtBaseMana);
 
-        lblStamina.setText("Stamina");
+        lblStamina.setText("Vigor");
         pnlCharacterFields.add(lblStamina);
         pnlCharacterFields.add(txtStamina);
 
-        lblBaseStamina.setText("Base stamina");
+        lblBaseStamina.setText("Vigor base");
         pnlCharacterFields.add(lblBaseStamina);
         pnlCharacterFields.add(txtBaseStamina);
 
-        lblSanity.setText("Sanity");
+        lblSanity.setText("Sanidade");
         pnlCharacterFields.add(lblSanity);
         pnlCharacterFields.add(txtSanity);
 
-        lblBaseSanity.setText("Base sanity");
+        lblBaseSanity.setText("Sanidade base");
         pnlCharacterFields.add(lblBaseSanity);
         pnlCharacterFields.add(txtBaseSanity);
 
@@ -894,7 +896,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlCharacterButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnNewCharacter.setText("New");
+        btnNewCharacter.setText("Novo");
         btnNewCharacter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newCharacterButtonActionPerformed(evt);
@@ -902,7 +904,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlCharacterButtons.add(btnNewCharacter);
 
-        btnSaveCharacter.setText("Save");
+        btnSaveCharacter.setText("Salvar");
         btnSaveCharacter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveCharacterButtonActionPerformed(evt);
@@ -910,7 +912,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlCharacterButtons.add(btnSaveCharacter);
 
-        btnDeleteCharacter.setText("Delete");
+        btnDeleteCharacter.setText("Excluir");
         btnDeleteCharacter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteCharacterButtonActionPerformed(evt);
@@ -918,7 +920,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlCharacterButtons.add(btnDeleteCharacter);
 
-        btnChangePhoto.setText("Change photo");
+        btnChangePhoto.setText("Alterar foto");
         btnChangePhoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changePhotoButtonActionPerformed(evt);
@@ -928,7 +930,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlCharacterTab.add(pnlCharacterButtons, java.awt.BorderLayout.CENTER);
 
-        tabMain.addTab("Character", pnlCharacterTab);
+        tabMain.addTab("Personagem", pnlCharacterTab);
 
         pnlSkillsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlSkillsTab.setLayout(new java.awt.BorderLayout(10, 10));
@@ -938,7 +940,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Skill", "Value"
+                "Perícia", "Valor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -962,27 +964,27 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlSkillsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        lblSkillName.setText("Skill");
+        lblSkillName.setText("Perícia");
         pnlSkillsFields.add(lblSkillName);
 
         txtSkillName.setColumns(12);
         pnlSkillsFields.add(txtSkillName);
 
-        lblSkillValue.setText("Value");
+        lblSkillValue.setText("Valor");
         pnlSkillsFields.add(lblSkillValue);
         pnlSkillsFields.add(txtSkillValue);
 
-        lblSkillDice.setText("Dice");
+        lblSkillDice.setText("Dados");
         pnlSkillsFields.add(lblSkillDice);
 
-        txtSkillDice.setToolTipText("Dice to roll, e.g. 1d20 + 5");
+        txtSkillDice.setToolTipText("Dados para rolar, por exemplo, 1d20 + 5");
         pnlSkillsFields.add(txtSkillDice);
 
         pnlSkillsForm.add(pnlSkillsFields, java.awt.BorderLayout.PAGE_START);
 
         pnlSkillsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnNewSkill.setText("New");
+        btnNewSkill.setText("Novo");
         btnNewSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newSkillButtonActionPerformed(evt);
@@ -990,7 +992,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlSkillsButtons.add(btnNewSkill);
 
-        btnSaveSkill.setText("Save");
+        btnSaveSkill.setText("Salvar");
         btnSaveSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveSkillButtonActionPerformed(evt);
@@ -998,7 +1000,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlSkillsButtons.add(btnSaveSkill);
 
-        btnDeleteSkill.setText("Delete");
+        btnDeleteSkill.setText("Excluir");
         btnDeleteSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteSkillButtonActionPerformed(evt);
@@ -1006,7 +1008,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlSkillsButtons.add(btnDeleteSkill);
 
-        btnRollSkillDice.setText("Roll");
+        btnRollSkillDice.setText("Rolar");
         btnRollSkillDice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rollSkillDiceButtonActionPerformed(evt);
@@ -1018,7 +1020,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlSkillsTab.add(pnlSkillsForm, java.awt.BorderLayout.LINE_END);
 
-        tabMain.addTab("Skills", pnlSkillsTab);
+        tabMain.addTab("Perícias", pnlSkillsTab);
 
         pnlSecondSkillsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlSecondSkillsTab.setLayout(new java.awt.BorderLayout(10, 10));
@@ -1028,7 +1030,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Second Skill", "Value"
+                "Perícia secundária", "Valor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1052,27 +1054,27 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlSecondSkillsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        lblSecondSkillName.setText("Second Skill");
+        lblSecondSkillName.setText("Perícia secundária");
         pnlSecondSkillsFields.add(lblSecondSkillName);
 
         txtSecondSkillName.setColumns(12);
         pnlSecondSkillsFields.add(txtSecondSkillName);
 
-        lblSecondSkillValue.setText("Value");
+        lblSecondSkillValue.setText("Valor");
         pnlSecondSkillsFields.add(lblSecondSkillValue);
         pnlSecondSkillsFields.add(txtSecondSkillValue);
 
-        lblSecondSkillDice.setText("Dice");
+        lblSecondSkillDice.setText("Dados");
         pnlSecondSkillsFields.add(lblSecondSkillDice);
 
-        txtSecondSkillDice.setToolTipText("Dice to roll, e.g. 1d20 + 5");
+        txtSecondSkillDice.setToolTipText("Dados para rolar, por exemplo, 1d20 + 5");
         pnlSecondSkillsFields.add(txtSecondSkillDice);
 
         pnlSecondSkillsForm.add(pnlSecondSkillsFields, java.awt.BorderLayout.PAGE_START);
 
         pnlSecondSkillsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnNewSecondSkill.setText("New");
+        btnNewSecondSkill.setText("Novo");
         btnNewSecondSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newSecondSkillButtonActionPerformed(evt);
@@ -1080,7 +1082,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlSecondSkillsButtons.add(btnNewSecondSkill);
 
-        btnSaveSecondSkill.setText("Save");
+        btnSaveSecondSkill.setText("Salvar");
         btnSaveSecondSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveSecondSkillButtonActionPerformed(evt);
@@ -1088,7 +1090,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlSecondSkillsButtons.add(btnSaveSecondSkill);
 
-        btnDeleteSecondSkill.setText("Delete");
+        btnDeleteSecondSkill.setText("Excluir");
         btnDeleteSecondSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteSecondSkillButtonActionPerformed(evt);
@@ -1096,7 +1098,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlSecondSkillsButtons.add(btnDeleteSecondSkill);
 
-        btnRollSecondSkillDice.setText("Roll");
+        btnRollSecondSkillDice.setText("Rolar");
         btnRollSecondSkillDice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rollSecondSkillDiceButtonActionPerformed(evt);
@@ -1108,27 +1110,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlSecondSkillsTab.add(pnlSecondSkillsForm, java.awt.BorderLayout.LINE_END);
 
-        tabMain.addTab("Second Skills", pnlSecondSkillsTab);
+        tabMain.addTab("Perícias secundárias", pnlSecondSkillsTab);
 
         pnlAbilitiesTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlAbilitiesTab.setLayout(new java.awt.BorderLayout(10, 10));
 
-        tblAbilities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Name", "Category", "Action", "Cost type", "Cost", "Learned"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
         tblAbilities.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 abilitiesTableMouseClicked(evt);
@@ -1142,29 +1128,29 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlAbilitiesFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        lblAbilityName.setText("Name");
+        lblAbilityName.setText("Nome");
         pnlAbilitiesFields.add(lblAbilityName);
 
         txtAbilityName.setColumns(12);
         pnlAbilitiesFields.add(txtAbilityName);
 
-        lblCategory.setText("Category");
+        lblCategory.setText("Categoria");
         pnlAbilitiesFields.add(lblCategory);
         pnlAbilitiesFields.add(cmbCategory);
 
-        lblActionType.setText("Action");
+        lblActionType.setText("Ação");
         pnlAbilitiesFields.add(lblActionType);
         pnlAbilitiesFields.add(cmbActionType);
 
-        lblCostType.setText("Cost type");
+        lblCostType.setText("Tipo de custo");
         pnlAbilitiesFields.add(lblCostType);
         pnlAbilitiesFields.add(cmbCostType);
 
-        lblCost.setText("Cost");
+        lblCost.setText("Custo");
         pnlAbilitiesFields.add(lblCost);
         pnlAbilitiesFields.add(txtCost);
 
-        lblAbilityDescription.setText("Description");
+        lblAbilityDescription.setText("Descrição");
         pnlAbilitiesFields.add(lblAbilityDescription);
         pnlAbilitiesFields.add(txtAbilityDescription);
 
@@ -1172,7 +1158,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlAbilitiesButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnNewAbility.setText("New");
+        btnNewAbility.setText("Novo");
         btnNewAbility.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newAbilityButtonActionPerformed(evt);
@@ -1180,7 +1166,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlAbilitiesButtons.add(btnNewAbility);
 
-        btnSaveAbility.setText("Save");
+        btnSaveAbility.setText("Salvar");
         btnSaveAbility.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveAbilityButtonActionPerformed(evt);
@@ -1188,7 +1174,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlAbilitiesButtons.add(btnSaveAbility);
 
-        btnDeleteAbility.setText("Delete");
+        btnDeleteAbility.setText("Excluir");
         btnDeleteAbility.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteAbilityButtonActionPerformed(evt);
@@ -1196,7 +1182,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlAbilitiesButtons.add(btnDeleteAbility);
 
-        btnLearn.setText("Learn");
+        btnLearn.setText("Aprender");
         btnLearn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 learnButtonActionPerformed(evt);
@@ -1204,7 +1190,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlAbilitiesButtons.add(btnLearn);
 
-        btnForget.setText("Forget");
+        btnForget.setText("Esquecer");
         btnForget.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 forgetButtonActionPerformed(evt);
@@ -1212,7 +1198,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlAbilitiesButtons.add(btnForget);
 
-        btnRollDamage.setText("Roll damage");
+        btnRollDamage.setText("Rolar dano");
         btnRollDamage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rollDamageButtonActionPerformed(evt);
@@ -1224,7 +1210,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlAbilitiesTab.add(pnlAbilitiesForm, java.awt.BorderLayout.LINE_END);
 
-        tabMain.addTab("Abilities", pnlAbilitiesTab);
+        tabMain.addTab("Habilidades", pnlAbilitiesTab);
 
         pnlInventoryTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlInventoryTab.setLayout(new java.awt.BorderLayout(10, 10));
@@ -1234,7 +1220,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Item", "Category", "Quantity", "Equipped", "Weight"
+                "Item", "Categoria", "Quantidade", "Equipado", "Peso"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1262,11 +1248,11 @@ public class MainWindow extends javax.swing.JFrame {
         pnlInventoryFields.add(lblItem);
         pnlInventoryFields.add(cmbItem);
 
-        lblQuantity.setText("Quantity");
+        lblQuantity.setText("Quantidade");
         pnlInventoryFields.add(lblQuantity);
         pnlInventoryFields.add(txtQuantity);
 
-        lblEquipped.setText("Equipped");
+        lblEquipped.setText("Equipado");
         pnlInventoryFields.add(lblEquipped);
         pnlInventoryFields.add(chkEquipped);
 
@@ -1274,7 +1260,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlInventoryButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnNewEntry.setText("New");
+        btnNewEntry.setText("Novo");
         btnNewEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newEntryButtonActionPerformed(evt);
@@ -1282,7 +1268,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlInventoryButtons.add(btnNewEntry);
 
-        btnSaveEntry.setText("Save");
+        btnSaveEntry.setText("Salvar");
         btnSaveEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveEntryButtonActionPerformed(evt);
@@ -1290,7 +1276,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlInventoryButtons.add(btnSaveEntry);
 
-        btnDeleteEntry.setText("Delete");
+        btnDeleteEntry.setText("Excluir");
         btnDeleteEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteEntryButtonActionPerformed(evt);
@@ -1302,7 +1288,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlInventoryTab.add(pnlInventoryForm, java.awt.BorderLayout.LINE_END);
 
-        tabMain.addTab("Inventory", pnlInventoryTab);
+        tabMain.addTab("Inventário", pnlInventoryTab);
 
         pnlItemsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlItemsTab.setLayout(new java.awt.BorderLayout(10, 10));
@@ -1312,7 +1298,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Weight", "Description"
+                "Nome", "Peso", "Descrição"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1336,17 +1322,17 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlItemsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        lblItemName.setText("Name");
+        lblItemName.setText("Nome");
         pnlItemsFields.add(lblItemName);
 
         txtItemName.setColumns(12);
         pnlItemsFields.add(txtItemName);
 
-        lblItemWeight.setText("Weight");
+        lblItemWeight.setText("Peso");
         pnlItemsFields.add(lblItemWeight);
         pnlItemsFields.add(txtItemWeight);
 
-        lblItemDescription.setText("Description");
+        lblItemDescription.setText("Descrição");
         pnlItemsFields.add(lblItemDescription);
         pnlItemsFields.add(txtItemDescription);
 
@@ -1354,7 +1340,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlItemsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnNewItem.setText("New");
+        btnNewItem.setText("Novo");
         btnNewItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newItemButtonActionPerformed(evt);
@@ -1362,7 +1348,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlItemsButtons.add(btnNewItem);
 
-        btnSaveItem.setText("Save");
+        btnSaveItem.setText("Salvar");
         btnSaveItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveItemButtonActionPerformed(evt);
@@ -1370,7 +1356,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlItemsButtons.add(btnSaveItem);
 
-        btnDeleteItem.setText("Delete");
+        btnDeleteItem.setText("Excluir");
         btnDeleteItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteItemButtonActionPerformed(evt);
@@ -1382,7 +1368,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlItemsTab.add(pnlItemsForm, java.awt.BorderLayout.LINE_END);
 
-        tabMain.addTab("Items", pnlItemsTab);
+        tabMain.addTab("Itens", pnlItemsTab);
 
         pnlWeaponsTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlWeaponsTab.setLayout(new java.awt.BorderLayout(10, 10));
@@ -1392,7 +1378,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Damage", "Attribute", "Critical range", "Critical multiplier", "Weight"
+                "Nome", "Dano", "Atributo", "Margem crítica", "Multiplicador crítico", "Peso"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1416,47 +1402,47 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlWeaponsFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        lblWeaponName.setText("Name");
+        lblWeaponName.setText("Nome");
         pnlWeaponsFields.add(lblWeaponName);
 
         txtWeaponName.setColumns(12);
         pnlWeaponsFields.add(txtWeaponName);
 
-        lblWeaponWeight.setText("Weight");
+        lblWeaponWeight.setText("Peso");
         pnlWeaponsFields.add(lblWeaponWeight);
         pnlWeaponsFields.add(txtWeaponWeight);
 
-        lblWeaponAttribute.setText("Attribute");
+        lblWeaponAttribute.setText("Atributo");
         pnlWeaponsFields.add(lblWeaponAttribute);
         pnlWeaponsFields.add(txtWeaponAttribute);
 
-        lblWeaponDamage.setText("Damage");
+        lblWeaponDamage.setText("Dano");
         pnlWeaponsFields.add(lblWeaponDamage);
         pnlWeaponsFields.add(txtWeaponDamage);
 
-        lblWeaponRange.setText("Critical range");
+        lblWeaponRange.setText("Margem crítica");
         pnlWeaponsFields.add(lblWeaponRange);
         pnlWeaponsFields.add(txtWeaponRange);
 
-        lblWeaponMultiplier.setText("Critical multiplier");
+        lblWeaponMultiplier.setText("Multiplicador crítico");
         pnlWeaponsFields.add(lblWeaponMultiplier);
         pnlWeaponsFields.add(txtWeaponMultiplier);
 
-        lblWeaponDescription.setText("Description");
+        lblWeaponDescription.setText("Descrição");
         pnlWeaponsFields.add(lblWeaponDescription);
         pnlWeaponsFields.add(txtWeaponDescription);
 
-        lblWeaponDice.setText("Dice");
+        lblWeaponDice.setText("Dados");
         pnlWeaponsFields.add(lblWeaponDice);
 
-        txtWeaponDice.setToolTipText("Dice to roll, e.g. 1d20 + 5");
+        txtWeaponDice.setToolTipText("Dados para rolar, por exemplo, 1d20 + 5");
         pnlWeaponsFields.add(txtWeaponDice);
 
         pnlWeaponsForm.add(pnlWeaponsFields, java.awt.BorderLayout.PAGE_START);
 
         pnlWeaponsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnNewWeapon.setText("New");
+        btnNewWeapon.setText("Novo");
         btnNewWeapon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newWeaponButtonActionPerformed(evt);
@@ -1464,7 +1450,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlWeaponsButtons.add(btnNewWeapon);
 
-        btnSaveWeapon.setText("Save");
+        btnSaveWeapon.setText("Salvar");
         btnSaveWeapon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveWeaponButtonActionPerformed(evt);
@@ -1472,7 +1458,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlWeaponsButtons.add(btnSaveWeapon);
 
-        btnDeleteWeapon.setText("Delete");
+        btnDeleteWeapon.setText("Excluir");
         btnDeleteWeapon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteWeaponButtonActionPerformed(evt);
@@ -1480,7 +1466,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlWeaponsButtons.add(btnDeleteWeapon);
 
-        btnRollWeaponDamage.setText("Roll damage");
+        btnRollWeaponDamage.setText("Rolar dano");
         btnRollWeaponDamage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rollWeaponDamageButtonActionPerformed(evt);
@@ -1488,7 +1474,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlWeaponsButtons.add(btnRollWeaponDamage);
 
-        btnRollWeaponCritical.setText("Roll critical");
+        btnRollWeaponCritical.setText("Rolar crítico");
         btnRollWeaponCritical.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rollWeaponCriticalButtonActionPerformed(evt);
@@ -1496,7 +1482,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlWeaponsButtons.add(btnRollWeaponCritical);
 
-        btnRollWeaponDice.setText("Roll");
+        btnRollWeaponDice.setText("Rolar");
         btnRollWeaponDice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rollWeaponDiceButtonActionPerformed(evt);
@@ -1508,7 +1494,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlWeaponsTab.add(pnlWeaponsForm, java.awt.BorderLayout.LINE_END);
 
-        tabMain.addTab("Weapons", pnlWeaponsTab);
+        tabMain.addTab("Armas", pnlWeaponsTab);
 
         pnlArmorTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlArmorTab.setLayout(new java.awt.BorderLayout(10, 10));
@@ -1518,7 +1504,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Physical AC", "Elemental AC", "Weight"
+                "Nome", "CA física", "CA elemental", "Peso"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1542,25 +1528,25 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlArmorFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        lblArmorName.setText("Name");
+        lblArmorName.setText("Nome");
         pnlArmorFields.add(lblArmorName);
 
         txtArmorName.setColumns(12);
         pnlArmorFields.add(txtArmorName);
 
-        lblArmorWeight.setText("Weight");
+        lblArmorWeight.setText("Peso");
         pnlArmorFields.add(lblArmorWeight);
         pnlArmorFields.add(txtArmorWeight);
 
-        lblPhysicalAc.setText("Physical AC");
+        lblPhysicalAc.setText("CA física");
         pnlArmorFields.add(lblPhysicalAc);
         pnlArmorFields.add(txtPhysicalAc);
 
-        lblElementalAc.setText("Elemental AC");
+        lblElementalAc.setText("CA elemental");
         pnlArmorFields.add(lblElementalAc);
         pnlArmorFields.add(txtElementalAc);
 
-        lblArmorDescription.setText("Description");
+        lblArmorDescription.setText("Descrição");
         pnlArmorFields.add(lblArmorDescription);
         pnlArmorFields.add(txtArmorDescription);
 
@@ -1568,7 +1554,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlArmorButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnNewArmor.setText("New");
+        btnNewArmor.setText("Novo");
         btnNewArmor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newArmorButtonActionPerformed(evt);
@@ -1576,7 +1562,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlArmorButtons.add(btnNewArmor);
 
-        btnSaveArmor.setText("Save");
+        btnSaveArmor.setText("Salvar");
         btnSaveArmor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveArmorButtonActionPerformed(evt);
@@ -1584,7 +1570,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlArmorButtons.add(btnSaveArmor);
 
-        btnDeleteArmor.setText("Delete");
+        btnDeleteArmor.setText("Excluir");
         btnDeleteArmor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteArmorButtonActionPerformed(evt);
@@ -1596,7 +1582,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlArmorTab.add(pnlArmorForm, java.awt.BorderLayout.LINE_END);
 
-        tabMain.addTab("Armor", pnlArmorTab);
+        tabMain.addTab("Armaduras", pnlArmorTab);
 
         pnlAmmunitionTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlAmmunitionTab.setLayout(new java.awt.BorderLayout(10, 10));
@@ -1606,7 +1592,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Damage", "Weight"
+                "Nome", "Dano", "Peso"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1630,35 +1616,35 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlAmmunitionFields.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        lblAmmoName.setText("Name");
+        lblAmmoName.setText("Nome");
         pnlAmmunitionFields.add(lblAmmoName);
 
         txtAmmoName.setColumns(12);
         pnlAmmunitionFields.add(txtAmmoName);
 
-        lblAmmoWeight.setText("Weight");
+        lblAmmoWeight.setText("Peso");
         pnlAmmunitionFields.add(lblAmmoWeight);
         pnlAmmunitionFields.add(txtAmmoWeight);
 
-        lblAmmoDamage.setText("Damage");
+        lblAmmoDamage.setText("Dano");
         pnlAmmunitionFields.add(lblAmmoDamage);
         pnlAmmunitionFields.add(txtAmmoDamage);
 
-        lblAmmoDescription.setText("Description");
+        lblAmmoDescription.setText("Descrição");
         pnlAmmunitionFields.add(lblAmmoDescription);
         pnlAmmunitionFields.add(txtAmmoDescription);
 
-        lblAmmoDice.setText("Dice");
+        lblAmmoDice.setText("Dados");
         pnlAmmunitionFields.add(lblAmmoDice);
 
-        txtAmmoDice.setToolTipText("Dice to roll, e.g. 1d20 + 5");
+        txtAmmoDice.setToolTipText("Dados para rolar, por exemplo, 1d20 + 5");
         pnlAmmunitionFields.add(txtAmmoDice);
 
         pnlAmmunitionForm.add(pnlAmmunitionFields, java.awt.BorderLayout.PAGE_START);
 
         pnlAmmunitionButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnNewAmmo.setText("New");
+        btnNewAmmo.setText("Novo");
         btnNewAmmo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newAmmoButtonActionPerformed(evt);
@@ -1666,7 +1652,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlAmmunitionButtons.add(btnNewAmmo);
 
-        btnSaveAmmo.setText("Save");
+        btnSaveAmmo.setText("Salvar");
         btnSaveAmmo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveAmmoButtonActionPerformed(evt);
@@ -1674,7 +1660,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlAmmunitionButtons.add(btnSaveAmmo);
 
-        btnDeleteAmmo.setText("Delete");
+        btnDeleteAmmo.setText("Excluir");
         btnDeleteAmmo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteAmmoButtonActionPerformed(evt);
@@ -1682,7 +1668,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlAmmunitionButtons.add(btnDeleteAmmo);
 
-        btnRollAmmoDamage.setText("Roll damage");
+        btnRollAmmoDamage.setText("Rolar dano");
         btnRollAmmoDamage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rollAmmoDamageButtonActionPerformed(evt);
@@ -1690,7 +1676,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlAmmunitionButtons.add(btnRollAmmoDamage);
 
-        btnRollAmmoDice.setText("Roll");
+        btnRollAmmoDice.setText("Rolar");
         btnRollAmmoDice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rollAmmoDiceButtonActionPerformed(evt);
@@ -1702,7 +1688,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlAmmunitionTab.add(pnlAmmunitionForm, java.awt.BorderLayout.LINE_END);
 
-        tabMain.addTab("Ammunition", pnlAmmunitionTab);
+        tabMain.addTab("Munições", pnlAmmunitionTab);
 
         getContentPane().add(tabMain, java.awt.BorderLayout.CENTER);
 
@@ -1731,12 +1717,12 @@ public class MainWindow extends javax.swing.JFrame {
     private void saveCharacterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCharacterButtonActionPerformed
         try {
             PlayerCharacter character = new PlayerCharacter(selected == null ? null : selected.getId(),
-                    number(txtLevel, "Level"), txtName.getText(), number(txtAge, "Age"), txtRace.getText(),
+                    number(txtLevel, "Nível"), txtName.getText(), number(txtAge, "Idade"), txtRace.getText(),
                     txtClass.getText(), txtSubclass.getText(), txtOrigin.getText(), txtLanguages.getText(),
-                    number(txtBaseHealth, "Base health"), number(txtHealth, "Health"),
-                    number(txtBaseMana, "Base mana"), number(txtMana, "Mana"),
-                    number(txtBaseStamina, "Base stamina"), number(txtStamina, "Stamina"),
-                    number(txtBaseSanity, "Base sanity"), number(txtSanity, "Sanity"));
+                    number(txtBaseHealth, "Vida base"), number(txtHealth, "Vida"),
+                    number(txtBaseMana, "Mana base"), number(txtMana, "Mana"),
+                    number(txtBaseStamina, "Vigor base"), number(txtStamina, "Vigor"),
+                    number(txtBaseSanity, "Sanidade base"), number(txtSanity, "Sanidade"));
             character.setPhoto(selected == null ? null : selected.getPhoto());
             service.saveCharacter(character);
             loadCharacters();
@@ -1748,10 +1734,10 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void deleteCharacterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCharacterButtonActionPerformed
         if (selected == null) {
-            showMessage("Select a character first.");
+            showMessage("Selecione um personagem primeiro.");
             return;
         }
-        if (!confirm("Delete " + selected.getName() + "?")) {
+        if (!confirm("Excluir " + selected.getName() + "?")) {
             return;
         }
         try {
@@ -1765,10 +1751,11 @@ public class MainWindow extends javax.swing.JFrame {
 
 private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePhotoButtonActionPerformed
         if (selected == null) {
-            showMessage("Select a character first.");
+            showMessage("Selecione um personagem primeiro.");
             return;
         }
         JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Selecione uma foto do personagem");
         if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
             return;
         }
@@ -1797,13 +1784,13 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 
     private void saveSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSkillButtonActionPerformed
         if (selected == null) {
-            showMessage("Select a character first.");
+            showMessage("Selecione um personagem primeiro.");
             return;
         }
         try {
             int row = tblSkills.getSelectedRow();
             Integer id = row >= 0 ? skills.get(row).getId() : null;
-            service.saveSkill(new Skill(id, selected.getId(), txtSkillName.getText(), number(txtSkillValue, "Value")));
+            service.saveSkill(new Skill(id, selected.getId(), txtSkillName.getText(), number(txtSkillValue, "Valor")));
             loadSkills();
         } catch (Exception e) {
             showError(e);
@@ -1813,10 +1800,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void deleteSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSkillButtonActionPerformed
         int row = tblSkills.getSelectedRow();
         if (row < 0) {
-            showMessage("Click a skill in the table first.");
+            showMessage("Selecione uma perícia na tabela primeiro.");
             return;
         }
-        if (!confirm("Delete the skill " + skills.get(row).getSkillName() + "?")) {
+        if (!confirm("Excluir a perícia " + skills.get(row).getSkillName() + "?")) {
             return;
         }
         try {
@@ -1827,7 +1814,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
         }
     }//GEN-LAST:event_deleteSkillButtonActionPerformed
 
-    // Rolls the dice typed in the "Dice" field of this tab.
+    // Rolls the dice typed in the "Dados" field of this tab.
     private void rollSkillDiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollSkillDiceButtonActionPerformed
         rollCustomDice(txtSkillDice, txtSkillName.getText());
     }//GEN-LAST:event_rollSkillDiceButtonActionPerformed
@@ -1848,13 +1835,13 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 
     private void saveSecondSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSecondSkillButtonActionPerformed
         if (selected == null) {
-            showMessage("Select a character first.");
+            showMessage("Selecione um personagem primeiro.");
             return;
         }
         try {
             int row = tblSecondSkills.getSelectedRow();
             Integer id = row >= 0 ? secondSkills.get(row).getId() : null;
-            service.saveSecondSkill(new SecondSkill(id, selected.getId(), txtSecondSkillName.getText(), number(txtSecondSkillValue, "Value")));
+            service.saveSecondSkill(new SecondSkill(id, selected.getId(), txtSecondSkillName.getText(), number(txtSecondSkillValue, "Valor")));
             loadSecondSkills();
         } catch (Exception e) {
             showError(e);
@@ -1864,10 +1851,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void deleteSecondSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSecondSkillButtonActionPerformed
         int row = tblSecondSkills.getSelectedRow();
         if (row < 0) {
-            showMessage("Click a second skill in the table first.");
+            showMessage("Selecione uma perícia secundária na tabela primeiro.");
             return;
         }
-        if (!confirm("Delete the second skill " + secondSkills.get(row).getSecondSkillName() + "?")) {
+        if (!confirm("Excluir a perícia secundária " + secondSkills.get(row).getSecondSkillName() + "?")) {
             return;
         }
         try {
@@ -1878,7 +1865,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
         }
     }//GEN-LAST:event_deleteSecondSkillButtonActionPerformed
 
-    // Rolls the dice typed in the "Dice" field of this tab.
+    // Rolls the dice typed in the "Dados" field of this tab.
     private void rollSecondSkillDiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollSecondSkillDiceButtonActionPerformed
         rollCustomDice(txtSecondSkillDice, txtSecondSkillName.getText());
     }//GEN-LAST:event_rollSecondSkillDiceButtonActionPerformed
@@ -1907,7 +1894,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             Integer id = row >= 0 ? abilities.get(row).getAbilityId() : null;
             service.saveAbility(new Ability(id, txtAbilityName.getText(), (AbilityCategory) cmbCategory.getSelectedItem(),
                     (ActionType) cmbActionType.getSelectedItem(), (CostType) cmbCostType.getSelectedItem(),
-                    number(txtCost, "Cost"), txtAbilityDescription.getText()));
+                    number(txtCost, "Custo"), txtAbilityDescription.getText()));
             loadAbilities();
         } catch (Exception e) {
             showError(e);
@@ -1917,10 +1904,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void deleteAbilityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAbilityButtonActionPerformed
         int row = tblAbilities.getSelectedRow();
         if (row < 0) {
-            showMessage("Click an ability in the table first.");
+            showMessage("Selecione uma habilidade na tabela primeiro.");
             return;
         }
-        if (!confirm("Delete the ability " + abilities.get(row).getName() + "?")) {
+        if (!confirm("Excluir a habilidade " + abilities.get(row).getName() + "?")) {
             return;
         }
         try {
@@ -1934,7 +1921,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void learnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnButtonActionPerformed
         int row = tblAbilities.getSelectedRow();
         if (selected == null || row < 0) {
-            showMessage("Select a character and click an ability in the table first.");
+            showMessage("Selecione um personagem e uma habilidade na tabela primeiro.");
             return;
         }
         try {
@@ -1948,7 +1935,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void forgetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forgetButtonActionPerformed
         int row = tblAbilities.getSelectedRow();
         if (selected == null || row < 0) {
-            showMessage("Select a character and click an ability in the table first.");
+            showMessage("Selecione um personagem e uma habilidade na tabela primeiro.");
             return;
         }
         try {
@@ -1969,7 +1956,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void rollDamageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollDamageButtonActionPerformed
         int row = tblAbilities.getSelectedRow();
         if (row < 0) {
-            showMessage("Click an ability in the table first.");
+            showMessage("Selecione uma habilidade na tabela primeiro.");
             return;
         }
         Ability ability = abilities.get(row);
@@ -1977,7 +1964,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
         // 1. Find the damage dice written in the description.
         String expression = DiceRoller.findDamageExpression(ability.getDescription());
         if (expression == null) {
-            showMessage("The description of " + ability.getName() + " has no damage dice (like 2d6 + 3).");
+            showMessage("A descrição de " + ability.getName() + " não possui dados de dano (como 2d6 + 3).");
             return;
         }
 
@@ -2007,14 +1994,14 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 
     private void saveEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveEntryButtonActionPerformed
         if (selected == null || cmbItem.getSelectedIndex() < 0) {
-            showMessage("Select a character and choose an item first.");
+            showMessage("Selecione um personagem e escolha um item primeiro.");
             return;
         }
         try {
             int row = tblInventory.getSelectedRow();
             Integer id = row >= 0 ? inventory.get(row).getId() : null;
             int itemId = inventoryItems.get(cmbItem.getSelectedIndex()).getId();
-            service.saveInventory(new Inventory(id, selected.getId(), itemId, number(txtQuantity, "Quantity"), chkEquipped.isSelected()));
+            service.saveInventory(new Inventory(id, selected.getId(), itemId, number(txtQuantity, "Quantidade"), chkEquipped.isSelected()));
             loadInventory();
         } catch (Exception e) {
             showError(e);
@@ -2024,10 +2011,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void deleteEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEntryButtonActionPerformed
         int row = tblInventory.getSelectedRow();
         if (row < 0) {
-            showMessage("Click an item in the table first.");
+            showMessage("Selecione um item na tabela primeiro.");
             return;
         }
-        if (!confirm("Remove this item from the inventory?")) {
+        if (!confirm("Remover este item do inventário?")) {
             return;
         }
         try {
@@ -2058,7 +2045,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             int row = tblItems.getSelectedRow();
             Integer id = row >= 0 ? generalItems.get(row).getId() : null;
             service.saveGeneralItem(new Item(id, txtItemName.getText(), txtItemDescription.getText(),
-                    decimal(txtItemWeight, "Weight"), ItemCategory.GENERAL));
+                    decimal(txtItemWeight, "Peso"), ItemCategory.GENERAL));
             loadItems();
         } catch (Exception e) {
             showError(e);
@@ -2068,10 +2055,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void deleteItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemButtonActionPerformed
         int row = tblItems.getSelectedRow();
         if (row < 0) {
-            showMessage("Click an item in the table first.");
+            showMessage("Selecione um item na tabela primeiro.");
             return;
         }
-        if (!confirm("Delete the item " + generalItems.get(row).getName() + "?")) {
+        if (!confirm("Excluir o item " + generalItems.get(row).getName() + "?")) {
             return;
         }
         try {
@@ -2106,9 +2093,9 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             int row = tblWeapons.getSelectedRow();
             Integer id = row >= 0 ? weapons.get(row).getId() : null;
             service.saveWeapon(new Weapon(id, txtWeaponName.getText(), txtWeaponDescription.getText(),
-                    decimal(txtWeaponWeight, "Weight"), txtWeaponAttribute.getText(),
-                    txtWeaponDamage.getText(), number(txtWeaponRange, "Critical range"),
-                    number(txtWeaponMultiplier, "Critical multiplier")));
+                    decimal(txtWeaponWeight, "Peso"), txtWeaponAttribute.getText(),
+                    txtWeaponDamage.getText(), number(txtWeaponRange, "Margem crítica"),
+                    number(txtWeaponMultiplier, "Multiplicador crítico")));
             loadItems();
         } catch (Exception e) {
             showError(e);
@@ -2118,10 +2105,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void deleteWeaponButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteWeaponButtonActionPerformed
         int row = tblWeapons.getSelectedRow();
         if (row < 0) {
-            showMessage("Click a weapon in the table first.");
+            showMessage("Selecione uma arma na tabela primeiro.");
             return;
         }
-        if (!confirm("Delete the weapon " + weapons.get(row).getName() + "?")) {
+        if (!confirm("Excluir a arma " + weapons.get(row).getName() + "?")) {
             return;
         }
         try {
@@ -2166,8 +2153,8 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             int row = tblArmor.getSelectedRow();
             Integer id = row >= 0 ? armors.get(row).getId() : null;
             service.saveArmor(new Armor(id, txtArmorName.getText(), txtArmorDescription.getText(),
-                    decimal(txtArmorWeight, "Weight"), number(txtPhysicalAc, "Physical AC"),
-                    number(txtElementalAc, "Elemental AC")));
+                    decimal(txtArmorWeight, "Peso"), number(txtPhysicalAc, "CA física"),
+                    number(txtElementalAc, "CA elemental")));
             loadItems();
         } catch (Exception e) {
             showError(e);
@@ -2177,10 +2164,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void deleteArmorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteArmorButtonActionPerformed
         int row = tblArmor.getSelectedRow();
         if (row < 0) {
-            showMessage("Click an armor in the table first.");
+            showMessage("Selecione uma armadura na tabela primeiro.");
             return;
         }
-        if (!confirm("Delete the armor " + armors.get(row).getName() + "?")) {
+        if (!confirm("Excluir a armadura " + armors.get(row).getName() + "?")) {
             return;
         }
         try {
@@ -2212,7 +2199,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             int row = tblAmmunition.getSelectedRow();
             Integer id = row >= 0 ? ammunition.get(row).getId() : null;
             service.saveAmmunition(new Ammunition(id, txtAmmoName.getText(), txtAmmoDescription.getText(),
-                    decimal(txtAmmoWeight, "Weight"), txtAmmoDamage.getText()));
+                    decimal(txtAmmoWeight, "Peso"), txtAmmoDamage.getText()));
             loadItems();
         } catch (Exception e) {
             showError(e);
@@ -2222,10 +2209,10 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void deleteAmmoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAmmoButtonActionPerformed
         int row = tblAmmunition.getSelectedRow();
         if (row < 0) {
-            showMessage("Click an ammunition in the table first.");
+            showMessage("Selecione uma munição na tabela primeiro.");
             return;
         }
-        if (!confirm("Delete the ammunition " + ammunition.get(row).getName() + "?")) {
+        if (!confirm("Excluir a munição " + ammunition.get(row).getName() + "?")) {
             return;
         }
         try {
@@ -2240,7 +2227,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private void rollAmmoDamageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollAmmoDamageButtonActionPerformed
         int row = tblAmmunition.getSelectedRow();
         if (row < 0) {
-            showMessage("Click an ammunition in the table first.");
+            showMessage("Selecione uma munição na tabela primeiro.");
             return;
         }
         Ammunition ammo = ammunition.get(row);
@@ -2250,7 +2237,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             expression = ammo.getDamageDice().trim();
         }
         if (expression == null) {
-            showMessage("The ammunition " + ammo.getName() + " has no damage dice (like 1d6 + 1).");
+            showMessage("A munição " + ammo.getName() + " não possui dados de dano (como 1d6 + 1).");
             return;
         }
 
@@ -2262,7 +2249,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
         }
     }//GEN-LAST:event_rollAmmoDamageButtonActionPerformed
 
-    // Rolls the custom dice expression typed in the "Dice" field of the Ammunition tab.
+    // Rolls the custom dice expression typed in the "Dados" field of the Ammunition tab.
     private void rollAmmoDiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rollAmmoDiceButtonActionPerformed
         rollCustomDice(txtAmmoDice, txtAmmoName.getText());
     }//GEN-LAST:event_rollAmmoDiceButtonActionPerformed
@@ -2310,7 +2297,6 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ActionType> cmbActionType;
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.AbilityCategory> cmbCategory;
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.CostType> cmbCostType;
-    private final javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ItemCategory> cmbInventoryCategory = new javax.swing.JComboBox<>();
     private javax.swing.JComboBox<String> cmbItem;
     private javax.swing.JLabel lblAbilityDescription;
     private javax.swing.JLabel lblAbilityName;

@@ -15,7 +15,7 @@ public class Skill {
         if (skillName != null && !skillName.trim().isEmpty()) {
             this.skillName = skillName;
         } else {
-            throw new IllegalArgumentException("Skill name is required.");
+            throw new IllegalArgumentException("O nome da perícia é obrigatório.");
         }
         this.value = value;
     }
