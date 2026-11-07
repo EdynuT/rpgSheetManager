@@ -18,20 +18,20 @@ public class ImageManager {
         try {
             Files.createDirectories(PHOTO_DIR);
         } catch (IOException e) {
-            throw new RuntimeException("Could not create photo directory: " + PHOTO_DIR.toAbsolutePath(), e);
+            throw new RuntimeException("Could not create photo directory at: " + PHOTO_DIR.toAbsolutePath(), e);
         }
     }
 
     /**
-     * Salva a foto do personagem como JPEG, reduzindo-a para caber no tamanho máximo
-     * sem alterar a proporção. A imagem não é ampliada se já for menor que o limite.
+     * Saves the character's photo as JPEG, reducing it to fit the maximum size
+     * without changing the aspect ratio. The image is not enlarged if it is already smaller than the limit.
      *
-     * @param characterId identificador usado para nomear o arquivo da foto
-     * @param sourceFile arquivo de imagem de origem
-     * @param maxSize dimensão máxima, em pixels, para largura ou altura
-     * @return bytes do JPEG salvo
-     * @throws IOException se houver erro ao ler ou gravar o arquivo
-     * @throws IllegalArgumentException se o arquivo não puder ser reconhecido como imagem
+     * @param characterId identifier used to name the photo file
+     * @param sourceFile source image file
+     * @param maxSize maximum dimension, in pixels, for width or height
+     * @return bytes of the saved JPEG
+     * @throws IOException if there is an error reading or writing the file
+     * @throws IllegalArgumentException if the file cannot be recognized as an image
      */
     public static byte[] saveCharacterPhoto(int characterId, File sourceFile, int maxSize) throws IOException {
         BufferedImage image = ImageIO.read(sourceFile);
@@ -53,10 +53,10 @@ public class ImageManager {
     }
 
     /**
-     * Carrega os bytes da foto JPEG salva para o personagem.
+     * Loads the saved JPEG photo bytes for the character.
      *
-     * @param characterId identificador usado para localizar o arquivo da foto
-     * @return bytes da foto, ou {@code null} se o arquivo não existir ou não puder ser lido
+     * @param characterId identifier used to locate the photo file
+     * @return bytes of the photo, or {@code null} if the file does not exist or cannot be read
      */
     public static byte[] loadCharacterPhoto(int characterId) {
         Path target = PHOTO_DIR.resolve("char_" + characterId + ".jpg");
@@ -71,9 +71,9 @@ public class ImageManager {
     }
 
     /**
-     * Exclui o arquivo de foto do personagem, se existir.
+     * Deletes the character's photo file, if it exists.
      *
-     * @param characterId identificador usado para localizar o arquivo da foto
+     * @param characterId identifier used to locate the photo file
      */
     public static void deleteCharacterPhoto(int characterId) {
         try {
