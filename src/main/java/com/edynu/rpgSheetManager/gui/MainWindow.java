@@ -686,7 +686,6 @@ public class MainWindow extends javax.swing.JFrame {
         lblEquipped = new javax.swing.JLabel();
         chkEquipped = new javax.swing.JCheckBox();
         pnlInventoryButtons = new javax.swing.JPanel();
-        btnNewEntry = new javax.swing.JButton();
         btnSaveEntry = new javax.swing.JButton();
         btnDeleteEntry = new javax.swing.JButton();
         pnlItemsTab = new javax.swing.JPanel();
@@ -779,7 +778,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         lblTitle.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("GERENCIADOR DE FICHAS DE RPG");
+        lblTitle.setText("RPG SHEET MANAGER");
         lblTitle.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
         getContentPane().add(lblTitle, java.awt.BorderLayout.PAGE_START);
 
@@ -1113,6 +1112,22 @@ public class MainWindow extends javax.swing.JFrame {
         pnlAbilitiesTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlAbilitiesTab.setLayout(new java.awt.BorderLayout(10, 10));
 
+        tblAbilities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nome", "Categoria", "Ação", "Tipo de custo", "Custo", "Aprendida"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblAbilities.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 abilitiesTableMouseClicked(evt);
@@ -1265,14 +1280,6 @@ public class MainWindow extends javax.swing.JFrame {
         pnlInventoryForm.add(pnlInventoryFields, java.awt.BorderLayout.PAGE_START);
 
         pnlInventoryButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        btnNewEntry.setText("Novo");
-        btnNewEntry.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newEntryButtonActionPerformed(evt);
-            }
-        });
-        pnlInventoryButtons.add(btnNewEntry);
 
         btnSaveEntry.setText("Salvar");
         btnSaveEntry.addActionListener(new java.awt.event.ActionListener() {
@@ -1994,10 +2001,6 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
         chkEquipped.setSelected(entry.isEquipped());
     }//GEN-LAST:event_inventoryTableMouseClicked
 
-    private void newEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEntryButtonActionPerformed
-        clearInventoryForm();
-    }//GEN-LAST:event_newEntryButtonActionPerformed
-
     private void saveEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveEntryButtonActionPerformed
         if (selected == null || cmbItem.getSelectedIndex() < 0) {
             showMessage("Selecione um personagem e escolha um item primeiro.");
@@ -2277,7 +2280,6 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JButton btnNewAmmo;
     private javax.swing.JButton btnNewArmor;
     private javax.swing.JButton btnNewCharacter;
-    private javax.swing.JButton btnNewEntry;
     private javax.swing.JButton btnNewItem;
     private javax.swing.JButton btnNewSecondSkill;
     private javax.swing.JButton btnNewSkill;
@@ -2328,8 +2330,8 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JLabel lblElementalAc;
     private javax.swing.JLabel lblEquipped;
     private javax.swing.JLabel lblHealth;
-    private javax.swing.JLabel lblItem;
     private javax.swing.JLabel lblInventoryCategory;
+    private javax.swing.JLabel lblItem;
     private javax.swing.JLabel lblItemDescription;
     private javax.swing.JLabel lblItemName;
     private javax.swing.JLabel lblItemWeight;
