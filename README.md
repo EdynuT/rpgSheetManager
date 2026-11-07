@@ -51,6 +51,28 @@ No Windows:
 gradlew.bat build
 ```
 
+## Gerar um JAR executável
+
+O comando abaixo gera um JAR com as dependências de execução incluídas e copia as fotos
+para uma pasta externa ao lado do arquivo:
+
+```bash
+./gradlew jar
+```
+
+Os arquivos gerados ficam em `build/libs/`:
+
+- `rpgSheetManager.jar`
+- `data/characterImages/`
+
+Execute o JAR com:
+
+```bash
+java -jar build/libs/rpgSheetManager.jar
+```
+
+No Windows, use `gradlew.bat jar` para gerar o pacote.
+
 ## Licença
 
 Este projeto está sob a licença MIT. Consulte o arquivo [`LICENSE`](LICENSE).

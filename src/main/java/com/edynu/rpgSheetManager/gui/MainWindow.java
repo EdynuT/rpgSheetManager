@@ -78,11 +78,6 @@ public class MainWindow extends javax.swing.JFrame {
         cmbInventoryCategory.setModel(new DefaultComboBoxModel<>(new ItemCategory[] {
             ItemCategory.GENERAL, ItemCategory.WEAPON, ItemCategory.ARMOR, ItemCategory.AMMUNITION
         }));
-        javax.swing.JPanel inventoryCategoryPanel = new javax.swing.JPanel(
-                new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        inventoryCategoryPanel.add(new JLabel("Categoria:"));
-        inventoryCategoryPanel.add(cmbInventoryCategory);
-        pnlInventoryTab.add(inventoryCategoryPanel, java.awt.BorderLayout.PAGE_START);
         cmbInventoryCategory.addActionListener(evt -> {
             refreshInventoryItemChoices();
             loadInventory();
@@ -677,6 +672,9 @@ public class MainWindow extends javax.swing.JFrame {
         btnForget = new javax.swing.JButton();
         btnRollDamage = new javax.swing.JButton();
         pnlInventoryTab = new javax.swing.JPanel();
+        pnlInventoryCategory = new javax.swing.JPanel();
+        lblInventoryCategory = new javax.swing.JLabel();
+        cmbInventoryCategory = new javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ItemCategory>();
         scrInventory = new javax.swing.JScrollPane();
         tblInventory = new javax.swing.JTable();
         pnlInventoryForm = new javax.swing.JPanel();
@@ -1214,6 +1212,14 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlInventoryTab.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlInventoryTab.setLayout(new java.awt.BorderLayout(10, 10));
+
+        pnlInventoryCategory.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        lblInventoryCategory.setText("Categoria:");
+        pnlInventoryCategory.add(lblInventoryCategory);
+        pnlInventoryCategory.add(cmbInventoryCategory);
+
+        pnlInventoryTab.add(pnlInventoryCategory, java.awt.BorderLayout.PAGE_START);
 
         tblInventory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2297,6 +2303,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ActionType> cmbActionType;
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.AbilityCategory> cmbCategory;
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.CostType> cmbCostType;
+    private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ItemCategory> cmbInventoryCategory;
     private javax.swing.JComboBox<String> cmbItem;
     private javax.swing.JLabel lblAbilityDescription;
     private javax.swing.JLabel lblAbilityName;
@@ -2322,6 +2329,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JLabel lblEquipped;
     private javax.swing.JLabel lblHealth;
     private javax.swing.JLabel lblItem;
+    private javax.swing.JLabel lblInventoryCategory;
     private javax.swing.JLabel lblItemDescription;
     private javax.swing.JLabel lblItemName;
     private javax.swing.JLabel lblItemWeight;
@@ -2369,6 +2377,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JPanel pnlCharacterFields;
     private javax.swing.JPanel pnlCharacterTab;
     private javax.swing.JPanel pnlInventoryButtons;
+    private javax.swing.JPanel pnlInventoryCategory;
     private javax.swing.JPanel pnlInventoryFields;
     private javax.swing.JPanel pnlInventoryForm;
     private javax.swing.JPanel pnlInventoryTab;

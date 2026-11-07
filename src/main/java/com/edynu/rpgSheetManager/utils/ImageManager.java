@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,7 +13,20 @@ import javax.imageio.ImageIO;
 
 public class ImageManager {
 
-    private static final Path PHOTO_DIR = Paths.get("data", "characterImages");
+    private static final Path PHOTO_DIR = resolvePhotoDirectory();
+
+    private static Path resolvePhotoDirectory() {
+        try {
+            Path applicationLocation = Paths.get(
+                    ImageManager.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            if (Files.isRegularFile(applicationLocation)) {
+                return applicationLocation.getParent().resolve("data").resolve("characterImages");
+            }
+            return Paths.get("data", "characterImages");
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Could not locate the application directory.", e);
+        }
+    }
 
     static {
         try {

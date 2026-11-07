@@ -28,7 +28,20 @@ dependencies {
 }
 
 jar {
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+
     manifest {
         attributes 'Main-Class': mainClass
+    }
+
+    doLast {
+        copy {
+            from 'data/characterImages'
+            into new File(destinationDir, 'data/characterImages')
+        }
     }
 }
