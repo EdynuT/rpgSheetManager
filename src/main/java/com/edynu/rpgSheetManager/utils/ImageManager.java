@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 
-public class Utils {
+public class ImageManager {
 
     private static final Path PHOTO_DIR = Paths.get("data", "characterImages");
 
@@ -22,6 +22,17 @@ public class Utils {
         }
     }
 
+    /**
+     * Salva a foto do personagem como JPEG, reduzindo-a para caber no tamanho máximo
+     * sem alterar a proporção. A imagem não é ampliada se já for menor que o limite.
+     *
+     * @param characterId identificador usado para nomear o arquivo da foto
+     * @param sourceFile arquivo de imagem de origem
+     * @param maxSize dimensão máxima, em pixels, para largura ou altura
+     * @return bytes do JPEG salvo
+     * @throws IOException se houver erro ao ler ou gravar o arquivo
+     * @throws IllegalArgumentException se o arquivo não puder ser reconhecido como imagem
+     */
     public static byte[] saveCharacterPhoto(int characterId, File sourceFile, int maxSize) throws IOException {
         BufferedImage image = ImageIO.read(sourceFile);
         if (image == null) {
@@ -41,6 +52,12 @@ public class Utils {
         return Files.readAllBytes(target);
     }
 
+    /**
+     * Carrega os bytes da foto JPEG salva para o personagem.
+     *
+     * @param characterId identificador usado para localizar o arquivo da foto
+     * @return bytes da foto, ou {@code null} se o arquivo não existir ou não puder ser lido
+     */
     public static byte[] loadCharacterPhoto(int characterId) {
         Path target = PHOTO_DIR.resolve("char_" + characterId + ".jpg");
         if (!Files.exists(target)) {
@@ -53,6 +70,11 @@ public class Utils {
         }
     }
 
+    /**
+     * Exclui o arquivo de foto do personagem, se existir.
+     *
+     * @param characterId identificador usado para localizar o arquivo da foto
+     */
     public static void deleteCharacterPhoto(int characterId) {
         try {
             Files.deleteIfExists(PHOTO_DIR.resolve("char_" + characterId + ".jpg"));

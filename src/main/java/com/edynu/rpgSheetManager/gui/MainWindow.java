@@ -44,7 +44,7 @@ import com.edynu.rpgSheetManager.utils.DiceRoller;
  * Characters on the left and one tab per model on the right. Each tab has a table, the
  * fields of the row clicked in the table and the New, Save and Delete buttons.
  *
- * @author edynu
+ * @author EdynuT
  */
 public class MainWindow extends javax.swing.JFrame {
 
@@ -61,6 +61,7 @@ public class MainWindow extends javax.swing.JFrame {
     private List<CharacterAbility> learned = new ArrayList<>();
     private List<Inventory> inventory = new ArrayList<>();
     private List<Item> allItems = new ArrayList<>();
+    private List<Item> inventoryItems = new ArrayList<>();
     private List<Item> generalItems = new ArrayList<>();
     private List<Weapon> weapons = new ArrayList<>();
     private List<Armor> armors = new ArrayList<>();
@@ -74,6 +75,18 @@ public class MainWindow extends javax.swing.JFrame {
         cmbCategory.setModel(new DefaultComboBoxModel<>(AbilityCategory.values()));
         cmbActionType.setModel(new DefaultComboBoxModel<>(ActionType.values()));
         cmbCostType.setModel(new DefaultComboBoxModel<>(CostType.values()));
+        cmbInventoryCategory.setModel(new DefaultComboBoxModel<>(new ItemCategory[] {
+            ItemCategory.GENERAL, ItemCategory.WEAPON, ItemCategory.ARMOR, ItemCategory.AMMUNITION
+        }));
+        javax.swing.JPanel inventoryCategoryPanel = new javax.swing.JPanel(
+                new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        inventoryCategoryPanel.add(new JLabel("Category:"));
+        inventoryCategoryPanel.add(cmbInventoryCategory);
+        pnlInventoryTab.add(inventoryCategoryPanel, java.awt.BorderLayout.PAGE_START);
+        cmbInventoryCategory.addActionListener(evt -> {
+            refreshInventoryItemChoices();
+            loadInventory();
+        });
         // Each character of the gallery is shown as its photo with the name below it.
         lstCharacter.setCellRenderer(new DefaultListCellRenderer() {
             @Override
@@ -282,6 +295,17 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (SQLException e) {
             showError(e);
         }
+        ItemCategory category = (ItemCategory) cmbInventoryCategory.getSelectedItem();
+        if (category != null) {
+            List<Inventory> categoryInventory = new ArrayList<>();
+            for (Inventory entry : inventory) {
+                Item item = findItem(entry.getItemId());
+                if (item != null && item.getCategory() == category) {
+                    categoryInventory.add(entry);
+                }
+            }
+            inventory = categoryInventory;
+        }
         DefaultTableModel model = (DefaultTableModel) tblInventory.getModel();
         model.setRowCount(0);
         for (Inventory entry : inventory) {
@@ -306,6 +330,22 @@ public class MainWindow extends javax.swing.JFrame {
         cmbItem.setSelectedIndex(-1);
         clear(txtQuantity);
         chkEquipped.setSelected(false);
+    }
+
+    private void refreshInventoryItemChoices() {
+        inventoryItems.clear();
+        cmbItem.removeAllItems();
+        ItemCategory category = (ItemCategory) cmbInventoryCategory.getSelectedItem();
+        if (category == null) {
+            return;
+        }
+        for (Item item : allItems) {
+            if (item.getCategory() == category) {
+                inventoryItems.add(item);
+                cmbItem.addItem(item.getName());
+            }
+        }
+        cmbItem.setSelectedIndex(-1);
     }
 
     // ---------------------------------------------------------------- Items, weapons, armor and ammunition
@@ -344,10 +384,7 @@ public class MainWindow extends javax.swing.JFrame {
             model.addRow(new Object[] {ammo.getName(), ammo.getDamageDice(), ammo.getWeight()});
         }
 
-        cmbItem.removeAllItems();
-        for (Item item : allItems) {
-            cmbItem.addItem(item.getName());
-        }
+        refreshInventoryItemChoices();
         clearItemForm();
         clearWeaponForm();
         clearArmorForm();
@@ -1959,7 +1996,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             return;
         }
         Inventory entry = inventory.get(row);
-        cmbItem.setSelectedIndex(allItems.indexOf(findItem(entry.getItemId())));
+        cmbItem.setSelectedIndex(inventoryItems.indexOf(findItem(entry.getItemId())));
         txtQuantity.setText(String.valueOf(entry.getQuantity()));
         chkEquipped.setSelected(entry.isEquipped());
     }//GEN-LAST:event_inventoryTableMouseClicked
@@ -1976,7 +2013,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
         try {
             int row = tblInventory.getSelectedRow();
             Integer id = row >= 0 ? inventory.get(row).getId() : null;
-            int itemId = allItems.get(cmbItem.getSelectedIndex()).getId();
+            int itemId = inventoryItems.get(cmbItem.getSelectedIndex()).getId();
             service.saveInventory(new Inventory(id, selected.getId(), itemId, number(txtQuantity, "Quantity"), chkEquipped.isSelected()));
             loadInventory();
         } catch (Exception e) {
@@ -2273,6 +2310,7 @@ private void changePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ActionType> cmbActionType;
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.AbilityCategory> cmbCategory;
     private javax.swing.JComboBox<com.edynu.rpgSheetManager.model.CostType> cmbCostType;
+    private final javax.swing.JComboBox<com.edynu.rpgSheetManager.model.ItemCategory> cmbInventoryCategory = new javax.swing.JComboBox<>();
     private javax.swing.JComboBox<String> cmbItem;
     private javax.swing.JLabel lblAbilityDescription;
     private javax.swing.JLabel lblAbilityName;

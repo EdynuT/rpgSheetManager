@@ -26,7 +26,7 @@ import com.edynu.rpgSheetManager.model.PlayerCharacter;
 import com.edynu.rpgSheetManager.model.SecondSkill;
 import com.edynu.rpgSheetManager.model.Skill;
 import com.edynu.rpgSheetManager.model.Weapon;
-import com.edynu.rpgSheetManager.utils.Utils;
+import com.edynu.rpgSheetManager.utils.ImageManager;
 
 /**
  * Operations used by the MainWindow. "save" inserts the object when it has no id yet,
@@ -49,7 +49,7 @@ public class MainWindowService {
     public List<PlayerCharacter> listCharacters() throws SQLException {
         List<PlayerCharacter> characters = characterDAO.list();
         for (PlayerCharacter character : characters) {
-            character.setPhoto(Utils.loadCharacterPhoto(character.getId()));
+            character.setPhoto(ImageManager.loadCharacterPhoto(character.getId()));
         }
         return characters;
     }
@@ -68,13 +68,13 @@ public class MainWindowService {
     }
 
     public void saveCharacterPhoto(PlayerCharacter character, File imageFile) throws IOException {
-        byte[] jpegBytes = Utils.saveCharacterPhoto(character.getId(), imageFile, 160);
+        byte[] jpegBytes = ImageManager.saveCharacterPhoto(character.getId(), imageFile, 160);
         character.setPhoto(jpegBytes);
     }
 
     public void deleteCharacter(int id) throws SQLException {
         characterDAO.delete(id);
-        Utils.deleteCharacterPhoto(id);
+        ImageManager.deleteCharacterPhoto(id);
     }
 
     // Skills
