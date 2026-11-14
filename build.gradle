@@ -27,6 +27,16 @@ dependencies {
     implementation 'com.bernardomg.tabletop:dice:2.0.4'
 }
 
+distributions {
+    main {
+        contents {
+            from('data/characterImages') {
+                into 'lib/data/characterImages'
+            }
+        }
+    }
+}
+
 jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
